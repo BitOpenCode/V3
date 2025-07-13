@@ -1240,22 +1240,30 @@ function App() {
 
   // Функции для работы с портфелем
   const togglePortfolio = () => {
-    if (!showPortfolio) {
+    if (showPortfolio) {
+      closeAllModals();
+    } else {
+      closeAllModals();
       setShowPortfolio(true);
       document.body.style.overflow = 'hidden';
+      // Загружаем тикеры при открытии Portfolio, если их нет
+      if (tickers.length === 0) {
+        fetchTickers();
+      }
       updatePortfolioTotals();
-    } else {
-      setShowPortfolio(false);
-      document.body.style.overflow = 'auto';
     }
   };
 
   const filterPortfolioCoins = (query: string) => {
     const q = query.trim().toLowerCase();
+    console.log('filterPortfolioCoins called with query:', q);
+    console.log('tickers length:', tickers.length);
+    
     if (!q) {
       setFilteredPortfolioCoins([]);
       return;
     }
+    
     const filtered = Object.values(tickers)
       .filter(ticker =>
         (ticker.symbol.toLowerCase().includes(q) || ticker.pair.toLowerCase().includes(q)) &&
@@ -1269,6 +1277,8 @@ function App() {
         if (!aExact && bExact) return 1;
         return a.pair.localeCompare(b.pair);
       });
+    
+    console.log('Filtered coins:', filtered.length, filtered.map(t => t.symbol));
     setFilteredPortfolioCoins(filtered);
   };
 
@@ -1967,6 +1977,10 @@ function App() {
       closeAllModals();
       setShowPortfolio(true);
       document.body.style.overflow = 'hidden';
+      // Загружаем тикеры при открытии Portfolio, если их нет
+      if (tickers.length === 0) {
+        fetchTickers();
+      }
       updatePortfolioTotals();
     }
   };
