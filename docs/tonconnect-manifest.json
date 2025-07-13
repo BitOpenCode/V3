@@ -1,7 +1,6 @@
 {
   "url": "https://bitopencode.github.io/EgorWorld/",
   "name": "TON Wallet Tracker",
-  "iconUrl": "http://localhost:5173/vite.svg",
   "termsOfUseUrl": "https://bitopencode.github.io/EgorWorld/terms",
   "privacyPolicyUrl": "https://bitopencode.github.io/EgorWorld/privacy",
   "features": ["ton_addr"],
