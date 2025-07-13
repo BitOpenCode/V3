@@ -1833,14 +1833,14 @@ html {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 4px;
-    padding: 6px 0;
+    gap: 2px;
+    padding: 4px 0;
   }
   .header-button-container {
     flex: 0 1 60px;
     min-width: 60px;
     max-width: 60px;
-    margin: 2px;
+    margin: 1px;
     display: flex;
     justify-content: center;
   }
@@ -1851,9 +1851,9 @@ html {
     min-height: 60px;
     max-width: 60px;
     max-height: 60px;
-    font-size: 0.65rem;
+    font-size: 0.5rem;
     border-radius: 12px;
-    margin: 2px;
+    margin: 1px;
     padding: 0;
     text-align: center;
     justify-content: center;
@@ -1861,47 +1861,44 @@ html {
     display: flex;
     letter-spacing: 0.01em;
   }
-  /* News ближе к Mempool */
-  .header-button-container:nth-child(2) { margin-left: -2px; }
-  /* Wallet Info ближе к Contact */
-  .header-button-container:nth-last-child(2) { margin-right: -2px; }
+  /* News максимально близко к Mempool */
+  .header-button-container:nth-child(2) { margin-left: -8px; }
+  /* Wallet Info максимально близко к Contact */
+  .header-button-container:nth-last-child(2) { margin-right: -8px; }
 }
 
 @media (max-width: 400px) {
   .nav-button, .nav-button-content {
-    font-size: 0.5rem;
-    width: 44px;
-    height: 44px;
-    min-width: 44px;
-    min-height: 44px;
-    max-width: 44px;
-    max-height: 44px;
+    font-size: 0.4rem;
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    min-height: 40px;
+    max-width: 40px;
+    max-height: 40px;
   }
   .header-button-container {
-    min-width: 44px;
-    max-width: 44px;
+    min-width: 40px;
+    max-width: 40px;
   }
 }
 
-/* Скрыть зелёную Wallet Connected на мобильных mini app, если кошелек подключён */
-@media (max-width: 600px) {
-  .tc-connect-button__container, .tc-connect-button__button, .tc-connect-button__content, .tc-connect-button__state, .tc-connect-button__icon, .tc-connect-button__address {
-    display: none !important;
-    visibility: hidden !important;
-    height: 0 !important;
-    min-height: 0 !important;
-    max-height: 0 !important;
-    padding: 0 !important;
-    margin: 0 !important;
-  }
-  /* Если используется кастомная плашка Wallet Connected */
-  .wallet-connected-banner, .wallet-connected, .wallet-connected-bar {
-    display: none !important;
-    visibility: hidden !important;
-    height: 0 !important;
-    min-height: 0 !important;
-    max-height: 0 !important;
-    padding: 0 !important;
-    margin: 0 !important;
-  }
+/* Скрыть зелёную Wallet Connected на всех экранах, если кошелек подключён */
+.tc-connect-button__container, .tc-connect-button__button, .tc-connect-button__content, .tc-connect-button__state, .tc-connect-button__icon, .tc-connect-button__address {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  max-height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+.wallet-connected-banner, .wallet-connected, .wallet-connected-bar {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  min-height: 0 !important;
+  max-height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
 } 

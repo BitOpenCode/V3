@@ -517,12 +517,11 @@ function App() {
 
       await fetchTonPriceData();
 
-        WebApp.MainButton.setText('Wallet Connected');
-        WebApp.MainButton.show();
+        // Убираем появление MainButton (зелёная плашка) при подключении кошелька
       } catch (error) {
         console.error("Error fetching wallet data:", error);
-      setBalance(null);
-    }
+        setBalance(null);
+      }
   };
 
   const fetchTonPriceData = async () => {
@@ -3152,6 +3151,56 @@ function App() {
                 </button>
               </div>
 
+              {/* СТАТИСТИКА и БЛОКИ ПОДНИМАЕМ ВВЕРХ */}
+              <div className="mempool-stats">
+                {!mempoolStatsLoading ? (
+                  <>
+                    <div className="stat">
+                      <div className="stat-label">Current Hashrate</div>
+                      <div className="stat-value">
+                        {formatHashrate(mempoolStats?.hashrate ?? 0)}
+                      </div>
+                    </div>
+                    <div className="stat">
+                      <div className="stat-label">Current Difficulty</div>
+                      <div className="stat-value">
+                        {formatDifficulty(mempoolStats?.difficulty ?? 0)}
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <div className="loading-spinner" />
+                )}
+              </div>
+
+              <div className="mempool-blocks">
+                <h3 className="mempool-blocks-title">Latest Blocks</h3>
+                <div className="mempool-blocks-header">
+                  <div className="mempool-block-cell">Height</div>
+                  <div className="mempool-block-cell">Time</div>
+                  <div className="mempool-block-cell">Size</div>
+                  <div className="mempool-block-cell">Tx Count</div>
+                </div>
+                <div className="mempool-blocks-body">
+                  {mempoolBlocksLoading && !mempoolDataLoaded ? (
+                    <div className="mempool-loading">Loading blocks...</div>
+                  ) : latestBlocks.length > 0 ? (
+                    latestBlocks.map((block) => (
+                      <div key={block.id} className="mempool-block-row">
+                        <div className="mempool-block-cell">{block.height}</div>
+                        <div className="mempool-block-cell">
+                          {formatTimeAgo(block.timestamp)}
+                        </div>
+                        <div className="mempool-block-cell">{formatBytes(block.size)}</div>
+                        <div className="mempool-block-cell">{block.tx_count}</div>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="mempool-loading">No blocks available</div>
+                  )}
+                </div>
+              </div>
+
               {/* Search Section */}
               <div className="mempool-search">
                 <div className="search-group">
@@ -3188,57 +3237,6 @@ function App() {
 
               {/* Search Results */}
               <SearchResults />
-
-              {/* Stats Section */}
-              <div className="mempool-stats">
-                {!mempoolStatsLoading ? (
-                  <>
-                    <div className="stat">
-                      <div className="stat-label">Current Hashrate</div>
-                      <div className="stat-value">
-                        {formatHashrate(mempoolStats?.hashrate ?? 0)}
-                      </div>
-                    </div>
-                    <div className="stat">
-                      <div className="stat-label">Current Difficulty</div>
-                      <div className="stat-value">
-                        {formatDifficulty(mempoolStats?.difficulty ?? 0)}
-                      </div>
-                    </div>
-                  </>
-                ) : (
-                  <div className="loading-spinner" />
-                )}
-              </div>
-
-              {/* Latest Blocks */}
-              <div className="mempool-blocks">
-                <h3 className="mempool-blocks-title">Latest Blocks</h3>
-                <div className="mempool-blocks-header">
-                  <div className="mempool-block-cell">Height</div>
-                  <div className="mempool-block-cell">Time</div>
-                  <div className="mempool-block-cell">Size</div>
-                  <div className="mempool-block-cell">Tx Count</div>
-                </div>
-                <div className="mempool-blocks-body">
-                  {mempoolBlocksLoading && !mempoolDataLoaded ? (
-                    <div className="mempool-loading">Loading blocks...</div>
-                  ) : latestBlocks.length > 0 ? (
-                    latestBlocks.map((block) => (
-                      <div key={block.id} className="mempool-block-row">
-                        <div className="mempool-block-cell">{block.height}</div>
-                        <div className="mempool-block-cell">
-                          {formatTimeAgo(block.timestamp)}
-                        </div>
-                        <div className="mempool-block-cell">{formatBytes(block.size)}</div>
-                        <div className="mempool-block-cell">{block.tx_count}</div>
-                      </div>
-                    ))
-                  ) : (
-                    <div className="mempool-loading">No blocks available</div>
-                  )}
-                </div>
-              </div>
             </div>
           </div>
         </div>
