@@ -1827,49 +1827,54 @@ html {
 } 
 
 /** --- Адаптивность для mini app и мобильных устройств --- */
+/* --- Квадратные компактные кнопки для мобильных mini app --- */
 @media (max-width: 600px) {
-  .upper-nav-panel {
+  .upper-nav-panel, .fixed.bottom-0 .container {
+    display: flex;
     flex-wrap: wrap;
-    padding: 8px 0;
-    gap: 2px;
+    justify-content: center;
+    gap: 4px;
+    padding: 6px 0;
   }
   .header-button-container {
-    flex: 1 1 40%;
-    min-width: 40vw;
-    max-width: 48vw;
-    margin: 2px 0;
+    flex: 0 1 48px;
+    min-width: 48px;
+    max-width: 48px;
+    margin: 2px;
     display: flex;
     justify-content: center;
   }
   .nav-button, .nav-button-content {
-    width: 90%;
-    min-width: 0;
-    max-width: 100vw;
-    height: 38px;
-    min-height: 36px;
-    max-height: 40px;
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    min-height: 48px;
+    max-width: 48px;
+    max-height: 48px;
     font-size: 0.7rem;
-    margin: 2px 0;
+    border-radius: 12px;
+    margin: 2px;
     padding: 0;
-  }
-  .fixed.bottom-0 .container {
-    flex-wrap: wrap;
+    text-align: center;
     justify-content: center;
-    gap: 2px;
-  }
-  .fixed.bottom-0 {
-    padding: 8px 0;
+    align-items: center;
+    display: flex;
   }
 }
 
 @media (max-width: 400px) {
   .nav-button, .nav-button-content {
     font-size: 0.55rem;
-    height: 32px;
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    min-height: 38px;
+    max-width: 38px;
+    max-height: 38px;
   }
   .header-button-container {
-    min-width: 90vw;
-    max-width: 100vw;
+    min-width: 38px;
+    max-width: 38px;
   }
 }
 
