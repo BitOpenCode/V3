@@ -330,7 +330,6 @@ function App() {
     buyPrice: 0
   });
   const [filteredPortfolioCoins, setFilteredPortfolioCoins] = useState<Ticker[]>([]);
-  const [showPortfolioDropdown, setShowPortfolioDropdown] = useState(false);
   const [portfolioPositions, setPortfolioPositions] = useState<PortfolioPosition[]>([]);
   const [totalInvestment, setTotalInvestment] = useState(0);
   const [currentValue, setCurrentValue] = useState(0);
@@ -723,7 +722,9 @@ function App() {
         });
         return updated;
       });
-    } catch {}
+    } catch (error) {
+      console.error("Error updating tickers:", error);
+    }
   };
 
   // Function to load news (based on index1.html logic, adjusted for no pagination)
@@ -1277,15 +1278,15 @@ function App() {
       selectedCoin: ticker,
       searchQuery: ticker.pair,
     }));
-    setShowPortfolioDropdown(false);
     setFilteredPortfolioCoins([]);
   };
 
   const handlePortfolioSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
+    console.log('Portfolio search input:', value);
     setPortfolioForm(prev => ({ ...prev, searchQuery: value, selectedCoin: null }));
     filterPortfolioCoins(value);
-    setShowPortfolioDropdown(true);
+    console.log('Filtered coins count:', filteredPortfolioCoins.length);
   };
 
   const isPortfolioFormValid =
@@ -1319,7 +1320,6 @@ function App() {
     });
     setPortfolioForm({ searchQuery: '', selectedCoin: null, amount: 0, buyPrice: 0 });
     setFilteredPortfolioCoins([]);
-    setShowPortfolioDropdown(false);
   };
 
   const removePortfolioPosition = (id: string) => {
@@ -2063,24 +2063,6 @@ function App() {
   // --- Portfolio Dropdown Logic ---
   const portfolioSearchRef = useRef<HTMLInputElement>(null);
   const portfolioDropdownRef = useRef<HTMLDivElement>(null);
-
-  // Обработчик клика вне dropdown для его закрытия
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (
-        portfolioDropdownRef.current &&
-        !portfolioDropdownRef.current.contains(event.target as Node) &&
-        portfolioSearchRef.current &&
-        !portfolioSearchRef.current.contains(event.target as Node)
-      ) {
-        setShowPortfolioDropdown(false);
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
 
   // --- Binance WebSocket for real-time tickers (like example.html) ---
   useEffect(() => {
@@ -2982,21 +2964,21 @@ function App() {
                     placeholder="Search coin"
                   value={portfolioForm.searchQuery}
                     onChange={handlePortfolioSearchInput}
-                    onFocus={() => setShowPortfolioDropdown(true)}
                     ref={portfolioSearchRef}
                 />
-                  {showPortfolioDropdown && filteredPortfolioCoins.length > 0 && (
+                  {filteredPortfolioCoins.length > 0 && (
                     <div
                       ref={portfolioDropdownRef}
-                      className="absolute z-50 w-full mt-1 bg-[--color-bg--300] rounded-lg shadow-lg max-h-36 overflow-y-auto"
+                      className="portfolio-coins-dropdown"
                     >
                     {filteredPortfolioCoins.map((ticker) => (
                       <div
                         key={ticker.symbol}
                         onClick={() => selectPortfolioCoin(ticker)}
-                          className="p-2 hover:bg-[--color-primary-purple] cursor-pointer text-xs"
-                        >
-                          {ticker.pair} ({ticker.lastPrice})
+                        className="portfolio-coin"
+                      >
+                        <span className="portfolio-coin-symbol">{ticker.pair}</span>
+                        <span className="portfolio-coin-details">${ticker.lastPrice}</span>
                       </div>
                     ))}
                   </div>

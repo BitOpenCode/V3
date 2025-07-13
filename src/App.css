@@ -1209,37 +1209,43 @@ header .z-50 {
   top: 100%;
   left: 0;
   right: 0;
-  background-color: var(--card-background);
-  border: 1px solid var(--border-color);
-  border-radius: 4px;
-  margin-top: 0.5rem;
-  max-height: 300px;
+  background-color: var(--color-bg--300);
+  border: 1px solid var(--color-primary-purple);
+  border-radius: 8px;
+  margin-top: 4px;
+  max-height: 200px;
   overflow-y: auto;
-  z-index: 1001;
+  z-index: 1003;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .portfolio-coin {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.75rem 1rem;
+  padding: 8px 12px;
   cursor: pointer;
   transition: background-color 0.2s;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .portfolio-coin:hover {
-  background-color: var(--hover-color);
+  background-color: var(--color-primary-purple);
+}
+
+.portfolio-coin:last-child {
+  border-bottom: none;
 }
 
 .portfolio-coin-symbol {
   font-weight: 500;
-  color: var(--text-color);
+  color: white;
+  font-size: 0.9rem;
 }
 
 .portfolio-coin-details {
-  display: flex;
-  gap: 1rem;
-  color: var(--text-secondary);
+  color: var(--color-primary-silver);
+  font-size: 0.8rem;
 }
 
 .portfolio-dropdown {
