@@ -255,6 +255,29 @@ interface TonJetton {
 }
 
 function App() {
+  // Глобальный обработчик ошибок для предотвращения крашей
+  useEffect(() => {
+    const handleError = (error: ErrorEvent) => {
+      console.error('Global error caught:', error);
+      // Предотвращаем краш приложения
+      error.preventDefault();
+    };
+
+    const handleUnhandledRejection = (event: PromiseRejectionEvent) => {
+      console.error('Unhandled promise rejection:', event.reason);
+      // Предотвращаем краш приложения
+      event.preventDefault();
+    };
+
+    window.addEventListener('error', handleError);
+    window.addEventListener('unhandledrejection', handleUnhandledRejection);
+
+    return () => {
+      window.removeEventListener('error', handleError);
+      window.removeEventListener('unhandledrejection', handleUnhandledRejection);
+    };
+  }, []);
+
   const [balance, setBalance] = useState<string | null>(null);
   const [tonPriceChange24h, setTonPriceChange24h] = useState<string | null>(null);
   const [tonPrice, setTonPrice] = useState<string | null>(null);
@@ -630,7 +653,11 @@ function App() {
         const prevMap = Object.fromEntries(prevTickers.map(t => [t.symbol, t]));
         // Создаём map для быстрого доступа к объёму с Binance
         const binanceMap = Object.fromEntries(spotTickers.map(t => [t.symbol, t]));
-        const updated = spotTickers.map(t => ({ ...prevMap[t.symbol], ...t }));
+        const updated = spotTickers.map(t => ({
+          ...prevMap[t.symbol],
+          ...t,
+          pair: t.symbol.replace(/(USDT|BTC)$/, '/$1')
+        }));
         // Добавляем тикеры TON, если их нет в новом ответе
         tonTickers.forEach(tonTicker => {
           const exist = updated.find(t => t.symbol === tonTicker.symbol);
@@ -1198,16 +1225,29 @@ function App() {
       return;
     }
 
+    // Проверяем, что tickers является массивом и не пустой
+    if (!Array.isArray(tickers) || tickers.length === 0) {
+      console.log('Tickers is not an array or empty in calculator, returning empty filtered list');
+      setFilteredCalculatorCoins([]);
+      return;
+    }
+
     const searchQuery = calculatorSearchQuery.toLowerCase();
-    const filtered = Object.values(tickers)
+    const filtered = tickers
       .filter(ticker => {
-        const symbol = ticker.symbol.toLowerCase();
+        // Проверяем, что ticker существует и имеет необходимые свойства
+        if (!ticker || typeof ticker !== 'object') {
+          console.log('Invalid ticker found in calculator:', ticker);
+          return false;
+        }
+        
+        const symbol = ticker.symbol?.toLowerCase() || '';
         const displaySymbol = symbol.replace('usdt', '/usdt');
         return (symbol.includes(searchQuery) || displaySymbol.includes(searchQuery)) && symbol.endsWith('usdt');
       })
       .sort((a, b) => {
-        const aSymbol = a.symbol.toLowerCase();
-        const bSymbol = b.symbol.toLowerCase();
+        const aSymbol = a.symbol?.toLowerCase() || '';
+        const bSymbol = b.symbol?.toLowerCase() || '';
         const aStartsWith = aSymbol.startsWith(searchQuery);
         const bStartsWith = bSymbol.startsWith(searchQuery);
         
@@ -1229,6 +1269,12 @@ function App() {
       const target = event.target as HTMLElement;
       if (!target.closest('.calculator-form-group')) {
         setShowCalculatorDropdown(false);
+      }
+      if (!target.closest('.portfolio-form-group')) {
+        // Если выбран тикер, не показываем список
+        if (!portfolioForm.selectedCoin) {
+          setFilteredPortfolioCoins([]);
+        }
       }
     };
 
@@ -1264,18 +1310,35 @@ function App() {
       return;
     }
     
-    const filtered = Object.values(tickers)
-      .filter(ticker =>
-        (ticker.symbol.toLowerCase().includes(q) || ticker.pair.toLowerCase().includes(q)) &&
-        ticker.symbol.endsWith('USDT')
-      )
+    // Проверяем, что tickers является массивом и не пустой
+    if (!Array.isArray(tickers) || tickers.length === 0) {
+      console.log('Tickers is not an array or empty, returning empty filtered list');
+      setFilteredPortfolioCoins([]);
+      return;
+    }
+    
+    const filtered = tickers
+      .filter(ticker => {
+        // Проверяем, что ticker существует и имеет необходимые свойства
+        if (!ticker || typeof ticker !== 'object') {
+          console.log('Invalid ticker found:', ticker);
+          return false;
+        }
+        
+        const symbol = ticker.symbol?.toLowerCase() || '';
+        const pair = ticker.pair?.toLowerCase() || '';
+        
+        return (symbol.includes(q) || pair.includes(q)) && symbol.endsWith('usdt');
+      })
       .slice(0, 8)
       .sort((a, b) => {
-        const aExact = a.symbol.toLowerCase().startsWith(q);
-        const bExact = b.symbol.toLowerCase().startsWith(q);
+        const aSymbol = a.symbol?.toLowerCase() || '';
+        const bSymbol = b.symbol?.toLowerCase() || '';
+        const aExact = aSymbol.startsWith(q);
+        const bExact = bSymbol.startsWith(q);
         if (aExact && !bExact) return -1;
         if (!aExact && bExact) return 1;
-        return a.pair.localeCompare(b.pair);
+        return (a.pair || '').localeCompare(b.pair || '');
       });
     
     console.log('Filtered coins:', filtered.length, filtered.map(t => t.symbol));
@@ -1283,20 +1346,37 @@ function App() {
   };
 
   const selectPortfolioCoin = (ticker: Ticker) => {
-    setPortfolioForm(prev => ({
-      ...prev,
-      selectedCoin: ticker,
-      searchQuery: ticker.pair,
-    }));
-    setFilteredPortfolioCoins([]);
+    try {
+      if (!ticker || typeof ticker !== 'object') {
+        console.error('Invalid ticker in selectPortfolioCoin:', ticker);
+        return;
+      }
+      
+      setPortfolioForm(prev => ({
+        ...prev,
+        selectedCoin: ticker,
+        searchQuery: '', // очищаем поле поиска
+      }));
+      setFilteredPortfolioCoins([]); // мгновенно скрываем список
+      portfolioSearchRef.current?.blur(); // снимаем фокус с input
+    } catch (error) {
+      console.error('Error in selectPortfolioCoin:', error);
+      setFilteredPortfolioCoins([]);
+    }
   };
 
   const handlePortfolioSearchInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    console.log('Portfolio search input:', value);
-    setPortfolioForm(prev => ({ ...prev, searchQuery: value, selectedCoin: null }));
-    filterPortfolioCoins(value);
-    console.log('Filtered coins count:', filteredPortfolioCoins.length);
+    try {
+      const value = e.target.value;
+      console.log('Portfolio search input:', value);
+      setPortfolioForm(prev => ({ ...prev, searchQuery: value, selectedCoin: null }));
+      filterPortfolioCoins(value);
+      console.log('Filtered coins count:', filteredPortfolioCoins.length);
+    } catch (error) {
+      console.error('Error in handlePortfolioSearchInput:', error);
+      // В случае ошибки очищаем фильтрованные монеты
+      setFilteredPortfolioCoins([]);
+    }
   };
 
   const isPortfolioFormValid =
@@ -1362,6 +1442,12 @@ function App() {
       return;
     }
 
+    // Проверяем, что tickers является массивом
+    if (!Array.isArray(tickers)) {
+      console.warn("Tickers is not an array in updatePortfolioTotals");
+      return;
+    }
+
     let totalInvestment = 0;
     let currentValue = 0;
     let tickersNotFound = false;
@@ -1412,13 +1498,18 @@ function App() {
   };
 
   useEffect(() => {
-    if (portfolioPositions.length > 0 && Object.keys(tickers).length > 0) {
+    if (portfolioPositions.length > 0 && Array.isArray(tickers) && tickers.length > 0) {
       updatePortfolioTotals();
     }
   }, [tickers, portfolioPositions]);
 
   useEffect(() => {
-    filterPortfolioCoins(portfolioForm.searchQuery);
+    try {
+      filterPortfolioCoins(portfolioForm.searchQuery);
+    } catch (error) {
+      console.error('Error in portfolio useEffect:', error);
+      setFilteredPortfolioCoins([]);
+    }
   }, [portfolioForm.searchQuery, tickers]);
 
   const handleCalculatorCoinClick = (ticker: Ticker) => {
@@ -2972,6 +3063,17 @@ function App() {
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4 items-end">
                 <div className="form-group relative portfolio-form-group md:col-span-4" style={{display: 'flex', flexDirection: 'column'}}>
                   <label className="block text-xs text-[--color-primary-silver] mb-1">Search coin</label>
+                  {portfolioForm.selectedCoin && (
+                    <div className="text-sm text-white mb-1 px-2 py-1 rounded flex justify-between items-center selected-coin-badge">
+                      <span>Selected: {portfolioForm.selectedCoin.pair} (${formatTickerPrice(portfolioForm.selectedCoin)})</span>
+                      <button 
+                        onClick={() => setPortfolioForm(prev => ({ ...prev, selectedCoin: null }))}
+                        className="text-xs bg-red-500 hover:bg-red-600 px-1 py-0.5 rounded"
+                      >
+                        ✕
+                      </button>
+                    </div>
+                  )}
                 <input
                   type="text"
                   className="portfolio-search"
@@ -2991,8 +3093,10 @@ function App() {
                         onClick={() => selectPortfolioCoin(ticker)}
                         className="portfolio-coin"
                       >
-                        <span className="portfolio-coin-symbol">{ticker.pair}</span>
-                        <span className="portfolio-coin-details">${ticker.lastPrice}</span>
+                        <span className="portfolio-coin-symbol">
+                          {ticker.pair}
+                        </span>
+                        <span className="portfolio-coin-details">${formatTickerPrice(ticker)}</span>
                       </div>
                     ))}
                   </div>

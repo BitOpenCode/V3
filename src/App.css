@@ -1927,6 +1927,16 @@ html {
   z-index: 1003;
 }
 
+.selected-coin-badge {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 10px rgba(128, 0, 128, 0.6);
+    background: radial-gradient(circle at 30% 30%, rgba(128, 0, 128, 0.6), transparent),
+                radial-gradient(circle at 70% 70%, rgba(128, 0, 128, 0.4), transparent),
+                radial-gradient(circle at 50% 50%, rgba(200, 0, 200, 0.6), transparent);
+    background-size: 200% 200%;
+    animation: lavaLamp 6s infinite ease-in-out;
+}
+
 button, .nav-button, .nav-button-content, .header-button-container, .upper-nav-panel, .fixed.bottom-0, .mempool-content, .portfolio-form-section, .portfolio-form-group, .portfolio-search {
-  touch-action: manipulation !important;
+    touch-action: manipulation !important;
 } 
