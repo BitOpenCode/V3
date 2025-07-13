@@ -1,3 +1,741 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Mempool Screen Styles */
+.mempool-screen-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--color-background);
+  z-index: 1;
+  overflow-y: auto;
+}
+
+.mempool-screen-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+.mempool-screen-header {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.mempool-content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Coin Selector */
+.mempool-coin-selector {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.mempool-coin-button {
+  padding: 8px 16px;
+  border: 1px solid var(--color-primary-silver);
+  background: none;
+  color: var(--color-primary-silver);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.mempool-coin-button.active {
+  background-color: var(--color-primary-silver);
+  color: var(--color-background);
+}
+
+/* Lookup Section */
+.mempool-lookup-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.mempool-lookup-group {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+}
+
+.mempool-lookup-input,
+.mempool-txid-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid var(--color-primary-silver);
+  border-radius: 4px;
+  background: none;
+  color: var(--color-primary-silver);
+  font-size: 14px;
+}
+
+.mempool-lookup-button {
+  padding: 8px 16px;
+  background-color: var(--color-primary-silver);
+  color: var(--color-background);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  white-space: nowrap;
+  min-width: 80px;
+}
+
+.mempool-lookup-button:hover {
+  opacity: 0.9;
+}
+
+/* Stats Section */
+.mempool-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.mempool-stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.mempool-stat-label {
+  color: var(--color-primary-silver);
+  font-size: 14px;
+}
+
+.mempool-stat-value {
+  color: var(--color-primary-silver);
+  font-size: 18px;
+  font-weight: bold;
+}
+
+/* Blocks Section */
+.mempool-blocks {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.mempool-blocks-title {
+  color: var(--color-primary-silver);
+  margin-bottom: 15px;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.mempool-blocks-header {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mempool-block-cell {
+  color: var(--color-primary-silver);
+  font-size: 14px;
+}
+
+.mempool-blocks-body {
+  margin-top: 10px;
+}
+
+.mempool-block-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.mempool-block-row:last-child {
+  border-bottom: none;
+}
+
+.mempool-loading {
+  color: var(--color-primary-silver);
+  text-align: center;
+  padding: 20px;
+}
+
+/* Existing Transactions Table */
+.mempool-transactions {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 20px;
+  overflow-x: auto;
+}
+
+.mempool-header {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.mempool-cell {
+  color: var(--color-primary-silver);
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.mempool-transaction {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.mempool-transaction:last-child {
+  border-bottom: none;
+}
+
+.hash-cell {
+  font-family: monospace;
+}
+
+.address-cell {
+  font-family: monospace;
+  font-size: 12px;
+}
+
+/* Portfolio summary grid — адаптивность и финальный стиль */
+.portfolio-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  background: var(--color-bg--500);
+  border-radius: 12px;
+  box-shadow: 0 2px 16px rgba(138,43,226,0.10);
+  overflow: hidden;
+  margin-bottom: 32px;
+  border: 2px solid var(--color-primary-purple);
+}
+
+.portfolio-summary-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 0 20px 0;
+  background: var(--color-bg--300);
+  position: relative;
+  min-width: 0;
+  min-height: 80px;
+  color: white !important;
+  background-color: #232136 !important;
+  /* border: 2px solid red; убрано */
+  box-shadow: 0 2px 8px rgba(138,43,226,0.07);
+}
+
+.portfolio-summary-card:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 20%;
+  right: 0;
+  width: 1.5px;
+  height: 60%;
+  background: linear-gradient(to bottom, var(--color-primary-purple), transparent 80%);
+  opacity: 0.5;
+}
+
+.portfolio-summary-label {
+  font-size: 0.85rem;
+  color: #fff !important;
+  margin-bottom: 8px;
+  letter-spacing: 0.02em;
+  font-weight: 500;
+}
+
+.portfolio-summary-value {
+  font-size: 1.08rem;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 700;
+  color: white;
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+  margin-left: 1.2em;
+  min-width: 60px;
+  text-align: left;
+}
+
+.portfolio-divider {
+  border: none;
+  border-top: 2px solid var(--color-primary-purple);
+  margin: 24px 0 32px 0;
+  opacity: 0.25;
+}
+
+.summary-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  justify-content: flex-start;
+  margin-bottom: 0.2em;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: auto minmax(80px, 1fr);
+  row-gap: 0.3em;
+  column-gap: 0.7em;
+}
+
+@media (max-width: 900px) {
+  .portfolio-summary-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .portfolio-summary-grid {
+    grid-template-columns: 1fr;
+  }
+  .portfolio-summary-card {
+    padding: 12px 0 8px 0;
+    min-height: 40px;
+  }
+  .portfolio-summary-card:not(:last-child)::after {
+    display: none;
+  }
+  .portfolio-summary-label {
+    font-size: 0.7rem;
+    margin-bottom: 2px;
+  }
+  .portfolio-summary-value {
+    font-size: 1.05rem;
+  }
+  .portfolio-summary-panel {
+    padding: 1rem 0.7rem 0.7rem 0.7rem !important;
+    min-height: 160px !important;
+    height: auto !important;
+  }
+  .portfolio-summary-panel .grid {
+    gap: 0.3rem !important;
+  }
+  .portfolio-summary-label { font-size: 0.9rem; }
+  .portfolio-summary-value { font-size: 1.1rem; }
+  .portfolio-summary-panel { min-height: unset !important; }
+  .portfolio-summary-label {
+    font-size: 0.82rem;
+    min-width: 80px;
+  }
+  .portfolio-summary-value {
+    font-size: 0.93rem;
+    margin-left: 0.7em;
+    min-width: 44px;
+  }
+}
+
+/* Увеличиваю паддинг сверху для портфеля, чтобы summary не скрывался под верхней панелью */
+.portfolio-screen-content {
+  overflow-y: auto !important;
+  scrollbar-width: auto !important;
+}
+
+/* Доп. стили для разделения секций портфеля */
+.portfolio-form-section {
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 10px;
+  margin-bottom: 32px;
+  background: rgba(34,34,34,0.7);
+  margin-top: 0 !important;
+}
+
+.portfolio-positions-container {
+  border: 1.5px solid var(--color-primary-purple);
+  border-radius: 10px;
+  background: rgba(34,34,34,0.7);
+}
+
+.portfolio-form-section .grid {
+  gap: 0.5rem !important; /* gap-2 */
+}
+.portfolio-form-group,
+.portfolio-form-section .form-group {
+  margin-bottom: 0.25rem !important;
+}
+
+.portfolio-add-btn {
+  height: 44px;
+  min-height: 44px;
+  max-height: 44px;
+  padding: 0 1.5rem;
+  font-size: 1rem;
+  min-width: 0;
+  box-sizing: border-box;
+  font-family: inherit !important;
+  font-weight: normal !important;
+  background: radial-gradient(circle at 30% 30%, rgba(128, 0, 128, 0.6), transparent),
+              radial-gradient(circle at 70% 70%, rgba(0, 119, 204, 0.4), transparent),
+              radial-gradient(circle at 50% 50%, rgba(200, 0, 200, 0.6), transparent);
+  background-size: 200% 200%;
+  animation: lavaLamp 6s infinite ease-in-out;
+  border: 2px solid rgba(255,255,255,0.3);
+}
+
+.portfolio-summary-panel {
+  background: radial-gradient(circle at 30% 30%, rgba(128, 0, 128, 0.6), transparent),
+              radial-gradient(circle at 70% 70%, rgba(0, 119, 204, 0.4), transparent),
+              radial-gradient(circle at 50% 50%, rgba(200, 0, 200, 0.6), transparent);
+  background-size: 200% 200%;
+  animation: lavaLamp 6s infinite ease-in-out;
+  border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 12px;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding: 1.25rem 1rem;
+  min-height: 180px;
+  margin-bottom: 0 !important;
+  padding-bottom: 0.5rem !important;
+}
+
+.portfolio-bubbles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.portfolio-summary-panel .bubble {
+  position: absolute;
+  bottom: 0;
+  background-color: rgba(200, 0, 200, 0.3);
+  border-radius: 50%;
+  opacity: 1;
+  animation: bubble var(--animation-duration, 2s) linear forwards !important;
+  z-index: 0;
+}
+
+.portfolio-summary-panel .grid {
+  gap: 1.5rem;
+}
+@media (max-width: 600px) {
+  .portfolio-summary-panel .grid {
+    grid-template-columns: 1fr !important;
+    gap: 1rem;
+  }
+}
+
+/* Удаляю или переопределяю правило, которое делало overflow-y: scroll для overlay-окон */
+.mempool-screen-content,
+.wallet-screen-content,
+.contact-screen-content,
+.tickers-screen-content,
+.news-screen-content,
+.chart-screen-content,
+.share-screen-content,
+.calculator-screen-content {
+  overflow-y: auto !important;
+  scrollbar-width: none !important; /* Firefox */
+}
+
+.news-screen-content {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.portfolio-screen-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--color-bg--300);
+  z-index: 50;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+}
+
+.portfolio-screen-content {
+  background-color: var(--color-bg--300);
+  border-radius: 0 !important;
+  padding: 0;
+  width: 100vw !important;
+  height: 100vh !important;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding-top: 110px;
+  padding-bottom: 110px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.portfolio-screen-content::-webkit-scrollbar,
+.mempool-screen-content::-webkit-scrollbar,
+.wallet-screen-content::-webkit-scrollbar,
+.contact-screen-content::-webkit-scrollbar,
+.tickers-screen-content::-webkit-scrollbar,
+.news-screen-content::-webkit-scrollbar,
+.chart-screen-content::-webkit-scrollbar,
+.share-screen-content::-webkit-scrollbar,
+.calculator-screen-content::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+.portfolio-form-section input[type="text"] {
+  background: rgba(255,255,255,0.07);
+  border: 1.5px solid rgba(255,255,255,0.18);
+  color: #fff;
+  box-shadow: 0 1px 6px 0 rgba(138,43,226,0.07);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-size: 0.85rem;
+  min-width: 120px;
+  width: 100%;
+}
+.portfolio-form-section .portfolio-search {
+}
+.portfolio-form-section input[type="number"] {
+  background: rgba(255,255,255,0.07);
+  border: 1.5px solid rgba(255,255,255,0.18);
+  color: #fff;
+  box-shadow: 0 1px 6px 0 rgba(138,43,226,0.07);
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-size: 0.85rem;
+  min-width: 120px;
+  width: 100%;
+  max-width: 220px;
+}
+
+.portfolio-form-section input[type="text"]:focus,
+.portfolio-form-section input[type="number"]:focus {
+  border-color: var(--color-primary-purple);
+  box-shadow: 0 0 0 2px var(--color-primary-purple);
+  outline: none;
+}
+
+.portfolio-form-section label, .portfolio-form-section .form-group label, .portfolio-form-section .portfolio-form-group label {
+  color: #fff !important;
+}
+
+@media (max-width: 600px) {
+  .portfolio-summary-panel {
+    min-height: 160px !important;
+    padding: 0.8rem 0.7rem 0.7rem 0.7rem !important;
+  }
+}
+
+.text-green {
+  color: #3fe57a !important;
+}
+.text-red {
+  color: #ff4b4b !important;
+}
+
+.wallet-screen-content {
+  background-color: var(--color-bg--300); /* Background color */
+  border-radius: 0; /* Убираем скругление */
+  padding: 16px; /* Inner padding */
+  width: 100%; /* На всю ширину */
+  height: 100%; /* На всю высоту */
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto; /* Enable scrolling if content overflows */
+  padding-top: 80px; /* Достаточно для видимости заголовка и кнопки */
+  padding-bottom: 80px;
+}
+
+.tickers-screen-content {
+  background-color: var(--color-bg--300);
+  border-radius: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding-top: 110px;
+  padding-bottom: 110px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.order-book-content {
+  background-color: var(--color-bg--300);
+  border-radius: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding-top: 110px;
+  padding-bottom: 110px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.contact-screen-content {
+  background-color: var(--color-bg--300);
+  border-radius: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding-top: 110px;
+  padding-bottom: 110px;
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.share-screen-filter {
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 8px rgba(128, 0, 128, 0.4);
+  padding: 8px 0;
+  border-radius: 0.5rem;
+  color: white;
+  background: radial-gradient(circle at 30% 30%, rgba(128, 0, 128, 0.6), transparent),
+              radial-gradient(circle at 70% 70%, rgba(0, 119, 204, 0.4), transparent),
+              radial-gradient(circle at 50% 50%, rgba(200, 0, 200, 0.6), transparent);
+  background-size: 200% 200%;
+  animation: lavaLamp 6s infinite ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  font-size: 0.8rem;
+  cursor: pointer;
+  flex: 1;
+  min-width: 0;
+}
+
+.share-screen-filter:hover {
+  transform: translateY(-2px);
+  background-color: rgba(128, 0, 128, 0.8);
+  box-shadow: 0 0 15px rgba(128, 0, 128, 0.8);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.share-screen-filter:active {
+  transform: translateY(1px);
+  box-shadow: 0 0 8px rgba(128, 0, 128, 0.8);
+}
+
+.share-screen-filter.active {
+  background-color: rgba(128, 0, 128, 0.9);
+  box-shadow: 0 0 20px rgba(128, 0, 128, 0.9);
+  border-color: rgba(255, 255, 255, 0.7);
+  transform: translateY(-1px);
+}
+
+.share-screen-share {
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 8px rgba(128, 0, 128, 0.4);
+  padding: 8px 12px;
+  border-radius: 0.5rem;
+  color: white;
+  background: radial-gradient(circle at 30% 30%, rgba(128, 0, 128, 0.6), transparent),
+              radial-gradient(circle at 70% 70%, rgba(0, 119, 204, 0.4), transparent),
+              radial-gradient(circle at 50% 50%, rgba(200, 0, 200, 0.6), transparent);
+  background-size: 200% 200%;
+  animation: lavaLamp 6s infinite ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  font-size: 0.8rem;
+  cursor: pointer;
+  min-width: 150px;
+  margin: 0 1rem;
+}
+
+.share-screen-share:hover:not(:disabled) {
+  opacity: 0.95;
+  transform: translateY(-1px);
+  box-shadow: 0 0 28px rgba(128, 0, 128, 1);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.share-screen-share:active:not(:disabled) {
+  transform: translateY(1px);
+  box-shadow: 0 0 12px rgba(128, 0, 128, 0.7);
+}
+
+.share-screen-share:disabled {
+  background: var(--color-bg--500);
+  color: var(--color-primary-silver);
+  border: 2px solid var(--color-primary-silver);
+  opacity: 0.5;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.share-screen-ticker.selected, .share-screen-ticker.selected:hover {
+  background: radial-gradient(circle at 30% 30%, rgba(128, 0, 128, 0.6), transparent),
+              radial-gradient(circle at 70% 70%, rgba(0, 119, 204, 0.4), transparent),
+              radial-gradient(circle at 50% 50%, rgba(200, 0, 200, 0.6), transparent) !important;
+  background-size: 200% 200% !important;
+  animation: lavaLamp 6s infinite ease-in-out;
+  border: 2px solid rgba(255,255,255,0.7);
+  color: white !important;
+  box-shadow: 0 0 16px 2px rgba(0,119,204,0.12), 0 0 8px 2px rgba(138,43,226,0.12);
+  transition: all 0.2s;
+  z-index: 2;
+}
+
+.share-screen-ticker {
+  background: rgba(34,34,34,0.7);
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  transition: all 0.2s;
+  cursor: pointer;
+  border: 2px solid transparent;
+  position: relative;
+  z-index: 1;
+}
+
+.share-screen-tickers {
+  background: var(--color-bg--500);
+  border-radius: 1rem;
+  padding: 1.2rem;
+  box-shadow: 0 2px 16px rgba(138,43,226,0.10);
+  overflow: visible !important;
+}
+.share-screen-tickers .grid {
+  background: transparent !important;
+}

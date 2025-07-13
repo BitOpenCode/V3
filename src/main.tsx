@@ -8,8 +8,8 @@ import './index.css';
 // Initialize Telegram WebApp
 WebApp.ready();
 
-// Обновлен URL манифеста на ваш GitHub Pages адрес
-const manifestUrl = "https://LilCannaVert.github.io/BansaiTest/tonconnect-manifest.json";
+// Используем рабочий URL манифеста
+const manifestUrl = "https://bitopencode.github.io/EgorWorld/tonconnect-manifest.json";
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

@@ -1,0 +1,1827 @@
+:root {
+    --color-primary-purple: #8a2be2; /* Blue Violet */
+    --color-primary-blue: #0077cc; /* Cerulean */
+    --color-primary-silver: #c0c0c0; /* Silver */
+    --color-primary-yellow: #eab308; /* Mustard */
+    --color-bg--300: #1e1e1e; /* Dark Gray */
+    --color-bg--500: #2e2e2e; /* Slightly lighter Dark Gray */
+    --color-text: #f0f0f0; /* Near White */
+}
+
+body {
+    background-color: var(--color-bg--500);
+    color: var(--color-primary-silver);
+    font-family: 'Rajdhani', sans-serif;
+    margin: 0;
+    min-height: 100vh;
+}
+
+.nav-button {
+    width: 96px; /* Updated fixed width for all nav buttons */
+    height: 40px; /* Fixed height */
+    display: flex; /* Use flexbox to center text */
+    justify-content: center; /* Center text horizontally */
+    align-items: center; /* Center text vertically */
+    padding: 0; /* Remove original padding now that size is fixed */
+    border-radius: 9999px; /* fully rounded */
+    font-weight: 400;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    text-align: center;
+    border: 2px solid;
+    z-index: 100;
+    position: relative;
+    font-size: 14px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.header-button {
+    width: 96px; /* Fixed width */
+    height: 40px; /* Fixed height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 0; /* Remove top margin from nav-button */
+}
+
+.left-button {
+    background-color: var(--color-primary-purple);
+    color: white;
+    margin-left: 10px;
+    border-color: rgba(255, 255, 255, 0.5);
+}
+.right-button {
+    background-color: var(--color-primary-blue);
+    color: white;
+    margin-right: 10px;
+    border-color: rgba(255, 255, 255, 0.5);
+}
+.top-corner-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+
+/* Additional styles found in the style block that might be relevant */
+.text-glow {
+    text-shadow: 0 0 8px var(--color-primary-yellow);
+}
+
+.delimiter {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--color-primary-purple), transparent);
+    margin: 20px 0;
+}
+
+.delimiter2 {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--color-primary-blue), transparent);
+    margin: 20px 0;
+}
+
+.cb {
+    background-color: var(--color-bg--300);
+    border-radius: 8px;
+}
+
+.cb2 {
+    background-color: var(--color-bg--300);
+    border-radius: 4px;
+    padding: 4px 8px;
+    border: 1px solid var(--color-primary-purple);
+}
+
+.silver {
+    color: var(--color-primary-silver);
+}
+
+.dotdotdot {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: 'Roboto Mono', monospace;
+}
+
+/* Styles related to ticker colors */
+.text-green {
+    color: #00ff00 !important;
+    font-weight: bold;
+}
+
+.text-red {
+    color: #ff0000 !important;
+    font-weight: bold;
+}
+
+/* Styles for transitions (if needed later) */
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+
+/* Chart modal styles (if needed later) */
+.chart-screen-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: var(--color-bg--300);
+    z-index: 40;
+    overflow: hidden;
+}
+
+.chart-screen-content {
+    height: 100%;
+    width: 100%;
+    padding: 1rem;
+    padding-bottom: 100px;
+    display: flex;
+    flex-direction: column;
+}
+
+.chart-screen-content .cb {
+    background-color: var(--color-bg--300);
+    border: 2px solid var(--color-primary-purple);
+    box-shadow: 0 0 10px 4px rgba(128, 0, 128, 0.9);
+    position: relative;
+}
+
+body.modal-open {
+    overflow: hidden;
+    pointer-events: none;
+}
+
+body.modal-open .chart-screen-overlay {
+    pointer-events: auto;
+}
+
+.modal-on-chart {
+    z-index: 200 !important;
+}
+
+body.modal-open .modal-on-chart {
+    pointer-events: auto;
+}
+
+.chart-screen-overlay + .modal-on-chart > div {
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.8);
+    border: 2px solid var(--color-primary-purple);
+}
+
+/* News screen styles */
+.news-screen-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+}
+
+.news-screen-content {
+    background-color: var(--color-bg--300);
+    border-radius: 8px;
+    padding: 12px;
+    width: 98%;
+    height: 98%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    padding-bottom: 100px;
+    padding-top: 100px;
+}
+
+/* Mobile optimizations for news screen */
+@media (max-width: 768px) {
+    .news-screen-content {
+        width: 100%;
+        height: 100%;
+        border-radius: 0;
+        padding: 8px;
+        padding-bottom: 80px;
+        padding-top: 80px;
+    }
+    
+    .news-screen-overlay {
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+}
+
+@media (max-width: 480px) {
+    .news-screen-content {
+        padding: 6px;
+        padding-bottom: 70px;
+        padding-top: 70px;
+    }
+}
+
+/* Order book modal styles */
+.order-book-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+}
+
+.order-book-content {
+    background-color: var(--color-bg--300);
+    border-radius: 8px;
+    padding: 16px;
+    width: 95%;
+    height: 95%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: visible;
+    padding-top: 120px;
+    padding-bottom: 120px;
+}
+
+.order-book-search {
+    background-color: var(--color-bg--500);
+    color: white;
+    padding: 8px;
+    border-radius: 4px;
+    width: 100%;
+    margin-bottom: 16px;
+}
+
+.order-book-dropdown {
+    position: absolute;
+    z-index: 50;
+    width: 100%;
+    margin-top: 4px;
+    background-color: var(--color-bg--300);
+    border-radius: 4px;
+    max-height: 192px;
+    overflow-y: auto;
+}
+
+.order-book-dropdown-item {
+    padding: 8px;
+    cursor: pointer;
+    color: var(--color-primary-silver);
+}
+
+.order-book-dropdown-item:hover {
+    background-color: var(--color-primary-purple);
+}
+
+.order-book-column {
+    background-color: var(--color-bg--300);
+    border-radius: 8px;
+    padding: 16px;
+    flex: 1;
+    overflow: hidden;
+}
+
+.order-book-header {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    height: 32px;
+    padding: 0 8px;
+    color: var(--color-primary-green);
+}
+
+.order-book-header > div {
+    flex: 1;
+}
+
+.order-book-body {
+    position: relative;
+    overflow-y: auto;
+    padding: 0 8px;
+  max-height: 60px; /* уменьшено с 96px */
+}
+
+.order-book-row {
+    display: flex;
+    gap: 8px;
+    padding: 1px 0;
+    font-size: 0.85em;
+    min-height: 16px;
+}
+
+.order-book-row > div {
+    flex: 1;
+}
+
+.order-book-asks {
+    background: linear-gradient(to right, #ff000030 0 var(--gradient-width), #ffffff00 var(--gradient-width) 100%);
+}
+
+.order-book-bids {
+    background: linear-gradient(to left, #00ff0030 0 var(--gradient-width), #ffffff00 var(--gradient-width) 100%);
+}
+
+.text-green {
+    color: var(--color-primary-green);
+}
+
+.text-red {
+    color: var(--color-primary-red);
+}
+
+/* Styles from index1.html for buttons */
+.nav-button.header-button {
+    min-width: 60px; /* Уменьшаем ширину */
+    max-width: 60px; /* Уменьшаем ширину */
+    min-height: 40px; 
+    padding: 0.75rem 0; 
+    font-size: 0.675rem; 
+    font-weight: 400;
+}
+
+.nav-button {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-weight: 400;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 10px rgba(128, 0, 128, 0.6);
+    min-width: 90px;
+    max-width: 90px;
+    min-height: 60px;
+    padding: 1.25rem 0;
+    font-size: 0.7rem;
+    margin: 0 3px;
+    text-align: center;
+    line-height: 1.2;
+    border-radius: 0.5rem;
+    color: white;
+    background: radial-gradient(circle at 30% 30%, rgba(128, 0, 128, 0.6), transparent),
+                radial-gradient(circle at 70% 70%, rgba(128, 0, 128, 0.4), transparent),
+                radial-gradient(circle at 50% 50%, rgba(200, 0, 200, 0.6), transparent);
+    background-size: 200% 200%;
+    animation: lavaLamp 6s infinite ease-in-out;
+    user-select: none; 
+    -webkit-user-select: none; 
+}
+
+@keyframes lavaLamp {
+    0% { background-position: 0% 100%; }
+    50% { background-position: 100% 0%; }
+    100% { background-position: 0% 100%; }
+}
+
+.nav-button:hover {
+    transform: translateY(-3px);
+    background-color: rgba(128, 0, 128, 0.8);
+    box-shadow: 0 0 15px rgba(128, 0, 128, 0.8);
+}
+
+.nav-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 0 8px rgba(128, 0, 128, 0.8);
+}
+
+.bubble {
+    position: absolute;
+    bottom: 0;
+    background-color: rgba(200, 0, 200, 0.6);
+    border-radius: 50%;
+    opacity: 1;
+    animation: bubble var(--animation-duration, 2s) linear forwards !important;
+}
+
+@keyframes bubble {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100px);
+        opacity: 0;
+    }
+}
+
+.modal-button {
+    transition: all 0.3s ease;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 10px rgba(128, 0, 128, 0.6);
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    color: white;
+    background: radial-gradient(circle at 30% 30%, rgba(128, 0, 128, 0.6), transparent),
+                radial-gradient(circle at 70% 70%, rgba(128, 0, 128, 0.4), transparent),
+                radial-gradient(circle at 50% 50%, rgba(200, 0, 200, 0.6), transparent);
+    background-size: 200% 200%;
+    animation: lavaLamp 6s infinite ease-in-out;
+    user-select: none; 
+    -webkit-user-select: none; 
+}
+
+.modal-button:hover {
+    transform: translateY(-2px);
+    background-color: rgba(128, 0, 128, 0.8);
+    box-shadow: 0 0 15px rgba(128, 0, 128, 0.8);
+}
+
+.modal-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 0 8px rgba(128, 0, 128, 0.8);
+}
+
+/* Ensure fonts are imported */
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@100;200;300;400;700&display=swap');
+
+/* Header styles from index1.html */
+/* Modified to be an upper navigation panel */
+.upper-nav-panel {
+    position: fixed; /* Фиксируем сверху */
+    top: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--color-bg--300); /* Фон как у нижней панели */
+    border-bottom: 2px solid var(--color-primary-purple); /* Граница как у нижней панели */
+    box-shadow: 0 4px 15px rgba(128, 0, 128, 0.5); /* Тень как у нижней панели */
+    z-index: 100; /* Поверх другого контента, но ниже модалок/нижней панели */
+    display: flex; /* Flexbox для расположения кнопок */
+    align-items: center; /* Выравнивание по центру вертикали */
+    justify-content: center; /* Изменяем на center для выравнивания как у нижней панели */
+    padding: 18px 0; /* Копируем padding нижней панели для идентичных размеров */
+}
+
+.upper-nav-panel .header-button {
+    margin-top: 0; /* Убираем лишний отступ */
+    /* Могут потребоваться дополнительные стили для размеров кнопок в верхней панели */
+}
+
+.connect-button-container {
+    /* Стили для контейнера TonConnectButton, если нужны */
+}
+
+/* Styles for contact dropdown */
+.contact-dropdown {
+  position: absolute;
+  top: 100%; /* Position below the button */
+  margin-top: 0.5rem; /* mt-2 */
+  width: 10rem; /* w-40 */
+  background-color: var(--color-bg--300); /* bg-[--color-bg--300] */
+  border-radius: 0.5rem; /* rounded-lg */
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.3); /* shadow-lg */
+  overflow: hidden;
+  z-index: 50;
+}
+
+.contact-dropdown button {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0.5rem 1rem; /* px-4 py-2 */
+  font-size: 0.875rem; /* text-sm */
+  color: var(--color-primary-silver); /* text-[--color-primary-silver] */
+  transition: background-color 0.2s ease;
+}
+
+.contact-dropdown button:hover {
+  background-color: var(--color-primary-purple); /* hover:bg-[--color-primary-purple] */
+}
+
+/* Additional styles for the button container in header */
+/* Removed or modified as absolute positioning is changed */
+/*
+header .flex.items-center {
+    position: absolute; 
+    top: 0; 
+}
+
+header .z-50 {
+    z-index: 50;
+}
+*/
+
+/* Styles for the bottom navigation container */
+.fixed.bottom-0 {
+    background-color: var(--color-bg--300);
+    box-shadow: 0 -4px 15px rgba(128, 0, 128, 0.5);
+    padding: 18px 0;
+    pointer-events: auto !important;
+    z-index: 200 !important; 
+}
+
+.fixed.bottom-0 .container {
+    display: flex;
+    justify-content: center;
+    width: 100%; /* Ensure it takes full width */
+}
+
+@media (max-width: 640px) {
+    .fixed.bottom-0 .container {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .nav-button {
+        min-width: 70px;
+        max-width: 70px;
+        min-height: 40px;
+        margin: 2px;
+        font-size: 0.75rem;
+        padding: 0.5rem 0;
+    }
+}
+
+@media (max-width: 375px) {
+    .nav-button {
+        min-width: 60px;
+        max-width: 60px;
+        min-height: 36px;
+        font-size: 0.7rem;
+        padding: 0.45rem 0;
+    }
+}
+
+/* Styles for upper header button containers */
+.header-button-container {
+    margin: 0 1px; /* Уменьшаем горизонтальный отступ */
+}
+
+/* Style for content inside header buttons if needed */
+.nav-button-content {
+    /* Дополнительные стили для содержимого кнопок, если нужно */
+    /* Высота, выравнивание текста и т.п. */
+    width: 100%; /* Занимаем всю ширину контейнера */
+    height: 100%; /* Занимаем всю высоту контейнера */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Style for content below the fixed header */
+.content-below-header {
+  padding-top: 80px; /* Добавляем отступ сверху для учета фиксированной верхней панели */
+}
+
+@media (max-width: 640px) {
+    .fixed.bottom-0 .container {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .nav-button {
+        min-width: 70px;
+        max-width: 70px;
+        min-height: 40px;
+        margin: 2px;
+        font-size: 0.75rem;
+        padding: 0.5rem 0;
+    }
+}
+
+@media (max-width: 375px) {
+    .nav-button {
+        min-width: 60px;
+        max-width: 60px;
+        min-height: 36px;
+        font-size: 0.7rem;
+        padding: 0.45rem 0;
+    }
+}
+
+/* Wallet screen styles (New) */
+.wallet-screen-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.9); /* Dark overlay */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50; /* Needs to be above main content and header */
+}
+
+.wallet-screen-content {
+    background-color: var(--color-bg--300); /* Background color */
+    border-radius: 8px; /* Rounded corners */
+    padding: 16px; /* Inner padding */
+    width: 95%; /* Occupy most of the screen width */
+    height: 95%; /* Occupy most of the screen height */
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* Enable scrolling if content overflows */
+    padding-top: 120px; /* Увеличиваем отступ сверху для учета фиксированной верхней панели */
+    padding-bottom: 120px; /* Add bottom padding to clear fixed bottom navigation */
+}
+
+/* Contact screen styles (New) */
+.contact-screen-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.9); /* Dark overlay */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50; /* Needs to be above main content and header */
+}
+
+.contact-screen-content {
+    background-color: var(--color-bg--300); /* Background color */
+    border-radius: 8px; /* Rounded corners */
+    padding: 16px; /* Inner padding */
+    width: 95%; /* Occupy most of the screen width */
+    height: 95%; /* Occupy most of the screen height */
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* Enable scrolling if content overflows */
+    padding-top: 120px; /* Увеличиваем отступ сверху для учета фиксированной верхней панели */
+    padding-bottom: 120px; /* Add bottom padding to clear fixed bottom navigation */
+}
+
+/* Tickers screen styles (New) */
+.tickers-screen-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.9); /* Dark overlay */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50; /* Needs to be above main content and header */
+}
+
+.tickers-screen-content {
+    background-color: var(--color-bg--300); /* Background color */
+    border-radius: 8px; /* Rounded corners */
+    padding: 16px; /* Inner padding */
+    width: 95%; /* Occupy most of the screen width */
+    height: 100%; /* Занимаем всю высоту экрана */
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto; /* Enable scrolling if content overflows */
+    padding-top: 140px; /* Увеличиваем отступ сверху для учета фиксированной верхней панели */
+    padding-bottom: 100px; /* Добавляем отступ снизу для нижней панели навигации */
+}
+
+/* Ticker table styles */
+.ticker-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--color-bg--500);
+    font-size: 0.75rem; /* ещё меньше */
+}
+
+.ticker-cell {
+    width: 25%;
+    text-align: right;
+    padding: 0 8px;
+    font-size: 0.75rem; /* ещё меньше */
+}
+
+.ticker-cell:first-child {
+    text-align: left;
+}
+
+/* Добавляем стили для заголовков таблицы тикеров */
+.ticker-header {
+    font-size: 0.75rem; /* такой же размер как у тикеров */
+    font-weight: bold;
+    color: var(--color-primary-silver);
+}
+
+/* Стили для кликабельных заголовков */
+.ticker-header span {
+    position: relative;
+    padding: 6px 12px;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 8px rgba(128, 0, 128, 0.4);
+    color: white;
+    background: radial-gradient(circle at 30% 30%, rgba(128, 0, 128, 0.6), transparent),
+                radial-gradient(circle at 70% 70%, rgba(0, 119, 204, 0.4), transparent),
+                radial-gradient(circle at 50% 50%, rgba(200, 0, 200, 0.6), transparent);
+    background-size: 200% 200%;
+    animation: lavaLamp 6s infinite ease-in-out;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+.ticker-header span:hover {
+    transform: translateY(-2px);
+    background-color: rgba(128, 0, 128, 0.8);
+    box-shadow: 0 0 15px rgba(128, 0, 128, 0.8);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.ticker-header span:active {
+    transform: translateY(1px);
+    box-shadow: 0 0 8px rgba(128, 0, 128, 0.8);
+}
+
+/* Стили для активного заголовка (по которому сортируем) */
+.ticker-header span.active {
+    background-color: rgba(128, 0, 128, 0.9);
+    box-shadow: 0 0 20px rgba(128, 0, 128, 0.9);
+    border-color: rgba(255, 255, 255, 0.7);
+    transform: translateY(-1px);
+}
+
+/* Стили для кнопок фильтрации тикеров */
+.ticker-filter-button {
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 0 8px rgba(128, 0, 128, 0.4);
+    padding: 8px 12px;
+    border-radius: 0.5rem;
+    color: white;
+    background: radial-gradient(circle at 30% 30%, rgba(128, 0, 128, 0.6), transparent),
+                radial-gradient(circle at 70% 70%, rgba(0, 119, 204, 0.4), transparent),
+                radial-gradient(circle at 50% 50%, rgba(200, 0, 200, 0.6), transparent);
+    background-size: 200% 200%;
+    animation: lavaLamp 6s infinite ease-in-out;
+    user-select: none;
+    -webkit-user-select: none;
+    font-size: 0.8rem;
+}
+
+.ticker-filter-button:hover {
+    transform: translateY(-2px);
+    background-color: rgba(128, 0, 128, 0.8);
+    box-shadow: 0 0 15px rgba(128, 0, 128, 0.8);
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.ticker-filter-button:active {
+    transform: translateY(1px);
+    box-shadow: 0 0 8px rgba(128, 0, 128, 0.8);
+}
+
+.ticker-filter-button.active {
+    background-color: rgba(128, 0, 128, 0.9);
+    box-shadow: 0 0 20px rgba(128, 0, 128, 0.9);
+    border-color: rgba(255, 255, 255, 0.7);
+    transform: translateY(-1px);
+}
+
+/* Стили для контейнера таблицы тикеров */
+.ticker-table-container {
+    border: 2px solid var(--color-primary-purple);
+    border-radius: 8px;
+    background-color: var(--color-bg--500);
+    padding: 12px;
+    box-shadow: 0 0 10px rgba(138, 43, 226, 0.3);
+    flex-grow: 1; /* Позволяет контейнеру расти и занимать всё доступное пространство */
+    overflow-y: auto;
+    min-height: 0; /* Важно для flex-grow */
+}
+
+/* Share Screen Styles */
+.share-screen-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-bg--300);
+  z-index: 40;
+  padding-top: 80px;
+  padding-bottom: 80px;
+  overflow-y: auto;
+}
+
+.share-screen-content {
+  height: 100%;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.share-screen-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0 1rem;
+}
+
+.share-screen-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-primary-silver);
+}
+
+.share-screen-close {
+  background: var(--color-bg--500);
+  border: 1px solid var(--color-primary-silver);
+  color: var(--color-primary-silver);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.share-screen-close:hover {
+  background: var(--color-primary-purple);
+  border-color: var(--color-primary-purple);
+  color: white;
+}
+
+.share-screen-search {
+  width: 100%;
+  padding: 0.75rem;
+  background: var(--color-bg--500);
+  border: 1px solid var(--color-primary-silver);
+  border-radius: 0.5rem;
+  color: var(--color-primary-silver);
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.share-screen-search:focus {
+  outline: none;
+  border-color: var(--color-primary-purple);
+}
+
+.share-screen-filters {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  padding: 0 1rem;
+}
+
+.share-screen-filter {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  background: var(--color-bg--500);
+  border: 1px solid var(--color-primary-silver);
+  border-radius: 0.5rem;
+  color: var(--color-primary-silver);
+  cursor: pointer;
+  transition: all 0.2s;
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.share-screen-filter:hover,
+.share-screen-filter.active {
+  background: var(--color-primary-purple);
+  border-color: var(--color-primary-purple);
+  color: white;
+}
+
+.share-screen-tickers {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  background: var(--color-bg--500);
+  border-radius: 0.5rem;
+  margin: 0 1rem;
+}
+
+.share-screen-tickers .grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.5rem;
+}
+
+.share-screen-tickers .grid > div {
+  background: var(--color-bg--300);
+  border-radius: 0.5rem;
+  padding: 0.75rem;
+  transition: all 0.2s;
+}
+
+.share-screen-tickers .grid > div:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.share-screen-share {
+  width: auto;
+  min-width: 150px;
+  padding: 0.75rem 1.5rem;
+  background: var(--color-primary-purple);
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 600;
+  font-size: 0.875rem;
+  margin: 0 1rem;
+}
+
+.share-screen-share:hover:not(:disabled) {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.share-screen-share:disabled {
+  background: var(--color-bg--500);
+  color: var(--color-primary-silver);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Scrollbar styles for share screen */
+.share-screen-tickers::-webkit-scrollbar {
+  width: 8px;
+}
+
+.share-screen-tickers::-webkit-scrollbar-track {
+  background: var(--color-bg--300);
+  border-radius: 4px;
+}
+
+.share-screen-tickers::-webkit-scrollbar-thumb {
+  background: var(--color-primary-purple);
+  border-radius: 4px;
+}
+
+.share-screen-tickers::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-blue);
+}
+
+/* Calculator Screen Styles */
+.calculator-screen-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--color-bg--300);
+  z-index: 40;
+  padding-top: 80px;
+  padding-bottom: 80px;
+  overflow-y: auto;
+}
+
+.calculator-screen-content {
+  height: 100%;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.calculator-screen-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 0 1rem;
+}
+
+.calculator-screen-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--color-primary-silver);
+}
+
+.calculator-screen-close {
+  background: var(--color-bg--500);
+  border: 1px solid var(--color-primary-silver);
+  color: var(--color-primary-silver);
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.calculator-screen-close:hover {
+  background: var(--color-primary-purple);
+  border-color: var(--color-primary-purple);
+  color: white;
+}
+
+.calculator-container {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  background: var(--color-bg--500);
+  border-radius: 0.5rem;
+  margin: 0 1rem;
+}
+
+.input-section {
+  margin-bottom: 1rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+.form-control {
+  width: 100%;
+  border: 1px solid var(--color-primary-silver);
+  transition: all 0.2s;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--color-primary-purple);
+}
+
+.results-section {
+  margin-top: 1rem;
+}
+
+.result-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.5rem;
+  background: var(--color-bg--300);
+  border-radius: 0.25rem;
+}
+
+/* Scrollbar styles for calculator */
+.calculator-container::-webkit-scrollbar {
+  width: 8px;
+}
+
+.calculator-container::-webkit-scrollbar-track {
+  background: var(--color-bg--300);
+  border-radius: 4px;
+}
+
+.calculator-container::-webkit-scrollbar-thumb {
+  background: var(--color-primary-purple);
+  border-radius: 4px;
+}
+
+.calculator-container::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-blue);
+}
+
+/* Portfolio Styles */
+/* Отключаю старые стили для portfolio-screen-overlay и portfolio-screen-content */
+.portfolio-screen-overlay,
+.portfolio-screen-content {
+  all: unset;
+}
+
+.portfolio-screen-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.portfolio-screen-title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.portfolio-screen-close {
+  padding: 0.5rem 1rem;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.portfolio-summary {
+  background-color: var(--card-background);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.portfolio-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.portfolio-summary-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.portfolio-summary-label {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.portfolio-summary-value {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.portfolio-summary-profit {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.portfolio-summary-profit-label {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.portfolio-summary-profit-value {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.portfolio-summary-profit-positive {
+  color: var(--success-color);
+}
+
+.portfolio-summary-profit-negative {
+  color: var(--error-color);
+}
+
+.portfolio-form {
+  background-color: var(--card-background);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.portfolio-form-group {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.portfolio-search {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--input-background);
+  color: var(--text-color);
+  font-size: 1rem;
+}
+
+.portfolio-search-wide {
+  width: 100%;
+  min-width: 0;
+  max-width: none;
+  flex: 1 1 0%;
+  display: block;
+}
+
+.portfolio-coins-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background-color: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  margin-top: 0.5rem;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 1001;
+}
+
+.portfolio-coin {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.portfolio-coin:hover {
+  background-color: var(--hover-color);
+}
+
+.portfolio-coin-symbol {
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.portfolio-coin-details {
+  display: flex;
+  gap: 1rem;
+  color: var(--text-secondary);
+}
+
+.portfolio-dropdown {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.amount-input,
+.buy-price-input {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--input-background);
+  color: var(--text-color);
+  font-size: 1rem;
+}
+
+.add-position-button {
+  padding: 0.75rem 1.5rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.portfolio-positions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.portfolio-position {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--card-background);
+  border-radius: 8px;
+  padding: 1rem;
+}
+
+.portfolio-position-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.portfolio-position-symbol {
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.portfolio-position-details {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.portfolio-position-profit {
+  text-align: right;
+}
+
+.portfolio-position-profit-value {
+  font-weight: 500;
+}
+
+.portfolio-position-profit-positive {
+  color: var(--success-color);
+}
+
+.portfolio-position-profit-negative {
+  color: var(--error-color);
+}
+
+.portfolio-position-remove {
+  padding: 0.5rem;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  cursor: pointer;
+  font-size: 1.2rem;
+  margin-left: 1rem;
+}
+
+.portfolio-position-remove:hover {
+  color: var(--error-color);
+}
+
+/* Mempool Screen Styles */
+.mempool-screen-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.mempool-screen-content {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--color-bg--300);
+  z-index: 1000;
+  padding: 1rem;
+  overflow-y: auto; /* Добавляем вертикальную прокрутку */
+  max-height: 100vh; /* Ограничиваем максимальную высоту */
+}
+
+.mempool-screen-header {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  background-color: var(--color-bg--300);
+  z-index: 1001;
+  border-bottom: 1px solid var(--color-primary-purple);
+}
+
+.mempool-screen-title {
+  margin: 0 auto;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--color-primary-silver);
+}
+
+.mempool-screen-close {
+  position: absolute;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #ef4444;
+  color: white;
+  padding: 0.25rem 0.7rem !important;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.mempool-screen-close:hover {
+  background-color: var(--color-primary-purple);
+  border-color: var(--color-primary-purple);
+  color: white;
+}
+
+.mempool-content {
+  padding: 1rem;
+  overflow-y: auto; /* Добавляем вертикальную прокрутку */
+  max-height: calc(100vh - 60px); /* Учитываем высоту заголовка */
+}
+
+.mempool-transactions {
+  background-color: var(--color-bg--500);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.mempool-header {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 1.5fr 1fr 1fr 1fr;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: var(--color-bg--300);
+  font-weight: 600;
+  color: var(--color-primary-silver);
+  border-bottom: 1px solid var(--color-primary-purple);
+}
+
+.mempool-transaction {
+  display: grid;
+  grid-template-columns: 2fr 1.5fr 1.5fr 1fr 1fr 1fr;
+  gap: 1rem;
+  padding: 1rem;
+  border-bottom: 1px solid var(--color-bg--300);
+  transition: background-color 0.2s;
+}
+
+.mempool-transaction:hover {
+  background-color: var(--color-bg--300);
+}
+
+.mempool-cell {
+  color: var(--color-primary-silver);
+  font-size: 0.9rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hash-cell {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 0.8rem;
+}
+
+.address-cell {
+  font-family: 'Roboto Mono', monospace;
+  font-size: 0.8rem;
+}
+
+/* Scrollbar styles for mempool */
+.mempool-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.mempool-content::-webkit-scrollbar-track {
+  background: var(--color-bg--300);
+  border-radius: 4px;
+}
+
+.mempool-content::-webkit-scrollbar-thumb {
+  background: var(--color-primary-purple);
+  border-radius: 4px;
+}
+
+.mempool-content::-webkit-scrollbar-thumb:hover {
+  background: var(--color-primary-blue);
+}
+
+/* Fix horizontal jumping by always reserving space for scrollbar */
+.mempool-screen-content {
+  overflow-y: scroll; /* Always show scrollbar */
+  scrollbar-width: thin; /* For Firefox */
+  scrollbar-color: var(--color-primary-purple) var(--color-bg--300); /* For Firefox */
+}
+
+/* Alternative fix - prevent layout shift */
+html {
+  overflow-y: scroll; /* Always show scrollbar on the page */
+}
+
+/* Network selection buttons */
+.mempool-network-buttons {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 1rem;
+  padding: 0 1rem;
+}
+
+.mempool-network-button {
+  flex: 1;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 8px rgba(128, 0, 128, 0.4);
+  padding: 8px 12px;
+  border-radius: 0.5rem;
+  color: white;
+  background: radial-gradient(circle at 30% 30%, rgba(128, 0, 128, 0.6), transparent),
+              radial-gradient(circle at 70% 70%, rgba(0, 119, 204, 0.4), transparent),
+              radial-gradient(circle at 50% 50%, rgba(200, 0, 200, 0.6), transparent);
+  background-size: 200% 200%;
+  animation: lavaLamp 6s infinite ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.mempool-network-button:hover {
+  transform: translateY(-2px);
+  background-color: rgba(128, 0, 128, 0.8);
+  box-shadow: 0 0 15px rgba(128, 0, 128, 0.8);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.mempool-network-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 0 8px rgba(128, 0, 128, 0.8);
+}
+
+.mempool-network-button.active {
+  background-color: rgba(128, 0, 128, 0.9);
+  box-shadow: 0 0 20px rgba(128, 0, 128, 0.9);
+  border-color: rgba(255, 255, 255, 0.7);
+  transform: translateY(-1px);
+}
+
+.mempool-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+  padding: 1rem;
+  background: var(--color-bg--500);
+  border-radius: 0.5rem;
+}
+
+.mempool-stat-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: var(--color-bg--300);
+  border-radius: 0.5rem;
+}
+
+.mempool-stat-label {
+  font-size: 0.875rem;
+  color: var(--color-primary-silver);
+}
+
+.mempool-stat-value {
+  font-size: 1rem;
+  font-family: monospace;
+  color: var(--color-primary-yellow);
+}
+
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--color-primary-yellow);
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+.mempool-lookup-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 1rem 0;
+  padding: 1rem;
+  background-color: var(--color-bg--500);
+  border-radius: 0.5rem;
+}
+
+.mempool-lookup-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.mempool-lookup-input,
+.mempool-txid-input {
+  flex: 1;
+  padding: 0.5rem;
+  background-color: var(--color-bg--300);
+  border: 1px solid var(--color-primary-purple);
+  border-radius: 0.25rem;
+  color: white;
+}
+
+.mempool-lookup-button {
+  padding: 0.5rem 1rem;
+  background-color: var(--color-primary-purple);
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.mempool-lookup-button:hover {
+  background-color: var(--color-primary-blue);
+}
+
+.mempool-blocks {
+  background-color: var(--color-bg--300);
+  border-radius: 8px;
+  padding: 16px;
+  margin-top: 16px;
+}
+
+.mempool-blocks-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-primary-silver);
+  margin-bottom: 16px;
+}
+
+.mempool-blocks-header {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 1fr;
+  gap: 8px;
+  padding: 8px;
+  background-color: var(--color-bg--500);
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.mempool-blocks-body {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.mempool-block-row {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 1fr;
+  gap: 8px;
+  padding: 8px;
+  border-bottom: 1px solid var(--color-bg--500);
+}
+
+.mempool-block-row:hover {
+  background-color: var(--color-bg--500);
+}
+
+.mempool-block-cell {
+  color: var(--color-primary-silver);
+  font-size: 0.875rem;
+}
+
+.mempool-loading {
+  text-align: center;
+  padding: 16px;
+  color: var(--color-primary-silver);
+}
+
+.mempool-search {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: var(--color-bg--500);
+  border-radius: 0.5rem;
+}
+
+.search-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.search-input {
+  flex: 1;
+  padding: 0.5rem;
+  background: var(--color-bg--300);
+  border: 1px solid var(--color-primary-purple);
+  border-radius: 0.25rem;
+  color: white;
+}
+
+.search-button {
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  letter-spacing: 0.05em;
+  font-weight: 500;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 8px rgba(128, 0, 128, 0.4);
+  padding: 8px 16px;
+  border-radius: 0.5rem;
+  color: white;
+  background: radial-gradient(circle at 30% 30%, rgba(128, 0, 128, 0.6), transparent),
+              radial-gradient(circle at 70% 70%, rgba(0, 119, 204, 0.4), transparent),
+              radial-gradient(circle at 50% 50%, rgba(200, 0, 200, 0.6), transparent);
+  background-size: 200% 200%;
+  animation: lavaLamp 6s infinite ease-in-out;
+  user-select: none;
+  -webkit-user-select: none;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.search-button:hover {
+  transform: translateY(-2px);
+  background-color: rgba(128, 0, 128, 0.8);
+  box-shadow: 0 0 15px rgba(128, 0, 128, 0.8);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.search-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 0 8px rgba(128, 0, 128, 0.8);
+}
+
+.search-results {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: var(--color-bg--500);
+  border-radius: 0.5rem;
+}
+
+.address-results,
+.transaction-results {
+  color: white;
+}
+
+.address-results h3,
+.transaction-results h3 {
+  margin-bottom: 1rem;
+  color: var(--color-primary-silver);
+  font-size: 1.25rem;
+}
+
+.address-details,
+.transaction-details {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.address-details p,
+.transaction-details p {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.5rem;
+  background: var(--color-bg--300);
+  border-radius: 0.25rem;
+} 
+
+.nav-button, .nav-button-content {
+    width: 88px;
+    min-width: 88px;
+    max-width: 88px;
+    height: 54px;
+    min-height: 54px;
+    max-height: 54px;
+    font-size: 0.75rem;
+    line-height: 1.1;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media (max-width: 640px) {
+    .nav-button, .nav-button-content {
+        width: 72px;
+        min-width: 72px;
+        max-width: 72px;
+        height: 44px;
+        min-height: 44px;
+        max-height: 44px;
+        font-size: 0.6rem;
+    }
+}
+
+@media (max-width: 375px) {
+    .nav-button, .nav-button-content {
+        width: 60px;
+        min-width: 60px;
+        max-width: 60px;
+        height: 38px;
+        min-height: 38px;
+        max-height: 38px;
+        font-size: 0.5rem;
+    }
+} 
+
+.close-button, .mempool-screen-close, .chart-screen-close, .tickers-screen-close, .share-screen-close, .calculator-screen-close, .portfolio-screen-close, .contact-screen-close, .news-screen-close, .wallet-screen-close, .order-book-close {
+  background-color: #ef4444;
+  color: white;
+  padding: 0.25rem 0.7rem !important;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem !important;
+  font-weight: 500;
+  transition: background-color 0.2s;
+}
+
+.close-button:hover, .mempool-screen-close:hover, .chart-screen-close:hover, .tickers-screen-close:hover, .share-screen-close:hover, .calculator-screen-close:hover, .portfolio-screen-close:hover, .contact-screen-close:hover, .news-screen-close:hover, .wallet-screen-close:hover, .order-book-close:hover {
+  background-color: #ef4444;
+} 
+
+.order-book-section {
+  border: 1.5px solid var(--color-primary-purple);
+  border-radius: 10px;
+  padding: 4px 0 2px 0; /* уменьшено */
+  margin-bottom: 8px; /* уменьшено */
+  background: rgba(34,34,34,0.7);
+} 
