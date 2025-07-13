@@ -1862,9 +1862,9 @@ html {
     letter-spacing: 0.01em;
   }
   /* News максимально близко к Mempool */
-  .header-button-container:nth-child(2) { margin-left: -8px; }
+  .header-button-container:nth-child(2) { margin-left: -16px; }
   /* Wallet Info максимально близко к Contact */
-  .header-button-container:nth-last-child(2) { margin-right: -8px; }
+  .header-button-container:nth-last-child(2) { margin-right: -16px; }
 }
 
 @media (max-width: 400px) {
@@ -1901,4 +1901,26 @@ html {
   max-height: 0 !important;
   padding: 0 !important;
   margin: 0 !important;
+} 
+
+.mempool-content { padding-top: 0.5rem; }
+.mempool-network-buttons { margin-bottom: 0.5rem; }
+.mempool-stats { margin: 0.5rem 0 0.5rem 0; padding: 0.5rem; }
+.mempool-blocks { margin-top: 4px; padding: 8px; }
+
+.portfolio-form-group, .portfolio-search {
+  position: relative;
+  z-index: 1002;
+}
+.portfolio-form-group:focus-within .portfolio-coins-dropdown,
+.portfolio-search:focus-within + .portfolio-coins-dropdown {
+  display: block !important;
+}
+.portfolio-coins-dropdown {
+  display: block;
+  z-index: 1003;
+}
+
+button, .nav-button, .nav-button-content, .header-button-container, .upper-nav-panel, .fixed.bottom-0, .mempool-content, .portfolio-form-section, .portfolio-form-group, .portfolio-search {
+  touch-action: manipulation !important;
 } 
