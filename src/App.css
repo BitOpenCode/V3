@@ -1825,3 +1825,57 @@ html {
   margin-bottom: 8px; /* уменьшено */
   background: rgba(34,34,34,0.7);
 } 
+
+/** --- Адаптивность для mini app и мобильных устройств --- */
+@media (max-width: 600px) {
+  .upper-nav-panel {
+    flex-wrap: wrap;
+    padding: 8px 0;
+    gap: 2px;
+  }
+  .header-button-container {
+    flex: 1 1 40%;
+    min-width: 40vw;
+    max-width: 48vw;
+    margin: 2px 0;
+    display: flex;
+    justify-content: center;
+  }
+  .nav-button, .nav-button-content {
+    width: 90%;
+    min-width: 0;
+    max-width: 100vw;
+    height: 38px;
+    min-height: 36px;
+    max-height: 40px;
+    font-size: 0.7rem;
+    margin: 2px 0;
+    padding: 0;
+  }
+  .fixed.bottom-0 .container {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 2px;
+  }
+  .fixed.bottom-0 {
+    padding: 8px 0;
+  }
+}
+
+@media (max-width: 400px) {
+  .nav-button, .nav-button-content {
+    font-size: 0.55rem;
+    height: 32px;
+  }
+  .header-button-container {
+    min-width: 90vw;
+    max-width: 100vw;
+  }
+}
+
+/* Скрыть зелёную Wallet Connected на мобильных mini app */
+@media (max-width: 600px) {
+  .tc-connect-button__container, .tc-connect-button__button {
+    display: none !important;
+  }
+} 
