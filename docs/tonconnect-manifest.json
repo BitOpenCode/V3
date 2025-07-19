@@ -1,8 +1,7 @@
 {
-  "url": "https://bitopencode.github.io/EgorWorld/",
-  "name": "TON Wallet Tracker",
-  "termsOfUseUrl": "https://bitopencode.github.io/EgorWorld/terms",
-  "privacyPolicyUrl": "https://bitopencode.github.io/EgorWorld/privacy",
-  "features": ["ton_addr"],
-  "redirectUrl": "https://bitopencode.github.io/EgorWorld/"
+  "url": "https://fortisbtc.com",
+  "name": "FortisBTC Wallet Tracker",
+  "iconUrl": "https://fortisbtc.com/logo.svg",
+  "termsOfUseUrl": "https://fortisbtc.com/terms",
+  "privacyPolicyUrl": "https://fortisbtc.com/privacy"
 }
