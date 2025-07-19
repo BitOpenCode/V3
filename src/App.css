@@ -1940,3 +1940,36 @@ html {
 button, .nav-button, .nav-button-content, .header-button-container, .upper-nav-panel, .fixed.bottom-0, .mempool-content, .portfolio-form-section, .portfolio-form-group, .portfolio-search {
     touch-action: manipulation !important;
 } 
+
+.info-row {
+  display: flex;
+  align-items: center;
+  font-size: 0.98em;
+  margin-bottom: 2px;
+}
+.info-label {
+  color: #aaa;
+  min-width: 80px; /* было 120px, теперь ближе к двоеточию */
+  margin-right: 2px; /* было 4px, теперь плотнее */
+  font-size: 0.97em;
+}
+.info-value {
+  color: #fff;
+  font-family: monospace;
+  font-size: 0.90em; /* чуть меньше */
+  word-break: break-all;
+  margin-left: 0px; /* убираем отступ слева */
+  padding-left: 2px; /* минимальный отступ для читаемости */
+}
+.address-value {
+  overflow-x: auto;
+  white-space: nowrap;
+  display: block;
+  max-width: 100%;
+  font-size: 0.88em;
+  padding-left: 2px;
+} 
+
+.ticker-cell:nth-child(3) {
+  padding-right: 24px; /* увеличиваем отступ справа для Change% */
+} 

@@ -7,6 +7,7 @@ import WebApp from '@twa-dev/sdk';
 import axios from 'axios';
 import './App.css';
 import BubbleButton from './components/BubbleButton';
+import MatrixLoader from './components/MatrixLoader';
 
 // Добавляем типы для TradingView
 interface TradingViewStudy {
@@ -1954,39 +1955,38 @@ function App() {
         {searchResults.type === 'address' && (
           isTonScreen && typeof searchResults.data.address === 'string' ? (
             <TonAddressResult data={searchResults.data as TonAddressResultProps['data']} />
-          ) : (
+          ) :
           <div className="address-results">
-              <h3>Address Information ({currency})</h3>
+            <h3>Address Information ({currency})</h3>
             <div className="address-details">
-                {isUsdtScreen ? (
-                  <>
-                    <p>Address: <span className="text-white">{searchResults.data.address}</span></p>
-                    <p>USDT TRC20 Balance: <span className="text-white">{searchResults.data.usdtBalance}</span></p>
-                    <p>TRX Balance: <span className="text-white">{searchResults.data.trxBalance}</span></p>
-                    <p>Total Transactions: <span className="text-white">{searchResults.data.totalTransactions}</span></p>
-                  </>
-                ) : (
-                  <>
-                    <p>Balance: <span className="text-white">{searchResults.data.balance}</span></p>
-              <p>Transactions: <span className="text-white">{searchResults.data.transactions}</span></p>
-              <p>Received: <span className="text-white">{searchResults.data.received} BTC</span></p>
-              <p>Spent: <span className="text-white">{searchResults.data.spent} BTC</span></p>
-                  </>
-                )}
+              {isUsdtScreen ? (
+                <>
+                  <div className="info-row"><span className="info-label">Address:</span> <span className="info-value address-value" style={{overflowX: 'auto', whiteSpace: 'nowrap', display: 'block', maxWidth: '100%'}}>{searchResults.data.address}</span></div>
+                  <div className="info-row"><span className="info-label">USDT TRC20 Balance:</span> <span className="info-value">{searchResults.data.usdtBalance}</span></div>
+                  <div className="info-row"><span className="info-label">TRX Balance:</span> <span className="info-value">{searchResults.data.trxBalance}</span></div>
+                  <div className="info-row"><span className="info-label">Total Transactions:</span> <span className="info-value">{searchResults.data.totalTransactions}</span></div>
+                </>
+              ) : (
+                <>
+                  <p>Balance: <span className="text-white">{searchResults.data.balance}</span></p>
+                  <p>Transactions: <span className="text-white">{searchResults.data.transactions}</span></p>
+                  <p>Received: <span className="text-white">{searchResults.data.received} BTC</span></p>
+                  <p>Spent: <span className="text-white">{searchResults.data.spent} BTC</span></p>
+                </>
+              )}
             </div>
           </div>
-          )
         )}
         {searchResults.type === 'transaction' && (
           <div className="transaction-results">
             <h3>Transaction Information ({currency})</h3>
             <div className="transaction-details">
-              <p>Hash: {searchResults.data.hash}</p>
-              <p>From: {searchResults.data.from}</p>
-              <p>To: {searchResults.data.to}</p>
-              <p>Value: {searchResults.data.value}</p>
+              <div className="info-row"><span className="info-label">Hash:</span><br /><span className="info-value hash-value">{searchResults.data.hash}</span></div>
+              <div className="info-row"><span className="info-label">From:</span><br /><span className="info-value hash-value">{searchResults.data.from}</span></div>
+              <div className="info-row"><span className="info-label">To:</span><br /><span className="info-value hash-value">{searchResults.data.to}</span></div>
+              <div className="info-row"><span className="info-label">Value:</span> <span className="info-value">{searchResults.data.value}</span></div>
               {searchResults.data.time && (
-                <p>Time: {new Date(searchResults.data.time * 1000).toLocaleString()}</p>
+                <div className="info-row"><span className="info-label">Time:</span> <span className="info-value">{new Date(searchResults.data.time * 1000).toLocaleString()}</span></div>
               )}
             </div>
           </div>
@@ -2293,8 +2293,16 @@ function App() {
     }
   };
 
+  const [showMatrix, setShowMatrix] = useState(true);
+  useEffect(() => {
+    const timer = setTimeout(() => setShowMatrix(false), 2000); // 2 секунды
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div className="relative p-2"> {/* Use relative positioning for header absolute positioning */}
+    <>
+      <MatrixLoader visible={showMatrix} />
+      <div className="relative p-2"> {/* Use relative positioning for header absolute positioning */}
       {/* Header section as upper navigation panel */}
       <header className="upper-nav-panel flex items-center justify-between px-1 text-sm lg:text-xl"> {/* Add class for upper nav panel */}
         {/* Mempool button - Wrap in container */}
@@ -3215,43 +3223,44 @@ function App() {
             </div>
 
             <div className="mempool-content">
-              {/* Network Selection Buttons */}
-              <div className="mempool-network-buttons">
-                <button
-                  className={`mempool-network-button ${selectedNetwork === 'BTC' ? 'active' : ''}`}
-                  onClick={() => setSelectedNetwork('BTC')}
-                >
-                  BTC
-                </button>
-                <button
-                  className={`mempool-network-button ${selectedNetwork === 'USDT' ? 'active' : ''}`}
-                  onClick={() => {
-                    setSelectedNetwork('USDT');
-                    setShowUsdtScreen(true);
-                    setShowMempoolScreen(false);
-                    setSearchResults({ type: null, data: null }); // Очищаем результаты поиска
-                    setAddressSearch(''); // Очищаем поле поиска адреса
-                    setTxSearch(''); // Очищаем поле поиска транзакции
-                  }}
-                >
-                  USDT
-                </button>
-                <button
-                  className={`mempool-network-button ${selectedNetwork === 'TON' ? 'active' : ''}`}
-                  onClick={() => {
-                    setSelectedNetwork('TON');
-                    setShowTonScreen(true);
-                    setShowMempoolScreen(false);
-                    setSearchResults({ type: null, data: null }); // Очищаем результаты поиска
-                    setAddressSearch(''); // Очищаем поле поиска адреса
-                    setTxSearch(''); // Очищаем поле поиска транзакции
-                  }}
-                >
-                  TON
-                </button>
+              {/* Search Section — теперь ПЕРЕД статистикой и Latest Blocks */}
+              <div className="mempool-search">
+                <div className="search-group">
+                  <input
+                    type="text"
+                    placeholder="Search by address..."
+                    className="search-input"
+                    value={addressSearch}
+                    onChange={(e) => setAddressSearch(e.target.value)}
+                  />
+                  <button 
+                    className="search-button"
+                    onClick={() => searchByAddress(addressSearch)}
+                  >
+                    Search
+                  </button>
+                </div>
+                <div className="search-group">
+                  <input
+                    type="text"
+                    placeholder="Search by transaction hash..."
+                    className="search-input"
+                    value={txSearch}
+                    onChange={(e) => setTxSearch(e.target.value)}
+                  />
+                  <button 
+                    className="search-button"
+                    onClick={() => searchByTransaction(txSearch)}
+                  >
+                    Search
+                  </button>
+                </div>
               </div>
 
-              {/* СТАТИСТИКА и БЛОКИ ПОДНИМАЕМ ВВЕРХ */}
+              {/* Search Results — теперь сразу под поиском */}
+              <SearchResults />
+
+              {/* СТАТИСТИКА и БЛОКИ */}
               <div className="mempool-stats">
                 {!mempoolStatsLoading ? (
                   <>
@@ -3300,43 +3309,6 @@ function App() {
                   )}
                 </div>
               </div>
-
-              {/* Search Section */}
-              <div className="mempool-search">
-                <div className="search-group">
-                  <input
-                    type="text"
-                    placeholder="Search by address..."
-                    className="search-input"
-                    value={addressSearch}
-                    onChange={(e) => setAddressSearch(e.target.value)}
-                  />
-                  <button 
-                    className="search-button"
-                    onClick={() => searchByAddress(addressSearch)}
-                  >
-                    Search
-                  </button>
-                </div>
-                <div className="search-group">
-                  <input
-                    type="text"
-                    placeholder="Search by transaction hash..."
-                    className="search-input"
-                    value={txSearch}
-                    onChange={(e) => setTxSearch(e.target.value)}
-                  />
-                  <button 
-                    className="search-button"
-                    onClick={() => searchByTransaction(txSearch)}
-                  >
-                    Search
-                  </button>
-                </div>
-              </div>
-
-              {/* Search Results */}
-              <SearchResults />
             </div>
           </div>
         </div>
@@ -3519,6 +3491,7 @@ function App() {
       )}
 
     </div>
+  </>
   );
 }
 
