@@ -10,8 +10,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
     "@orbs-network/ton-access": "^2.3.3",
+    "@radix-ui/react-dialog": "^1.1.15",
+    "@radix-ui/react-dropdown-menu": "^2.1.16",
+    "@radix-ui/react-select": "^2.2.6",
+    "@radix-ui/react-tabs": "^1.1.13",
+    "@radix-ui/react-tooltip": "^1.2.8",
     "@tanstack/react-query": "^5.90.16",
+    "@tanstack/react-virtual": "^3.13.17",
     "@ton/core": "^0.60.1",
     "@tonconnect/ui-react": "^2.1.0",
     "@twa-dev/sdk": "^6.9.1",
@@ -22,11 +29,13 @@
     "crypto-browserify": "^3.12.1",
     "date-fns": "^4.1.0",
     "evp_bytestokey": "^1.0.3",
+    "framer-motion": "^12.24.10",
     "lucide-react": "^0.562.0",
     "numeral": "^2.0.6",
     "parse-asn1": "^5.1.9",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-hook-form": "^7.70.0",
     "react-hot-toast": "^2.6.0",
     "react-router-dom": "^7.11.0",
     "stream-browserify": "^3.0.0",
@@ -34,6 +43,7 @@
     "tailwindcss-animate": "^1.0.7",
     "ton": "^13.9.0",
     "ton-core": "^0.53.0",
+    "zod": "^4.3.5",
     "zustand": "^5.0.9"
   },
   "devDependencies": {
