@@ -7,10 +7,10 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <header className="upper-nav-panel flex items-center justify-between px-1 text-sm lg:text-xl">
+    <header className="upper-nav-panel">
       <div className="header-button-container">
         <BubbleButton 
-          className="nav-button-content bg-[--color-primary-blue] text-white rounded font-rajdhani" 
+          className="nav-button"
           onClick={() => navigate('/mempool')}
         >
           Mempool
@@ -19,29 +19,29 @@ const Header: React.FC = () => {
 
       <div className="header-button-container">
         <BubbleButton 
-          className="nav-button-content bg-[--color-primary-blue] text-white rounded font-rajdhani" 
+          className="nav-button"
           onClick={() => navigate('/news')}
         >
           News
         </BubbleButton>
       </div>
 
-      <div className="header-button-container flex items-center justify-center">
+      <div className="header-button-container connect-wallet-button">
         <TonConnectButton />
       </div>
 
       <div className="header-button-container">
         <BubbleButton
-          className="nav-button-content bg-[--color-primary-blue] text-white rounded font-rajdhani"
+          className="nav-button"
           onClick={() => navigate('/wallet')}
         >
           Wallet Info
         </BubbleButton>
       </div>
 
-      <div className="relative header-button-container">
+      <div className="header-button-container">
         <BubbleButton
-          className="nav-button-content bg-[--color-primary-blue] text-white rounded font-rajdhani"
+          className="nav-button"
           onClick={() => navigate('/menu')}
         >
           Menu
