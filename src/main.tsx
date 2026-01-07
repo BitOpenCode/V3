@@ -1,6 +1,6 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import { TonConnectUIProvider } from '@tonconnect/ui-react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
@@ -45,14 +45,11 @@ const queryClient = new QueryClient({
   },
 });
 
-// Base path for GitHub Pages
-const basename = '/V3';
-
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={queryClient}>
       <TonConnectUIProvider manifestUrl={manifestUrl}>
-        <BrowserRouter basename={basename}>
+        <HashRouter>
           <Routes>
             <Route path="/" element={<Layout />}>
               {/* Main routes */}
@@ -79,7 +76,7 @@ createRoot(document.getElementById('root')!).render(
               <Route path="*" element={<Home />} />
             </Route>
           </Routes>
-        </BrowserRouter>
+        </HashRouter>
         <Toaster 
           position="top-center"
           toastOptions={{
