@@ -3,23 +3,37 @@ import { persist } from 'zustand/middleware';
 import { PortfolioPosition, TickerFilter, TickerSort, SortDirection } from '../types';
 
 // App Settings Store
+export type Theme = 'bubbles' | 'space' | 'light';
+
 interface SettingsState {
-  theme: 'dark' | 'light';
+  theme: Theme;
   currency: 'USD' | 'EUR' | 'RUB';
-  setTheme: (theme: 'dark' | 'light') => void;
+  setTheme: (theme: Theme) => void;
   setCurrency: (currency: 'USD' | 'EUR' | 'RUB') => void;
 }
 
 export const useSettingsStore = create<SettingsState>()(
   persist(
     (set) => ({
-      theme: 'dark',
+      theme: 'bubbles',
       currency: 'USD',
-      setTheme: (theme) => set({ theme }),
+      setTheme: (theme) => {
+        set({ theme });
+        // Apply theme class to body
+        document.body.className = document.body.className.replace(/theme-\w+/g, '');
+        document.body.classList.add(`theme-${theme}`);
+      },
       setCurrency: (currency) => set({ currency }),
     }),
     {
       name: 'settings-storage',
+      onRehydrateStorage: () => (state) => {
+        // Apply theme on hydration
+        if (state?.theme) {
+          document.body.className = document.body.className.replace(/theme-\w+/g, '');
+          document.body.classList.add(`theme-${state.theme}`);
+        }
+      },
     }
   )
 );

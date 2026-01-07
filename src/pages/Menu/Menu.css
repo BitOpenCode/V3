@@ -16,3 +16,78 @@
   width: 100%;
 }
 
+/* Theme Selector */
+.theme-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.theme-button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(30, 30, 30, 0.7);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: var(--color-primary-silver);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  text-align: left;
+  position: relative;
+}
+
+.theme-button:hover {
+  background: rgba(138, 43, 226, 0.15);
+  border-color: rgba(138, 43, 226, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(138, 43, 226, 0.2);
+}
+
+.theme-button.active {
+  background: linear-gradient(135deg, rgba(138, 43, 226, 0.3), rgba(0, 119, 204, 0.3));
+  border-color: var(--color-primary-purple);
+  color: white;
+  box-shadow: 0 4px 16px rgba(138, 43, 226, 0.4);
+}
+
+.theme-icon {
+  font-size: 1.5rem;
+  width: 32px;
+  text-align: center;
+}
+
+.theme-label {
+  flex: 1;
+  font-size: 1rem;
+}
+
+.theme-check {
+  color: var(--color-primary-green);
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+/* Light theme adjustments */
+body.theme-light .theme-button {
+  background: rgba(249, 250, 251, 0.8);
+  border-color: rgba(124, 58, 237, 0.2);
+  color: var(--color-text);
+}
+
+body.theme-light .theme-button:hover {
+  background: rgba(124, 58, 237, 0.1);
+  border-color: rgba(124, 58, 237, 0.4);
+}
+
+body.theme-light .theme-button.active {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(37, 99, 235, 0.2));
+  border-color: var(--color-primary-purple);
+  color: var(--color-text);
+}
+

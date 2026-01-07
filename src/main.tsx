@@ -29,9 +29,27 @@ import HugMe from './pages/Games/HugMe';
 
 import './index.css';
 import './App.css';
+import './styles/themes.css';
 
 // Initialize Telegram WebApp
 WebApp.ready();
+
+// Initialize theme on app start
+const savedTheme = localStorage.getItem('settings-storage');
+if (savedTheme) {
+  try {
+    const settings = JSON.parse(savedTheme);
+    if (settings.state?.theme) {
+      document.body.className = document.body.className.replace(/theme-\w+/g, '');
+      document.body.classList.add(`theme-${settings.state.theme}`);
+    }
+  } catch (e) {
+    // Fallback to default theme
+    document.body.classList.add('theme-bubbles');
+  }
+} else {
+  document.body.classList.add('theme-bubbles');
+}
 
 // Используем рабочий URL манифеста
 const manifestUrl = "https://bitopencode.github.io/EgorWorld/tonconnect-manifest.json";
