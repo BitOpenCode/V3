@@ -123,7 +123,13 @@
   
   .bottom-nav,
   .fixed.bottom-0 {
-    padding: 8px 2px;
+    padding: 12px 2px 8px 2px; /* Увеличен верхний отступ, уменьшен нижний */
+  }
+  
+  .bottom-nav .container,
+  .fixed.bottom-0 .container {
+    align-items: flex-start; /* Выравнивание кнопок по верху */
+    padding-top: 4px; /* Дополнительный отступ сверху для кнопок */
   }
   
   .page-header {
@@ -148,7 +154,13 @@
   
   .bottom-nav,
   .fixed.bottom-0 {
-    padding: 6px 1px;
+    padding: 10px 1px 6px 1px; /* Увеличен верхний отступ, уменьшен нижний */
+  }
+  
+  .bottom-nav .container,
+  .fixed.bottom-0 .container {
+    align-items: flex-start; /* Выравнивание кнопок по верху */
+    padding-top: 3px; /* Дополнительный отступ сверху для кнопок */
   }
   
   .page-title {
