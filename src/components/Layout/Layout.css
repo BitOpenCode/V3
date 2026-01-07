@@ -37,19 +37,32 @@
   background: var(--color-primary-blue);
 }
 
-/* Header panel */
+/* ============================================
+   Header panel (Upper navigation)
+   ============================================ */
 .upper-nav-panel {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  z-index: 100;
-  background: var(--color-bg--300);
-  border-bottom: 2px solid var(--color-primary-purple);
+  z-index: 150;
+  
+  /* Dark gradient background */
+  background: linear-gradient(180deg, 
+    rgba(20, 15, 35, 0.98) 0%, 
+    rgba(25, 20, 40, 0.95) 100%
+  );
+  backdrop-filter: blur(12px);
+  
+  /* Bottom border glow */
+  border-bottom: 1px solid rgba(138, 43, 226, 0.5);
+  box-shadow: 0 2px 20px rgba(138, 43, 226, 0.2);
+  
+  /* Layout */
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 12px 8px;
+  padding: 10px 8px;
   gap: 4px;
 }
 
@@ -66,16 +79,28 @@
   min-width: fit-content;
 }
 
-/* Bottom navigation */
+/* ============================================
+   Bottom navigation panel
+   ============================================ */
 .bottom-nav {
   position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  background: var(--color-bg--300);
-  border-top: 2px solid var(--color-primary-purple);
-  z-index: 100;
-  padding: 8px 4px;
+  z-index: 150;
+  
+  /* Dark gradient background */
+  background: linear-gradient(0deg, 
+    rgba(20, 15, 35, 0.98) 0%, 
+    rgba(25, 20, 40, 0.95) 100%
+  );
+  backdrop-filter: blur(12px);
+  
+  /* Top border glow */
+  border-top: 1px solid rgba(138, 43, 226, 0.5);
+  box-shadow: 0 -2px 20px rgba(138, 43, 226, 0.2);
+  
+  padding: 10px 4px;
 }
 
 .bottom-nav .container {
@@ -85,11 +110,17 @@
   gap: 2px;
 }
 
-/* Responsive adjustments */
+/* ============================================
+   Responsive adjustments
+   ============================================ */
 @media (max-width: 640px) {
   .upper-nav-panel {
     padding: 8px 4px;
     gap: 2px;
+  }
+  
+  .bottom-nav {
+    padding: 8px 2px;
   }
   
   .page-header {
@@ -110,6 +141,10 @@
   .upper-nav-panel {
     padding: 6px 2px;
     gap: 1px;
+  }
+  
+  .bottom-nav {
+    padding: 6px 1px;
   }
   
   .page-title {
