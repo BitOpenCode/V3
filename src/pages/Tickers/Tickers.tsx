@@ -178,6 +178,7 @@ const Tickers: React.FC = () => {
         <div onClick={() => handleSort('volume')} className="sortable">
           Vol {sortBy === 'volume' && (sortDir === 'asc' ? '↑' : '↓')}
         </div>
+        <div className="fav-header">⭐</div>
       </div>
 
       {/* Loading state */}
@@ -205,18 +206,16 @@ const Tickers: React.FC = () => {
             <span className={`ticker-change ${ticker.priceChangePercent >= 0 ? 'positive' : 'negative'}`}>
               {ticker.priceChangePercent >= 0 ? '↑' : '↓'} {Math.abs(ticker.priceChangePercent).toFixed(2)}%
             </span>
-            <div className="ticker-volume-container">
-              <span className="ticker-volume">{formatVolume(ticker.quoteVolume)}</span>
-              <button
-                className="favorite-btn"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  toggleFavorite(ticker.symbol);
-                }}
-              >
-                {favorites.includes(ticker.symbol) ? '★' : '☆'}
-              </button>
-            </div>
+            <span className="ticker-volume">{formatVolume(ticker.quoteVolume)}</span>
+            <button
+              className="favorite-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleFavorite(ticker.symbol);
+              }}
+            >
+              {favorites.includes(ticker.symbol) ? '★' : '☆'}
+            </button>
           </div>
         ))}
       </div>

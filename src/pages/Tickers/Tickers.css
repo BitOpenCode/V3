@@ -35,44 +35,50 @@
 
 .tickers-filters {
   display: flex;
-  gap: 8px;
-  margin-bottom: 8px;
+  gap: 6px;
+  margin-bottom: 12px;
 }
 
 .filter-button {
   flex: 1;
-  padding: 8px 12px;
-  background: var(--color-bg--300);
-  border: 1px solid var(--color-primary-purple);
-  border-radius: 4px;
+  padding: 10px 8px;
+  background: transparent;
+  border: 1px solid rgba(138, 43, 226, 0.4);
+  border-radius: 8px;
   color: var(--color-primary-silver);
-  font-size: 0.8rem;
+  font-size: 0.75rem;
+  font-weight: 500;
   cursor: pointer;
   transition: all 0.2s;
   text-align: center;
 }
 
 .filter-button:hover {
-  background: rgba(138, 43, 226, 0.3);
+  background: rgba(138, 43, 226, 0.15);
+  border-color: var(--color-primary-purple);
 }
 
 .filter-button.active {
-  background: var(--color-primary-purple);
+  background: linear-gradient(135deg, var(--color-primary-purple), var(--color-primary-blue));
+  border-color: transparent;
   color: white;
   font-weight: 600;
+  box-shadow: 0 2px 8px rgba(138, 43, 226, 0.4);
 }
 
 /* Table header - using CSS Grid for perfect alignment */
 .tickers-table-header {
   display: grid;
-  grid-template-columns: 1fr 1fr 0.8fr 1.2fr;
+  grid-template-columns: 1.5fr 1fr 0.8fr 0.9fr 0.4fr;
   align-items: center;
-  padding: 8px 12px;
+  padding: 10px 12px;
   background: var(--color-bg--300);
   border-radius: 8px 8px 0 0;
-  font-size: 0.75rem;
-  color: rgba(192, 192, 192, 0.7);
+  font-size: 0.7rem;
+  color: rgba(192, 192, 192, 0.6);
   font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .tickers-table-header div {
@@ -94,11 +100,19 @@
 }
 
 .tickers-table-header div:nth-child(3) {
-  text-align: center;
+  text-align: right;
 }
 
 .tickers-table-header div:nth-child(4) {
   text-align: right;
+}
+
+.tickers-table-header div:nth-child(5) {
+  text-align: center;
+}
+
+.fav-header {
+  cursor: default !important;
 }
 
 .tickers-list {
@@ -115,23 +129,28 @@
 /* Ticker row - using CSS Grid for perfect alignment */
 .ticker-row {
   display: grid;
-  grid-template-columns: 1fr 1fr 0.8fr 1.2fr;
+  grid-template-columns: 1.5fr 1fr 0.8fr 0.9fr 0.4fr;
   align-items: center;
-  padding: 8px 12px;
+  padding: 10px 12px;
   font-size: 0.8rem;
   font-family: 'Roboto Mono', monospace;
   transition: background 0.15s;
   cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
 }
 
 .ticker-row:hover {
-  background: rgba(234, 179, 8, 0.15);
+  background: rgba(138, 43, 226, 0.1);
+}
+
+.ticker-row:last-child {
+  border-bottom: none;
 }
 
 /* Column styles */
 .ticker-pair {
   text-align: left;
-  color: var(--color-primary-silver);
+  color: white;
   font-weight: 500;
   white-space: nowrap;
   overflow: hidden;
@@ -143,6 +162,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: 500;
 }
 
 .ticker-price.positive {
@@ -154,8 +174,9 @@
 }
 
 .ticker-change {
-  text-align: center;
+  text-align: right;
   white-space: nowrap;
+  font-size: 0.75rem;
 }
 
 .ticker-change.positive {
@@ -166,16 +187,10 @@
   color: #ef4444;
 }
 
-.ticker-volume-container {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 8px;
-}
-
 .ticker-volume {
+  text-align: right;
   color: var(--color-primary-silver);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   white-space: nowrap;
 }
 
@@ -183,16 +198,17 @@
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 1rem;
-  padding: 0;
+  font-size: 0.9rem;
+  padding: 4px;
   line-height: 1;
-  flex-shrink: 0;
-  color: #9ca3af;
-  transition: color 0.2s;
+  color: rgba(156, 163, 175, 0.5);
+  transition: all 0.2s;
+  text-align: center;
 }
 
 .favorite-btn:hover {
   color: var(--color-primary-yellow);
+  transform: scale(1.2);
 }
 
 .tickers-loading,
@@ -215,27 +231,32 @@
 /* Responsive */
 @media (max-width: 480px) {
   .tickers-table-header {
-    grid-template-columns: 1.2fr 1fr 0.8fr 0.5fr;
-    font-size: 0.65rem;
+    grid-template-columns: 1.3fr 1fr 0.7fr 0.7fr 0.3fr;
+    font-size: 0.6rem;
     padding: 8px;
   }
 
   .ticker-row {
-    grid-template-columns: 1.2fr 1fr 0.8fr 0.5fr;
+    grid-template-columns: 1.3fr 1fr 0.7fr 0.7fr 0.3fr;
     font-size: 0.7rem;
-    padding: 6px 8px;
+    padding: 8px;
   }
 
   .ticker-volume {
-    display: none;
+    font-size: 0.6rem;
   }
 
   .filter-button {
-    padding: 6px 8px;
-    font-size: 0.7rem;
+    padding: 8px 4px;
+    font-size: 0.65rem;
   }
   
   .tickers-list {
     max-height: calc(100vh - 280px);
+  }
+  
+  .favorite-btn {
+    font-size: 0.8rem;
+    padding: 2px;
   }
 }
