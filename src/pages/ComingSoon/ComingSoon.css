@@ -1,0 +1,44 @@
+.coming-soon-page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0 16px;
+}
+
+.coming-soon-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+.coming-soon-card {
+  width: 100%;
+  max-width: 400px;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.coming-soon-inner {
+  text-align: center;
+  color: var(--color-primary-silver);
+}
+
+.coming-soon-icon {
+  font-size: 4rem;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.coming-soon-inner h2 {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
+
+.coming-soon-inner p {
+  font-size: 0.9rem;
+  opacity: 0.7;
+}
+

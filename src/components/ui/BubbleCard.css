@@ -1,0 +1,119 @@
+/* BubbleCard Component Styles */
+
+.bubble-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  padding: 20px;
+  background: radial-gradient(circle at 30% 30%, rgba(128, 0, 128, 0.6), transparent),
+              radial-gradient(circle at 70% 70%, rgba(0, 119, 204, 0.4), transparent),
+              radial-gradient(circle at 50% 50%, rgba(200, 0, 200, 0.6), transparent);
+  background-size: 200% 200%;
+  animation: bubbleCardLavaLamp 6s infinite ease-in-out;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 20px rgba(128, 0, 128, 0.3),
+              0 0 30px rgba(0, 119, 204, 0.1);
+  transition: all 0.3s ease;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.bubble-card:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 6px 25px rgba(128, 0, 128, 0.4),
+              0 0 40px rgba(0, 119, 204, 0.2);
+}
+
+.bubble-card-title {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-primary-silver, #c0c0c0);
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  text-align: center;
+}
+
+.bubble-card-content {
+  position: relative;
+  z-index: 1;
+  color: var(--color-primary-silver, #c0c0c0);
+}
+
+/* Bubble animation for card */
+.bubble-card-bubble {
+  position: absolute;
+  bottom: 0;
+  background-color: rgba(200, 0, 200, 0.5);
+  border-radius: 50%;
+  opacity: 1;
+  animation: bubbleCardRise var(--animation-duration, 4s) ease-in-out forwards;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes bubbleCardRise {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateY(-150px) scale(0.5);
+    opacity: 0;
+  }
+}
+
+@keyframes bubbleCardLavaLamp {
+  0% {
+    background-position: 0% 100%;
+  }
+  50% {
+    background-position: 100% 0%;
+  }
+  100% {
+    background-position: 0% 100%;
+  }
+}
+
+/* Size variants */
+.bubble-card--small {
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.bubble-card--large {
+  padding: 32px;
+  border-radius: 24px;
+}
+
+/* Full width variant */
+.bubble-card--full {
+  width: 100%;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .bubble-card {
+    padding: 16px;
+    border-radius: 12px;
+  }
+  
+  .bubble-card-title {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .bubble-card {
+    padding: 12px;
+    border-radius: 10px;
+  }
+  
+  .bubble-card-title {
+    font-size: 1rem;
+  }
+}
+

@@ -1,0 +1,151 @@
+/* OrderBook page styles */
+.orderbook-page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0 8px;
+}
+
+.orderbook-search-container {
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.orderbook-search {
+  width: 100%;
+  padding: 10px 14px;
+  background: var(--color-bg--300);
+  border: 1px solid var(--color-primary-purple);
+  border-radius: 8px;
+  color: var(--color-primary-silver);
+  font-size: 0.9rem;
+  outline: none;
+}
+
+.orderbook-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--color-bg--300);
+  border: 1px solid var(--color-primary-purple);
+  border-radius: 8px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 10;
+}
+
+.dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 10px 14px;
+  background: none;
+  border: none;
+  color: var(--color-primary-silver);
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.dropdown-item:hover {
+  background: var(--color-primary-purple);
+}
+
+.orderbook-symbol {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.symbol-name {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: white;
+}
+
+.orderbook-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.orderbook-section {
+  flex: 1;
+}
+
+.section-header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 8px;
+  font-size: 0.65rem;
+  color: rgba(192, 192, 192, 0.6);
+  text-transform: uppercase;
+}
+
+.orderbook-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 6px 8px;
+  font-size: 0.75rem;
+  font-family: monospace;
+  position: relative;
+}
+
+.orderbook-row.ask {
+  background: linear-gradient(to right, rgba(239, 68, 68, 0.2) 0 var(--gradient-width), transparent var(--gradient-width) 100%);
+}
+
+.orderbook-row.bid {
+  background: linear-gradient(to right, rgba(34, 197, 94, 0.2) 0 var(--gradient-width), transparent var(--gradient-width) 100%);
+}
+
+.orderbook-row .price {
+  color: var(--color-primary-silver);
+}
+
+.orderbook-row.ask .price {
+  color: #ef4444;
+}
+
+.orderbook-row.bid .price {
+  color: #22c55e;
+}
+
+.orderbook-row .amount {
+  text-align: center;
+  color: var(--color-primary-silver);
+}
+
+.orderbook-row .total {
+  text-align: right;
+  color: rgba(192, 192, 192, 0.7);
+}
+
+.orderbook-spread {
+  text-align: center;
+  padding: 12px;
+  background: var(--color-bg--300);
+  border-radius: 8px;
+  margin: 8px 0;
+  font-size: 0.8rem;
+  color: var(--color-primary-silver);
+}
+
+.orderbook-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+  color: var(--color-primary-silver);
+}
+
+@media (max-width: 480px) {
+  .orderbook-row {
+    font-size: 0.7rem;
+    padding: 5px 6px;
+  }
+
+  .section-header {
+    font-size: 0.6rem;
+  }
+}
+

@@ -16,6 +16,173 @@ body {
     min-height: 100vh;
 }
 
+/* Main content area */
+.main-content {
+    padding-top: 100px;
+    padding-bottom: 120px;
+    padding-left: 8px;
+    padding-right: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    overflow-y: auto;
+}
+
+@media (max-width: 640px) {
+    .main-content {
+        padding-top: 90px;
+        padding-bottom: 100px;
+        padding-left: 4px;
+        padding-right: 4px;
+    }
+}
+
+/* Hero card with floating avatar */
+.hero-card {
+    width: 100%;
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.floating-avatar {
+    width: 12em;
+    max-width: 200px;
+    animation: floatAvatar 10s ease-in-out infinite;
+    user-select: none;
+    -webkit-user-drag: none;
+    z-index: 2;
+    position: relative;
+}
+
+.floating-avatar:hover {
+    cursor: grab;
+}
+
+.floating-avatar:active {
+    cursor: grabbing;
+}
+
+@keyframes floatAvatar {
+    0% {
+        transform: translateX(0) translateY(0);
+    }
+    25% {
+        transform: translateY(-1em) translateX(-1em);
+        rotate: -10deg;
+    }
+    50% {
+        transform: translateY(1em) translateX(-1em);
+    }
+    75% {
+        transform: translateY(-1.25em) translateX(1em);
+        rotate: 10deg;
+    }
+    100% {
+        transform: translateX(0) translateY(0);
+    }
+}
+
+/* Main action buttons */
+.main-buttons {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 8px 0;
+    width: 100%;
+}
+
+/* Main action button - inherits nav-button styles */
+.main-action-button.nav-button {
+    width: 88px;
+    min-width: 88px;
+    max-width: 88px;
+    height: 54px;
+    min-height: 54px;
+    max-height: 54px;
+    font-size: 0.65rem;
+    padding: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    line-height: 1.1;
+}
+
+@media (max-width: 640px) {
+    .hero-card {
+        min-height: 45vh;
+    }
+
+    .floating-avatar {
+        width: 10em;
+    }
+
+    .main-buttons {
+        gap: 6px;
+    }
+
+    .main-action-button.nav-button {
+        width: 72px;
+        min-width: 72px;
+        max-width: 72px;
+        height: 44px;
+        min-height: 44px;
+        max-height: 44px;
+        font-size: 0.55rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .main-action-button.nav-button {
+        width: 65px;
+        min-width: 65px;
+        max-width: 65px;
+        height: 40px;
+        min-height: 40px;
+        max-height: 40px;
+        font-size: 0.5rem;
+    }
+}
+
+@media (max-width: 375px) {
+    .main-action-button.nav-button {
+        width: 60px;
+        min-width: 60px;
+        max-width: 60px;
+        height: 38px;
+        min-height: 38px;
+        max-height: 38px;
+        font-size: 0.45rem;
+    }
+}
+
+@media (min-width: 769px) {
+    .hero-card {
+        min-height: 55vh;
+    }
+
+    .floating-avatar {
+        width: 14em;
+    }
+
+    .main-buttons {
+        gap: 12px;
+    }
+
+    .main-action-button.nav-button {
+        width: 100px;
+        min-width: 100px;
+        max-width: 100px;
+        height: 50px;
+        min-height: 50px;
+        max-height: 50px;
+        font-size: 0.7rem;
+    }
+}
+
 .nav-button {
     width: 96px; /* Updated fixed width for all nav buttons */
     height: 40px; /* Fixed height */
@@ -1776,7 +1943,7 @@ html {
     height: 54px;
     min-height: 54px;
     max-height: 54px;
-    font-size: 0.75rem;
+    font-size: 0.65rem;
     line-height: 1.1;
     padding: 0;
     display: flex;
@@ -1792,7 +1959,7 @@ html {
         height: 44px;
         min-height: 44px;
         max-height: 44px;
-        font-size: 0.6rem;
+        font-size: 0.55rem;
     }
 }
 
@@ -1804,7 +1971,7 @@ html {
         height: 38px;
         min-height: 38px;
         max-height: 38px;
-        font-size: 0.5rem;
+        font-size: 0.45rem;
     }
 } 
 
@@ -1837,15 +2004,15 @@ html {
 @media (max-width: 600px) {
   .upper-nav-panel, .fixed.bottom-0 .container {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
+    flex-wrap: nowrap;
+    justify-content: space-between;
     gap: 2px;
-    padding: 4px 0;
+    padding: 4px 2px;
   }
   .header-button-container {
-    flex: 0 1 60px;
-    min-width: 60px;
-    max-width: 60px;
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: none;
     margin: 1px;
     display: flex;
     justify-content: center;
@@ -1867,25 +2034,30 @@ html {
     display: flex;
     letter-spacing: 0.01em;
   }
-  /* News максимально близко к Mempool */
-  .header-button-container:nth-child(2) { margin-left: -16px; }
-  /* Wallet Info максимально близко к Contact */
-  .header-button-container:nth-last-child(2) { margin-right: -16px; }
+  /* Убираем отрицательные отступы для лучшей адаптивности */
+  .header-button-container:nth-child(2) { margin-left: 0; }
+  .header-button-container:nth-last-child(2) { margin-right: 0; }
 }
 
 @media (max-width: 400px) {
   .nav-button, .nav-button-content {
-    font-size: 0.4rem;
-    width: 40px;
-    height: 40px;
-    min-width: 40px;
-    min-height: 40px;
-    max-width: 40px;
-    max-height: 40px;
+    font-size: clamp(0.38rem, 2.5vw, 0.5rem);
+    width: auto;
+    height: 36px;
+    min-width: 0;
+    min-height: 36px;
+    max-width: none;
+    max-height: 36px;
+    padding: 2px 4px;
   }
   .header-button-container {
-    min-width: 40px;
-    max-width: 40px;
+    min-width: 0;
+    max-width: none;
+    flex: 1 1 0;
+  }
+  .upper-nav-panel {
+    padding: 8px 2px !important;
+    gap: 1px !important;
   }
 }
 

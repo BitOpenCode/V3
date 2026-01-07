@@ -1,0 +1,144 @@
+/* Calculator page styles */
+.calculator-page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0 16px;
+}
+
+.calculator-card {
+  background: var(--color-bg--300);
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid var(--color-primary-purple);
+}
+
+.calc-group {
+  margin-bottom: 16px;
+  position: relative;
+}
+
+.calc-label {
+  display: block;
+  font-size: 0.75rem;
+  color: rgba(192, 192, 192, 0.7);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.calc-input {
+  width: 100%;
+  padding: 12px 16px;
+  background: var(--color-bg--500);
+  border: 1px solid rgba(138, 43, 226, 0.3);
+  border-radius: 8px;
+  color: white;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.calc-input:focus {
+  border-color: var(--color-primary-purple);
+}
+
+/* Coin dropdown */
+.coin-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  margin-top: 4px;
+  background: var(--color-bg--300);
+  border: 1px solid var(--color-primary-purple);
+  border-radius: 8px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+.coin-option {
+  padding: 10px 14px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--color-primary-silver);
+  transition: background 0.2s;
+}
+
+.coin-option:hover {
+  background: var(--color-primary-purple);
+  color: white;
+}
+
+/* Results */
+.calc-results {
+  margin-top: 20px;
+  padding: 16px;
+  background: rgba(138, 43, 226, 0.1);
+  border-radius: 12px;
+  border: 1px solid rgba(138, 43, 226, 0.2);
+}
+
+.result-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(138, 43, 226, 0.1);
+}
+
+.result-item:last-child {
+  border-bottom: none;
+}
+
+.result-item.highlight {
+  margin-top: 8px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(138, 43, 226, 0.3);
+  border-bottom: none;
+}
+
+.result-label {
+  font-size: 0.75rem;
+  color: rgba(192, 192, 192, 0.7);
+  text-transform: uppercase;
+}
+
+.result-value {
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+  font-family: monospace;
+}
+
+.result-item.highlight .result-value {
+  font-size: 1.2rem;
+  color: var(--color-primary-purple);
+}
+
+.result-value.positive {
+  color: #22c55e;
+}
+
+.result-value.negative {
+  color: #ef4444;
+}
+
+@media (max-width: 480px) {
+  .calculator-card {
+    padding: 16px;
+  }
+
+  .calc-input {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+
+  .result-value {
+    font-size: 0.9rem;
+  }
+
+  .result-item.highlight .result-value {
+    font-size: 1.1rem;
+  }
+}

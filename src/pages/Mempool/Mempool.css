@@ -1,0 +1,156 @@
+/* Mempool page styles */
+.mempool-page {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0 8px;
+  gap: 16px;
+}
+
+.network-toggle {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.toggle-btn {
+  padding: 8px 20px;
+  background: var(--color-bg--300);
+  border: 1px solid var(--color-primary-purple);
+  border-radius: 6px;
+  color: var(--color-primary-silver);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.toggle-btn.active {
+  background: var(--color-primary-purple);
+  color: white;
+}
+
+.mempool-stats-card {
+  padding: 16px;
+}
+
+.mempool-stats-card h3 {
+  font-size: 0.9rem;
+  color: white;
+  margin: 0 0 16px 0;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-label {
+  display: block;
+  font-size: 0.65rem;
+  color: rgba(192, 192, 192, 0.6);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.stat-value {
+  font-size: 1rem;
+  font-weight: bold;
+  color: white;
+}
+
+.fees-card,
+.blocks-card {
+  background: var(--color-bg--300);
+  border-radius: 12px;
+  padding: 16px;
+  border: 1px solid rgba(138, 43, 226, 0.2);
+}
+
+.fees-card h3,
+.blocks-card h3 {
+  font-size: 0.9rem;
+  color: white;
+  margin: 0 0 16px 0;
+}
+
+.fees-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.fee-item {
+  text-align: center;
+  padding: 10px 8px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+}
+
+.fee-label {
+  display: block;
+  font-size: 0.6rem;
+  color: rgba(192, 192, 192, 0.6);
+  margin-bottom: 4px;
+}
+
+.fee-value {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.fee-item.fastest .fee-value { color: #22c55e; }
+.fee-item.medium .fee-value { color: #eab308; }
+.fee-item.slow .fee-value { color: #f97316; }
+.fee-item.economy .fee-value { color: #ef4444; }
+
+.blocks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.block-item {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  padding: 10px 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  font-size: 0.8rem;
+}
+
+.block-height {
+  color: var(--color-primary-blue);
+  font-weight: 600;
+}
+
+.block-txs {
+  text-align: center;
+  color: var(--color-primary-silver);
+}
+
+.block-size {
+  text-align: right;
+  color: rgba(192, 192, 192, 0.6);
+}
+
+@media (max-width: 480px) {
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .fees-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stat-item,
+  .fee-item {
+    padding: 8px;
+  }
+}
+
