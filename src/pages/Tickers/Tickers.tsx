@@ -193,10 +193,17 @@ const Tickers: React.FC = () => {
       {/* Tickers list */}
       <div className="tickers-list">
         {filteredTickers.map((ticker) => (
-          <div key={ticker.symbol} className="ticker-row">
+          <div 
+            key={ticker.symbol} 
+            className="ticker-row"
+            onClick={() => navigate(`/orderbook?symbol=${ticker.symbol}`)}
+          >
             <button
               className="favorite-btn"
-              onClick={() => toggleFavorite(ticker.symbol)}
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleFavorite(ticker.symbol);
+              }}
             >
               {favorites.includes(ticker.symbol) ? '⭐' : '☆'}
             </button>

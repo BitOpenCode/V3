@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { fetchOrderBook, fetchTickers } from '../../services/api';
 import { Ticker } from '../../types';
@@ -7,8 +7,18 @@ import './OrderBook.css';
 
 const OrderBook: React.FC = () => {
   const navigate = useNavigate();
-  const [selectedSymbol, setSelectedSymbol] = useState('BTCUSDT');
+  const [searchParams] = useSearchParams();
+  const initialSymbol = searchParams.get('symbol') || 'BTCUSDT';
+  const [selectedSymbol, setSelectedSymbol] = useState(initialSymbol);
   const [searchQuery, setSearchQuery] = useState('');
+
+  // Update symbol when URL changes
+  useEffect(() => {
+    const symbol = searchParams.get('symbol');
+    if (symbol) {
+      setSelectedSymbol(symbol);
+    }
+  }, [searchParams]);
 
   // Fetch tickers for symbol list
   const { data: tickers } = useQuery({
@@ -17,11 +27,11 @@ const OrderBook: React.FC = () => {
     staleTime: 30000,
   });
 
-  // Fetch order book
+  // Fetch order book - update every 500ms for real-time feel
   const { data: orderBook, isLoading } = useQuery({
     queryKey: ['orderbook', selectedSymbol],
     queryFn: () => fetchOrderBook(selectedSymbol, 15),
-    refetchInterval: 2000,
+    refetchInterval: 500,
   });
 
   // Filter symbols

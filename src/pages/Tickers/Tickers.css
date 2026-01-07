@@ -94,11 +94,14 @@
   background: rgba(30, 30, 30, 0.5);
   border-radius: 6px;
   font-size: 0.75rem;
-  transition: background 0.2s;
+  transition: all 0.2s;
+  cursor: pointer;
 }
 
 .ticker-row:hover {
-  background: rgba(138, 43, 226, 0.1);
+  background: rgba(138, 43, 226, 0.2);
+  transform: translateX(2px);
+  border-left: 2px solid var(--color-primary-purple);
 }
 
 .favorite-btn {
