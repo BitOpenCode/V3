@@ -61,71 +61,69 @@ body {
    Navigation Buttons - Override Tailwind base
    ============================================ */
 
-@layer components {
-  button.nav-button {
-    /* Base sizing */
-    width: 80px !important;
-    height: 42px !important;
-    padding: 8px 4px !important;
-    margin: 2px !important;
-    
-    /* Flexbox centering */
-    display: flex !important;
-    justify-content: center !important;
-    align-items: center !important;
-    
-    /* Typography */
-    font-size: 0.7rem !important;
-    font-weight: 600 !important;
-    letter-spacing: 0.03em !important;
-    text-transform: uppercase !important;
-    color: white !important;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) !important;
-    
-    /* Appearance */
-    border-radius: 12px !important;
-    border: 1px solid rgba(255, 255, 255, 0.2) !important;
-    cursor: pointer !important;
-    position: relative !important;
-    overflow: hidden !important;
-    background-color: transparent !important;
-    
-    /* Lava lamp gradient effect */
-    background: 
-      radial-gradient(circle at 20% 20%, rgba(138, 43, 226, 0.8), transparent 50%),
-      radial-gradient(circle at 80% 80%, rgba(0, 119, 204, 0.6), transparent 50%),
-      radial-gradient(circle at 50% 50%, rgba(180, 50, 200, 0.7), transparent 60%),
-      linear-gradient(135deg, #2a1a4a 0%, #1a1a3a 100%) !important;
-    background-size: 200% 200% !important;
-    animation: lavaLamp 8s infinite ease-in-out !important;
-    
-    /* Shadow & glow */
-    box-shadow: 
-      0 2px 8px rgba(138, 43, 226, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
-    
-    /* Transition */
-    transition: all 0.3s ease !important;
-    user-select: none !important;
-    -webkit-user-select: none !important;
-  }
+button.nav-button {
+  /* Base sizing */
+  width: 80px !important;
+  height: 42px !important;
+  padding: 8px 4px !important;
+  margin: 2px !important;
+  
+  /* Flexbox centering */
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  
+  /* Typography */
+  font-size: 0.7rem !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.03em !important;
+  text-transform: uppercase !important;
+  color: white !important;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) !important;
+  
+  /* Appearance */
+  border-radius: 12px !important;
+  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  cursor: pointer !important;
+  position: relative !important;
+  overflow: hidden !important;
+  background-color: transparent !important;
+  
+  /* Lava lamp gradient effect */
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(138, 43, 226, 0.8), transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(0, 119, 204, 0.6), transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(180, 50, 200, 0.7), transparent 60%),
+    linear-gradient(135deg, #2a1a4a 0%, #1a1a3a 100%) !important;
+  background-size: 200% 200% !important;
+  animation: lavaLamp 8s infinite ease-in-out !important;
+  
+  /* Shadow & glow */
+  box-shadow: 
+    0 2px 8px rgba(138, 43, 226, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  
+  /* Transition */
+  transition: all 0.3s ease !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+}
 
-  button.nav-button:hover {
-    transform: translateY(-2px) scale(1.02) !important;
-    box-shadow: 
-      0 4px 16px rgba(138, 43, 226, 0.6),
-      0 0 20px rgba(0, 119, 204, 0.4),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
-    border-color: rgba(255, 255, 255, 0.4) !important;
-    background-color: transparent !important;
-  }
+button.nav-button:hover {
+  transform: translateY(-2px) scale(1.02) !important;
+  box-shadow: 
+    0 4px 16px rgba(138, 43, 226, 0.6),
+    0 0 20px rgba(0, 119, 204, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  background-color: transparent !important;
+}
 
-  button.nav-button:active {
-    transform: translateY(0) scale(0.98) !important;
-    box-shadow: 
-      0 1px 4px rgba(138, 43, 226, 0.5),
-      inset 0 2px 4px rgba(0, 0, 0, 0.2) !important;
-  }
+button.nav-button:active {
+  transform: translateY(0) scale(0.98) !important;
+  box-shadow: 
+    0 1px 4px rgba(138, 43, 226, 0.5),
+    inset 0 2px 4px rgba(0, 0, 0, 0.2) !important;
 }
 
 .header-button-container {
