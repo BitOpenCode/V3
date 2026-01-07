@@ -11,6 +11,7 @@ const OrderBook: React.FC = () => {
   const initialSymbol = searchParams.get('symbol') || 'BTCUSDT';
   const [selectedSymbol, setSelectedSymbol] = useState(initialSymbol);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   // Update symbol when URL changes
   useEffect(() => {
@@ -34,13 +35,14 @@ const OrderBook: React.FC = () => {
     refetchInterval: 500,
   });
 
-  // Filter symbols
+  // Filter symbols - show top 20 by volume, or search results
   const filteredSymbols = tickers
     ?.filter((t: Ticker) => t.symbol.endsWith('USDT'))
     .filter((t: Ticker) => {
       if (!searchQuery) return true;
       return t.symbol.toLowerCase().includes(searchQuery.toLowerCase());
     })
+    .sort((a: Ticker, b: Ticker) => b.quoteVolume - a.quoteVolume)
     .slice(0, 20) || [];
 
   // Format price
@@ -78,30 +80,33 @@ const OrderBook: React.FC = () => {
       <div className="orderbook-search-container">
         <input
           type="text"
-          placeholder="Search symbol..."
+          placeholder="Search symbol... (click to browse)"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
+          onFocus={() => setIsDropdownOpen(true)}
+          onBlur={() => setTimeout(() => setIsDropdownOpen(false), 200)}
           className="orderbook-search"
         />
+        
+        {/* Symbol dropdown */}
+        {isDropdownOpen && filteredSymbols.length > 0 && (
+          <div className="orderbook-dropdown">
+            {filteredSymbols.map((t: Ticker) => (
+              <button
+                key={t.symbol}
+                onClick={() => {
+                  setSelectedSymbol(t.symbol);
+                  setSearchQuery('');
+                  setIsDropdownOpen(false);
+                }}
+                className="dropdown-item"
+              >
+                {t.pair}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
-
-      {/* Symbol dropdown */}
-      {searchQuery && (
-        <div className="orderbook-dropdown">
-          {filteredSymbols.map((t: Ticker) => (
-            <button
-              key={t.symbol}
-              onClick={() => {
-                setSelectedSymbol(t.symbol);
-                setSearchQuery('');
-              }}
-              className="dropdown-item"
-            >
-              {t.pair}
-            </button>
-          ))}
-        </div>
-      )}
 
       {/* Selected symbol */}
       <div className="orderbook-symbol">

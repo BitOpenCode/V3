@@ -45,14 +45,26 @@ export const fetchTickers = async (): Promise<Ticker[]> => {
       const hasValidPrice = parseFloat(t.lastPrice) > 0;
       return (isUSDT || isBTC) && hasValidPrice;
     })
-    .map((t: { symbol: string; lastPrice: string; priceChangePercent: string; quoteVolume: string }) => ({
-      symbol: t.symbol,
-      pair: t.symbol.replace('USDT', '/USDT').replace('BTC', '/BTC'),
-      close: t.lastPrice,
-      lastPrice: parseFloat(t.lastPrice),
-      priceChangePercent: parseFloat(t.priceChangePercent),
-      quoteVolume: parseFloat(t.quoteVolume),
-    }));
+    .map((t: { symbol: string; lastPrice: string; priceChangePercent: string; quoteVolume: string }) => {
+      // Format pair correctly: BTCUSDT -> BTC/USDT, ETHBTC -> ETH/BTC
+      let pair: string;
+      if (t.symbol.endsWith('USDT')) {
+        pair = t.symbol.replace('USDT', '/USDT');
+      } else if (t.symbol.endsWith('BTC')) {
+        pair = t.symbol.replace('BTC', '/BTC');
+      } else {
+        pair = t.symbol;
+      }
+      
+      return {
+        symbol: t.symbol,
+        pair,
+        close: t.lastPrice,
+        lastPrice: parseFloat(t.lastPrice),
+        priceChangePercent: parseFloat(t.priceChangePercent),
+        quoteVolume: parseFloat(t.quoteVolume),
+      };
+    });
 
   // Add TON tickers
   return [...spotTickers, ...tonTickers];
@@ -121,14 +133,26 @@ export const createTickerWebSocket = (onMessage: (data: Ticker[]) => void): WebS
           const isBTC = t.s.endsWith('BTC') && t.s !== 'BTC';
           return isUSDT || isBTC;
         })
-        .map((t: { s: string; c: string; P: string; q: string }) => ({
-          symbol: t.s,
-          pair: t.s.replace('USDT', '/USDT').replace('BTC', '/BTC'),
-          close: t.c,
-          lastPrice: parseFloat(t.c),
-          priceChangePercent: parseFloat(t.P),
-          quoteVolume: parseFloat(t.q),
-        }));
+        .map((t: { s: string; c: string; P: string; q: string }) => {
+          // Format pair correctly
+          let pair: string;
+          if (t.s.endsWith('USDT')) {
+            pair = t.s.replace('USDT', '/USDT');
+          } else if (t.s.endsWith('BTC')) {
+            pair = t.s.replace('BTC', '/BTC');
+          } else {
+            pair = t.s;
+          }
+          
+          return {
+            symbol: t.s,
+            pair,
+            close: t.c,
+            lastPrice: parseFloat(t.c),
+            priceChangePercent: parseFloat(t.P),
+            quoteVolume: parseFloat(t.q),
+          };
+        });
       onMessage(tickers);
     } catch {
       // ignore parsing errors
