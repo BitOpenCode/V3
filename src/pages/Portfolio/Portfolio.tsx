@@ -30,29 +30,52 @@ const Portfolio: React.FC = () => {
     .filter((v: string, i: number, a: string[]) => a.indexOf(v) === i)
     .sort() || [];
 
-  // Calculate portfolio with live prices
+  // Calculate portfolio with live prices using BigNumber for precision
   const portfolioWithPrices = useMemo(() => {
     if (!tickers) return positions;
+    
+    const { multiply, minus, calculateProfitPercent, bn } = require('../../utils/bignumber');
     
     return positions.map(pos => {
       const ticker = tickers.find((t: Ticker) => t.symbol === `${pos.symbol}USDT`);
       const currentPrice = ticker?.lastPrice || pos.currentPrice;
-      const value = pos.amount * currentPrice;
-      const cost = pos.amount * pos.buyPrice;
-      const pnl = value - cost;
-      const pnlPercent = cost > 0 ? (pnl / cost) * 100 : 0;
       
-      return { ...pos, currentPrice, value, pnl, pnlPercent };
+      const value = multiply(pos.amount, currentPrice);
+      const cost = multiply(pos.amount, pos.buyPrice);
+      const pnl = minus(value, cost);
+      const pnlPercent = calculateProfitPercent(cost, value);
+      
+      return { 
+        ...pos, 
+        currentPrice, 
+        value: parseFloat(value.toString()),
+        pnl: parseFloat(pnl.toString()),
+        pnlPercent: parseFloat(pnlPercent.toString()),
+      };
     });
   }, [positions, tickers]);
 
-  // Portfolio totals
+  // Portfolio totals using BigNumber
   const totals = useMemo(() => {
-    const totalValue = portfolioWithPrices.reduce((sum, p) => sum + p.value, 0);
-    const totalCost = portfolioWithPrices.reduce((sum, p) => sum + (p.amount * p.buyPrice), 0);
-    const totalPnl = totalValue - totalCost;
-    const totalPnlPercent = totalCost > 0 ? (totalPnl / totalCost) * 100 : 0;
-    return { totalValue, totalCost, totalPnl, totalPnlPercent };
+    const { plus, minus, multiply, calculateProfitPercent, bn } = require('../../utils/bignumber');
+    
+    const totalValue = portfolioWithPrices.reduce(
+      (sum, p) => plus(sum, p.value), 
+      bn(0)
+    );
+    const totalCost = portfolioWithPrices.reduce(
+      (sum, p) => plus(sum, multiply(p.amount, p.buyPrice)), 
+      bn(0)
+    );
+    const totalPnl = minus(totalValue, totalCost);
+    const totalPnlPercent = calculateProfitPercent(totalCost, totalValue);
+    
+    return { 
+      totalValue: parseFloat(totalValue.toString()),
+      totalCost: parseFloat(totalCost.toString()),
+      totalPnl: parseFloat(totalPnl.toString()),
+      totalPnlPercent: parseFloat(totalPnlPercent.toString()),
+    };
   }, [portfolioWithPrices]);
 
   // Add position handler

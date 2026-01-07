@@ -77,24 +77,30 @@ const Calculator: React.FC = () => {
     return () => document.removeEventListener('click', handleClickOutside);
   }, []);
 
-  // Calculate results
+  // Calculate results using BigNumber for precision
   const results = useMemo(() => {
     if (!form.investment || !form.initialPrice || !form.projectedPrice) {
       return null;
     }
 
-    const tokensBought = form.investment / form.initialPrice;
-    const projectedSubtotal = tokensBought * form.projectedPrice;
-    const projectedProfit = projectedSubtotal - form.investment;
-    const profitPercent = (projectedProfit / form.investment) * 100;
-    const projectedTotal = form.investment + projectedProfit;
+    const { divide, multiply, minus, plus, calculatePercentChange, toFixed } = require('../../utils/bignumber');
+    
+    const investment = form.investment;
+    const initialPrice = form.initialPrice;
+    const projectedPrice = form.projectedPrice;
+
+    const tokensBought = divide(investment, initialPrice);
+    const projectedSubtotal = multiply(tokensBought, projectedPrice);
+    const projectedProfit = minus(projectedSubtotal, investment);
+    const profitPercent = calculatePercentChange(investment, projectedSubtotal);
+    const projectedTotal = plus(investment, projectedProfit);
 
     return {
-      tokensBought,
-      projectedSubtotal,
-      projectedProfit,
-      profitPercent,
-      projectedTotal,
+      tokensBought: parseFloat(tokensBought.toString()),
+      projectedSubtotal: parseFloat(projectedSubtotal.toString()),
+      projectedProfit: parseFloat(projectedProfit.toString()),
+      profitPercent: parseFloat(profitPercent.toString()),
+      projectedTotal: parseFloat(projectedTotal.toString()),
     };
   }, [form]);
 

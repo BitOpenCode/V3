@@ -7,6 +7,7 @@ import { Toaster } from 'react-hot-toast';
 import WebApp from '@twa-dev/sdk';
 
 import { Layout } from './components/Layout';
+import { ErrorBoundary } from './components/ErrorBoundary';
 import { 
   Home, 
   Games, 
@@ -47,47 +48,49 @@ const queryClient = new QueryClient({
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <TonConnectUIProvider manifestUrl={manifestUrl}>
-        <HashRouter>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              {/* Main routes */}
-              <Route index element={<Home />} />
-              <Route path="games" element={<Games />} />
-              <Route path="games/spaceship" element={<SpaceShip />} />
-              <Route path="games/runroad" element={<RunRoad />} />
-              <Route path="games/hugme" element={<HugMe />} />
-              <Route path="avatars" element={<Avatars />} />
-              <Route path="menu" element={<Menu />} />
-              
-              {/* Functional pages */}
-              <Route path="tickers" element={<Tickers />} />
-              <Route path="news" element={<News />} />
-              <Route path="calculator" element={<Calculator />} />
-              <Route path="orderbook" element={<OrderBook />} />
-              <Route path="portfolio" element={<Portfolio />} />
-              <Route path="wallet" element={<Wallet />} />
-              <Route path="mempool" element={<Mempool />} />
-              <Route path="chart" element={<Chart />} />
-              <Route path="share" element={<Share />} />
-              
-              {/* Fallback */}
-              <Route path="*" element={<Home />} />
-            </Route>
-          </Routes>
-        </HashRouter>
-        <Toaster 
-          position="top-center"
-          toastOptions={{
-            style: {
-              background: '#1e1e1e',
-              color: '#c0c0c0',
-              border: '1px solid #8a2be2',
-            },
-          }}
-        />
-      </TonConnectUIProvider>
-    </QueryClientProvider>
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <TonConnectUIProvider manifestUrl={manifestUrl}>
+          <HashRouter>
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                {/* Main routes */}
+                <Route index element={<Home />} />
+                <Route path="games" element={<Games />} />
+                <Route path="games/spaceship" element={<SpaceShip />} />
+                <Route path="games/runroad" element={<RunRoad />} />
+                <Route path="games/hugme" element={<HugMe />} />
+                <Route path="avatars" element={<Avatars />} />
+                <Route path="menu" element={<Menu />} />
+                
+                {/* Functional pages */}
+                <Route path="tickers" element={<Tickers />} />
+                <Route path="news" element={<News />} />
+                <Route path="calculator" element={<Calculator />} />
+                <Route path="orderbook" element={<OrderBook />} />
+                <Route path="portfolio" element={<Portfolio />} />
+                <Route path="wallet" element={<Wallet />} />
+                <Route path="mempool" element={<Mempool />} />
+                <Route path="chart" element={<Chart />} />
+                <Route path="share" element={<Share />} />
+                
+                {/* Fallback */}
+                <Route path="*" element={<Home />} />
+              </Route>
+            </Routes>
+          </HashRouter>
+          <Toaster 
+            position="top-center"
+            toastOptions={{
+              style: {
+                background: '#1e1e1e',
+                color: '#c0c0c0',
+                border: '1px solid #8a2be2',
+              },
+            }}
+          />
+        </TonConnectUIProvider>
+      </QueryClientProvider>
+    </ErrorBoundary>
   </StrictMode>
 );
