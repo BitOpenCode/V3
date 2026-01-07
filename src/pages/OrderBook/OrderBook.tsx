@@ -50,6 +50,13 @@ const OrderBook: React.FC = () => {
     return price.toFixed(6);
   };
 
+  // Format total
+  const formatTotal = (total: number): string => {
+    if (total >= 1e6) return `${(total / 1e6).toFixed(2)}M`;
+    if (total >= 1e3) return `${(total / 1e3).toFixed(2)}K`;
+    return total.toFixed(2);
+  };
+
   // Calculate max total for gradient width
   const maxTotal = orderBook 
     ? Math.max(
@@ -108,9 +115,9 @@ const OrderBook: React.FC = () => {
           {/* Asks (sells) */}
           <div className="orderbook-section asks">
             <div className="section-header">
-              <span>Price</span>
-              <span>Amount</span>
               <span>Total</span>
+              <span>Size</span>
+              <span>Price</span>
             </div>
             {[...orderBook.asks].reverse().map((ask, i) => (
               <div 
@@ -120,9 +127,9 @@ const OrderBook: React.FC = () => {
                   '--gradient-width': `${(ask.total / maxTotal) * 100}%` 
                 } as React.CSSProperties}
               >
-                <span className="price">{formatPrice(ask.price)}</span>
+                <span className="total">{formatTotal(ask.total)}</span>
                 <span className="amount">{ask.size.toFixed(4)}</span>
-                <span className="total">${ask.total.toFixed(2)}</span>
+                <span className="price">{formatPrice(ask.price)}</span>
               </div>
             ))}
           </div>
@@ -136,6 +143,11 @@ const OrderBook: React.FC = () => {
 
           {/* Bids (buys) */}
           <div className="orderbook-section bids">
+            <div className="section-header">
+              <span>Total</span>
+              <span>Size</span>
+              <span>Price</span>
+            </div>
             {orderBook.bids.map((bid, i) => (
               <div 
                 key={i} 
@@ -144,9 +156,9 @@ const OrderBook: React.FC = () => {
                   '--gradient-width': `${(bid.total / maxTotal) * 100}%` 
                 } as React.CSSProperties}
               >
-                <span className="price">{formatPrice(bid.price)}</span>
+                <span className="total">{formatTotal(bid.total)}</span>
                 <span className="amount">{bid.size.toFixed(4)}</span>
-                <span className="total">${bid.total.toFixed(2)}</span>
+                <span className="price">{formatPrice(bid.price)}</span>
               </div>
             ))}
           </div>

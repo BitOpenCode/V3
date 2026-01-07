@@ -198,21 +198,25 @@ const Tickers: React.FC = () => {
             className="ticker-row"
             onClick={() => navigate(`/orderbook?symbol=${ticker.symbol}`)}
           >
-            <button
-              className="favorite-btn"
-              onClick={(e) => {
-                e.stopPropagation();
-                toggleFavorite(ticker.symbol);
-              }}
-            >
-              {favorites.includes(ticker.symbol) ? '⭐' : '☆'}
-            </button>
             <span className="ticker-pair">{ticker.pair}</span>
-            <span className="ticker-price">${formatTickerPrice(ticker)}</span>
-            <span className={`ticker-change ${ticker.priceChangePercent >= 0 ? 'positive' : 'negative'}`}>
-              {ticker.priceChangePercent >= 0 ? '+' : ''}{ticker.priceChangePercent.toFixed(2)}%
+            <span className={`ticker-price ${ticker.priceChangePercent >= 0 ? 'positive' : 'negative'}`}>
+              {formatTickerPrice(ticker)}
             </span>
-            <span className="ticker-volume">{formatVolume(ticker.quoteVolume)}</span>
+            <span className={`ticker-change ${ticker.priceChangePercent >= 0 ? 'positive' : 'negative'}`}>
+              {ticker.priceChangePercent >= 0 ? '↑' : '↓'} {Math.abs(ticker.priceChangePercent).toFixed(2)}%
+            </span>
+            <div className="ticker-volume-container">
+              <span className="ticker-volume">{formatVolume(ticker.quoteVolume)}</span>
+              <button
+                className="favorite-btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  toggleFavorite(ticker.symbol);
+                }}
+              >
+                {favorites.includes(ticker.symbol) ? '★' : '☆'}
+              </button>
+            </div>
           </div>
         ))}
       </div>

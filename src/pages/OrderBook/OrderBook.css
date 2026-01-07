@@ -1,8 +1,10 @@
-/* OrderBook page styles */
+/* OrderBook page styles - matching Calculator design */
 .orderbook-page {
   display: flex;
   flex-direction: column;
   width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
   padding: 0 8px;
 }
 
@@ -20,6 +22,11 @@
   color: var(--color-primary-silver);
   font-size: 0.9rem;
   outline: none;
+}
+
+.orderbook-search:focus {
+  border-color: var(--color-primary-blue);
+  box-shadow: 0 0 8px rgba(0, 119, 204, 0.3);
 }
 
 .orderbook-dropdown {
@@ -49,57 +56,126 @@
 
 .dropdown-item:hover {
   background: var(--color-primary-purple);
+  color: white;
 }
 
 .orderbook-symbol {
   text-align: center;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
 }
 
 .symbol-name {
   font-size: 1.2rem;
   font-weight: bold;
   color: white;
+  text-shadow: 0 0 8px var(--color-primary-yellow);
 }
 
 .orderbook-container {
   flex: 1;
   display: flex;
   flex-direction: column;
+  gap: 8px;
 }
 
+/* Section styling */
 .orderbook-section {
-  flex: 1;
+  background: var(--color-bg--300);
+  border-radius: 8px;
+  overflow: hidden;
+  padding-bottom: 8px;
 }
 
+.orderbook-section.asks::before,
+.orderbook-section.bids::before {
+  content: '';
+  display: block;
+  padding: 8px 12px;
+  font-weight: bold;
+  font-size: 1rem;
+  text-shadow: 0 0 8px var(--color-primary-yellow);
+}
+
+.orderbook-section.asks::before {
+  content: 'Sell Orders';
+  color: #ef4444;
+}
+
+.orderbook-section.bids::before {
+  content: 'Buy Orders';
+  color: #22c55e;
+}
+
+/* Header - Total | Size | Price */
 .section-header {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  padding: 8px;
-  font-size: 0.65rem;
-  color: rgba(192, 192, 192, 0.6);
+  display: flex;
+  padding: 6px 12px;
+  font-size: 0.7rem;
+  color: #22c55e;
+  font-weight: 600;
   text-transform: uppercase;
 }
 
+.section-header span:nth-child(1) {
+  width: 33.33%;
+  text-align: left;
+}
+
+.section-header span:nth-child(2) {
+  width: 33.33%;
+  text-align: center;
+}
+
+.section-header span:nth-child(3) {
+  width: 33.33%;
+  text-align: right;
+}
+
+/* Order row - matching Calculator */
 .orderbook-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  padding: 6px 8px;
-  font-size: 0.75rem;
-  font-family: monospace;
+  display: flex;
+  padding: 4px 12px;
+  font-size: 0.8rem;
+  font-family: 'Roboto Mono', monospace;
   position: relative;
 }
 
 .orderbook-row.ask {
-  background: linear-gradient(to right, rgba(239, 68, 68, 0.2) 0 var(--gradient-width), transparent var(--gradient-width) 100%);
+  background: linear-gradient(
+    to right, 
+    rgba(239, 68, 68, 0.2) 0, 
+    rgba(239, 68, 68, 0.2) var(--gradient-width, 0%), 
+    transparent var(--gradient-width, 0%), 
+    transparent 100%
+  );
 }
 
 .orderbook-row.bid {
-  background: linear-gradient(to right, rgba(34, 197, 94, 0.2) 0 var(--gradient-width), transparent var(--gradient-width) 100%);
+  background: linear-gradient(
+    to right, 
+    rgba(34, 197, 94, 0.2) 0, 
+    rgba(34, 197, 94, 0.2) var(--gradient-width, 0%), 
+    transparent var(--gradient-width, 0%), 
+    transparent 100%
+  );
+}
+
+/* Columns - Total | Size | Price (33.33% each) */
+.orderbook-row .total {
+  width: 33.33%;
+  text-align: left;
+  color: var(--color-primary-silver);
+}
+
+.orderbook-row .amount {
+  width: 33.33%;
+  text-align: center;
+  color: var(--color-primary-silver);
 }
 
 .orderbook-row .price {
-  color: var(--color-primary-silver);
+  width: 33.33%;
+  text-align: right;
 }
 
 .orderbook-row.ask .price {
@@ -110,42 +186,48 @@
   color: #22c55e;
 }
 
-.orderbook-row .amount {
-  text-align: center;
-  color: var(--color-primary-silver);
-}
-
-.orderbook-row .total {
-  text-align: right;
-  color: rgba(192, 192, 192, 0.7);
-}
-
+/* Spread section */
 .orderbook-spread {
   text-align: center;
-  padding: 12px;
-  background: var(--color-bg--300);
+  padding: 10px;
+  background: var(--color-bg--500);
   border-radius: 8px;
-  margin: 8px 0;
-  font-size: 0.8rem;
-  color: var(--color-primary-silver);
+  font-size: 0.85rem;
+  color: var(--color-primary-yellow);
+  font-weight: 600;
 }
 
 .orderbook-loading {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px;
+  padding: 60px;
   color: var(--color-primary-silver);
+  font-size: 1rem;
+}
+
+/* Scrollable sections */
+.orderbook-section {
+  max-height: 180px;
+  overflow-y: auto;
 }
 
 @media (max-width: 480px) {
   .orderbook-row {
     font-size: 0.7rem;
-    padding: 5px 6px;
+    padding: 3px 8px;
   }
 
   .section-header {
     font-size: 0.6rem;
+    padding: 5px 8px;
+  }
+  
+  .orderbook-section {
+    max-height: 150px;
+  }
+  
+  .symbol-name {
+    font-size: 1rem;
   }
 }
-
