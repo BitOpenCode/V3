@@ -166,18 +166,18 @@ const Tickers: React.FC = () => {
 
       {/* Table header */}
       <div className="tickers-table-header">
-        <span onClick={() => handleSort('symbol')} className="sortable">
+        <div onClick={() => handleSort('symbol')} className="sortable">
           Pair {sortBy === 'symbol' && (sortDir === 'asc' ? '↑' : '↓')}
-        </span>
-        <span onClick={() => handleSort('price')} className="sortable">
+        </div>
+        <div onClick={() => handleSort('price')} className="sortable">
           Price {sortBy === 'price' && (sortDir === 'asc' ? '↑' : '↓')}
-        </span>
-        <span onClick={() => handleSort('change')} className="sortable">
+        </div>
+        <div onClick={() => handleSort('change')} className="sortable">
           24h {sortBy === 'change' && (sortDir === 'asc' ? '↑' : '↓')}
-        </span>
-        <span onClick={() => handleSort('volume')} className="sortable">
+        </div>
+        <div onClick={() => handleSort('volume')} className="sortable">
           Vol {sortBy === 'volume' && (sortDir === 'asc' ? '↑' : '↓')}
-        </span>
+        </div>
       </div>
 
       {/* Loading state */}

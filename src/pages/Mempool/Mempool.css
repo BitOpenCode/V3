@@ -321,6 +321,11 @@
   color: #eab308 !important;
 }
 
+.address-text {
+  font-size: 0.75rem;
+  word-break: break-all;
+}
+
 /* Responsive */
 @media (max-width: 640px) {
   .fees-grid {

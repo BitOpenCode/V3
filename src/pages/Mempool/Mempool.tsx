@@ -5,7 +5,7 @@ import axios from 'axios';
 import { BubbleCard } from '../../components/ui';
 import './Mempool.css';
 
-type Currency = 'BTC' | 'TON';
+type Currency = 'BTC' | 'TON' | 'TRC20';
 
 interface Block {
   id: string;
@@ -59,8 +59,33 @@ interface TonJetton {
   };
 }
 
+interface TronAddressData {
+  balance: number;
+  bandwidth: { freeNetUsed: number; freeNetLimit: number };
+  trc20token_balances: Array<{
+    tokenName: string;
+    tokenAbbr: string;
+    balance: string;
+    tokenDecimal: number;
+  }>;
+  transactions: number;
+}
+
+interface TronTxData {
+  hash: string;
+  confirmed: boolean;
+  block: number;
+  timestamp: number;
+  ownerAddress: string;
+  toAddress: string;
+  contractType: number;
+  amount?: number;
+  cost: { net_fee: number; energy_fee: number };
+}
+
 const MEMPOOL_API = 'https://mempool.space/api';
 const TONAPI_URL = 'https://tonapi.io/v2';
+const TRONSCAN_API = 'https://apilist.tronscan.org/api';
 
 const Mempool: React.FC = () => {
   const navigate = useNavigate();
@@ -83,6 +108,17 @@ const Mempool: React.FC = () => {
   const [tonJettons, setTonJettons] = useState<TonJetton[]>([]);
   const [tonAddressLoading, setTonAddressLoading] = useState(false);
   const [tonAddressError, setTonAddressError] = useState<string | null>(null);
+
+  // TRON/TRC20 State
+  const [tronAddress, setTronAddress] = useState('');
+  const [tronAddressData, setTronAddressData] = useState<TronAddressData | null>(null);
+  const [tronAddressLoading, setTronAddressLoading] = useState(false);
+  const [tronAddressError, setTronAddressError] = useState<string | null>(null);
+
+  const [tronTxId, setTronTxId] = useState('');
+  const [tronTxData, setTronTxData] = useState<TronTxData | null>(null);
+  const [tronTxLoading, setTronTxLoading] = useState(false);
+  const [tronTxError, setTronTxError] = useState<string | null>(null);
 
   // Fetch BTC blocks
   const { data: blocks } = useQuery({
@@ -240,6 +276,57 @@ const Mempool: React.FC = () => {
     }
   };
 
+  // TRON Address Lookup
+  const lookupTronAddress = async () => {
+    if (!tronAddress.trim()) {
+      setTronAddressError('Please enter a TRON address');
+      return;
+    }
+
+    setTronAddressLoading(true);
+    setTronAddressError(null);
+    setTronAddressData(null);
+
+    try {
+      const response = await axios.get(`${TRONSCAN_API}/account?address=${tronAddress.trim()}`);
+      setTronAddressData(response.data);
+    } catch (error: any) {
+      setTronAddressError('Error fetching address data');
+    } finally {
+      setTronAddressLoading(false);
+    }
+  };
+
+  // TRON Transaction Lookup
+  const lookupTronTransaction = async () => {
+    if (!tronTxId.trim()) {
+      setTronTxError('Please enter a Transaction Hash');
+      return;
+    }
+
+    setTronTxLoading(true);
+    setTronTxError(null);
+    setTronTxData(null);
+
+    try {
+      const response = await axios.get(`${TRONSCAN_API}/transaction-info?hash=${tronTxId.trim()}`);
+      if (response.data && response.data.hash) {
+        setTronTxData(response.data);
+      } else {
+        setTronTxError('Transaction not found');
+      }
+    } catch (error: any) {
+      setTronTxError('Error fetching transaction data');
+    } finally {
+      setTronTxLoading(false);
+    }
+  };
+
+  // Format TRX
+  const formatTrx = (sun: number): string => {
+    return (sun / 1e6).toFixed(6);
+  };
+
   return (
     <div className="mempool-page">
       <div className="page-header">
@@ -262,6 +349,12 @@ const Mempool: React.FC = () => {
           onClick={() => setCurrency('TON')}
         >
           💎 TON
+        </button>
+        <button 
+          className={`currency-btn ${currency === 'TRC20' ? 'active' : ''}`}
+          onClick={() => setCurrency('TRC20')}
+        >
+          🔴 TRC20
         </button>
       </div>
 
@@ -481,6 +574,130 @@ const Mempool: React.FC = () => {
                       </span>
                     </div>
                   ))}
+                </div>
+              </div>
+            )}
+          </BubbleCard>
+        </>
+      )}
+
+      {/* TRC20/TRON Section */}
+      {currency === 'TRC20' && (
+        <>
+          {/* TRON Address Lookup */}
+          <BubbleCard className="lookup-card">
+            <h3>TRON/TRC20 Address Lookup</h3>
+            <div className="lookup-input-group">
+              <input
+                type="text"
+                placeholder="Enter TRON address (T...)"
+                value={tronAddress}
+                onChange={(e) => setTronAddress(e.target.value)}
+                className="lookup-input"
+              />
+              <button 
+                onClick={lookupTronAddress}
+                disabled={tronAddressLoading}
+                className="lookup-btn"
+              >
+                {tronAddressLoading ? '...' : 'Lookup'}
+              </button>
+            </div>
+            
+            {tronAddressError && <div className="lookup-error">{tronAddressError}</div>}
+            
+            {tronAddressData && (
+              <div className="lookup-result">
+                <div className="result-row">
+                  <span>TRX Balance:</span>
+                  <span>{formatTrx(tronAddressData.balance)} TRX</span>
+                </div>
+                <div className="result-row">
+                  <span>Transactions:</span>
+                  <span>{tronAddressData.transactions || 0}</span>
+                </div>
+                <div className="result-row">
+                  <span>Bandwidth:</span>
+                  <span>{tronAddressData.bandwidth?.freeNetUsed || 0} / {tronAddressData.bandwidth?.freeNetLimit || 0}</span>
+                </div>
+              </div>
+            )}
+
+            {/* TRC20 Token Balances */}
+            {tronAddressData?.trc20token_balances && tronAddressData.trc20token_balances.length > 0 && (
+              <div className="jettons-section">
+                <h4>TRC20 Tokens</h4>
+                <div className="jettons-list">
+                  {tronAddressData.trc20token_balances
+                    .filter(token => parseFloat(token.balance) > 0)
+                    .map((token, index) => (
+                      <div key={index} className="jetton-item">
+                        <span className="jetton-symbol">{token.tokenAbbr || token.tokenName}</span>
+                        <span className="jetton-balance">
+                          {(parseFloat(token.balance) / Math.pow(10, token.tokenDecimal)).toFixed(4)}
+                        </span>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            )}
+          </BubbleCard>
+
+          {/* TRON Transaction Lookup */}
+          <BubbleCard className="lookup-card">
+            <h3>TRON Transaction Lookup</h3>
+            <div className="lookup-input-group">
+              <input
+                type="text"
+                placeholder="Enter Transaction Hash"
+                value={tronTxId}
+                onChange={(e) => setTronTxId(e.target.value)}
+                className="lookup-input"
+              />
+              <button 
+                onClick={lookupTronTransaction}
+                disabled={tronTxLoading}
+                className="lookup-btn"
+              >
+                {tronTxLoading ? '...' : 'Lookup'}
+              </button>
+            </div>
+            
+            {tronTxError && <div className="lookup-error">{tronTxError}</div>}
+            
+            {tronTxData && (
+              <div className="lookup-result">
+                <div className="result-row">
+                  <span>Status:</span>
+                  <span className={tronTxData.confirmed ? 'text-green' : 'text-yellow'}>
+                    {tronTxData.confirmed ? 'Confirmed' : 'Unconfirmed'}
+                  </span>
+                </div>
+                <div className="result-row">
+                  <span>Block:</span>
+                  <span>{tronTxData.block || 'Pending'}</span>
+                </div>
+                <div className="result-row">
+                  <span>From:</span>
+                  <span className="address-text">{tronTxData.ownerAddress?.slice(0, 8)}...{tronTxData.ownerAddress?.slice(-6)}</span>
+                </div>
+                <div className="result-row">
+                  <span>To:</span>
+                  <span className="address-text">{tronTxData.toAddress?.slice(0, 8)}...{tronTxData.toAddress?.slice(-6)}</span>
+                </div>
+                {tronTxData.amount && (
+                  <div className="result-row">
+                    <span>Amount:</span>
+                    <span>{formatTrx(tronTxData.amount)} TRX</span>
+                  </div>
+                )}
+                <div className="result-row">
+                  <span>Net Fee:</span>
+                  <span>{tronTxData.cost?.net_fee || 0} sun</span>
+                </div>
+                <div className="result-row">
+                  <span>Energy Fee:</span>
+                  <span>{tronTxData.cost?.energy_fee || 0} sun</span>
                 </div>
               </div>
             )}

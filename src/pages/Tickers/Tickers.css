@@ -75,29 +75,29 @@
   font-weight: 600;
 }
 
-.tickers-table-header span {
+.tickers-table-header div {
   cursor: pointer;
   user-select: none;
   transition: color 0.2s;
 }
 
-.tickers-table-header span:hover {
+.tickers-table-header div:hover {
   color: white;
 }
 
-.tickers-table-header span:nth-child(1) {
+.tickers-table-header div:nth-child(1) {
   text-align: left;
 }
 
-.tickers-table-header span:nth-child(2) {
+.tickers-table-header div:nth-child(2) {
   text-align: right;
 }
 
-.tickers-table-header span:nth-child(3) {
+.tickers-table-header div:nth-child(3) {
   text-align: center;
 }
 
-.tickers-table-header span:nth-child(4) {
+.tickers-table-header div:nth-child(4) {
   text-align: right;
 }
 
