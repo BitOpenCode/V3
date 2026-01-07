@@ -11,30 +11,57 @@
 .currency-selector {
   display: flex;
   gap: 8px;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 
 .currency-btn {
   flex: 1;
   padding: 12px 16px;
-  background: var(--color-bg--300);
-  border: 2px solid var(--color-primary-purple);
   border-radius: 12px;
-  color: var(--color-primary-silver);
-  font-size: 1rem;
+  font-size: 0.9rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  
+  /* Lava lamp style */
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(138, 43, 226, 0.5), transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(0, 119, 204, 0.4), transparent 50%),
+    linear-gradient(135deg, #2a1a4a 0%, #1a1a3a 100%);
+  background-size: 200% 200%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 2px 8px rgba(138, 43, 226, 0.2);
 }
 
 .currency-btn:hover {
-  background: rgba(138, 43, 226, 0.2);
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 16px rgba(138, 43, 226, 0.4);
 }
 
 .currency-btn.active {
-  background: linear-gradient(135deg, var(--color-primary-purple), var(--color-primary-blue));
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(138, 43, 226, 0.8), transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(0, 119, 204, 0.6), transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(180, 50, 200, 0.7), transparent 60%),
+    linear-gradient(135deg, #2a1a4a 0%, #1a1a3a 100%);
+  background-size: 200% 200%;
+  animation: lavaLampBtn 8s infinite ease-in-out;
   color: white;
-  border-color: transparent;
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 4px 16px rgba(138, 43, 226, 0.5),
+    0 0 20px rgba(0, 119, 204, 0.3);
+}
+
+@keyframes lavaLampBtn {
+  0% { background-position: 0% 100%; }
+  33% { background-position: 100% 50%; }
+  66% { background-position: 50% 0%; }
+  100% { background-position: 0% 100%; }
 }
 
 /* Lookup Cards */
@@ -55,43 +82,60 @@
 
 .lookup-input {
   flex: 1;
-  padding: 10px 14px;
-  background: var(--color-bg--300);
-  border: 1px solid rgba(138, 43, 226, 0.5);
-  border-radius: 8px;
+  padding: 12px 16px;
+  background: rgba(30, 20, 50, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
   color: white;
   font-size: 0.85rem;
   outline: none;
+  transition: all 0.3s ease;
 }
 
 .lookup-input:focus {
-  border-color: var(--color-primary-purple);
-  box-shadow: 0 0 8px rgba(138, 43, 226, 0.3);
+  border-color: rgba(138, 43, 226, 0.6);
+  box-shadow: 0 0 16px rgba(138, 43, 226, 0.3);
+  background: rgba(40, 30, 60, 0.9);
 }
 
 .lookup-input::placeholder {
-  color: rgba(192, 192, 192, 0.5);
+  color: rgba(255, 255, 255, 0.4);
 }
 
 .lookup-btn {
   padding: 10px 20px;
-  background: var(--color-primary-purple);
-  border: none;
-  border-radius: 8px;
-  color: white;
+  min-width: 80px;
+  border-radius: 10px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
-  min-width: 80px;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  
+  /* Lava lamp style */
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(138, 43, 226, 0.8), transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(0, 119, 204, 0.6), transparent 50%),
+    linear-gradient(135deg, #2a1a4a 0%, #1a1a3a 100%);
+  background-size: 200% 200%;
+  animation: lavaLampBtn 8s infinite ease-in-out;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  box-shadow: 0 2px 8px rgba(138, 43, 226, 0.4);
 }
 
 .lookup-btn:hover:not(:disabled) {
-  background: var(--color-primary-blue);
+  transform: translateY(-2px);
+  box-shadow: 
+    0 4px 16px rgba(138, 43, 226, 0.5),
+    0 0 20px rgba(0, 119, 204, 0.3);
+  border-color: rgba(255, 255, 255, 0.4);
 }
 
 .lookup-btn:disabled {
-  opacity: 0.6;
+  opacity: 0.5;
   cursor: not-allowed;
+  animation: none;
 }
 
 .lookup-error {
@@ -106,9 +150,10 @@
 
 .lookup-result {
   margin-top: 12px;
-  padding: 12px;
-  background: var(--color-bg--300);
-  border-radius: 8px;
+  padding: 14px;
+  background: rgba(30, 20, 50, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
 }
 
 .result-row {
@@ -140,20 +185,34 @@
 }
 
 .stat-card {
-  background: var(--color-bg--300);
-  border: 1px solid var(--color-primary-purple);
+  /* Lava lamp gradient */
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(138, 43, 226, 0.6), transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(0, 119, 204, 0.4), transparent 50%),
+    linear-gradient(135deg, #2a1a4a 0%, #1a1a3a 100%);
+  background-size: 200% 200%;
+  animation: lavaLampCard 10s infinite ease-in-out;
+  border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 12px;
   padding: 16px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
+  box-shadow: 0 4px 16px rgba(138, 43, 226, 0.3);
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(138, 43, 226, 0.4);
 }
 
 .stat-label {
-  color: var(--color-primary-silver);
+  color: rgba(255, 255, 255, 0.7);
   font-size: 0.8rem;
   text-transform: uppercase;
+  letter-spacing: 0.05em;
 }
 
 .stat-value {
@@ -161,19 +220,42 @@
   font-size: 1.1rem;
   font-weight: 700;
   font-family: monospace;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes lavaLampCard {
+  0% { background-position: 0% 100%; }
+  50% { background-position: 100% 0%; }
+  100% { background-position: 0% 100%; }
 }
 
 /* Fees Card */
 .fees-card {
-  background: var(--color-bg--300);
-  border-radius: 12px;
-  padding: 16px;
+  /* Lava lamp gradient */
+  background: 
+    radial-gradient(circle at 30% 30%, rgba(138, 43, 226, 0.5), transparent 50%),
+    radial-gradient(circle at 70% 70%, rgba(0, 119, 204, 0.4), transparent 50%),
+    linear-gradient(135deg, #2a1a4a 0%, #1a1a3a 100%);
+  background-size: 200% 200%;
+  animation: lavaLampCard 12s infinite ease-in-out;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(138, 43, 226, 0.3);
+  transition: all 0.3s ease;
+}
+
+.fees-card:hover {
+  box-shadow: 0 6px 28px rgba(138, 43, 226, 0.4);
 }
 
 .fees-card h3 {
-  color: var(--color-primary-yellow);
+  color: white;
   font-size: 1rem;
   margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .fees-grid {
@@ -187,49 +269,78 @@
   flex-direction: column;
   align-items: center;
   padding: 12px 8px;
-  border-radius: 8px;
-  background: var(--color-bg--500);
+  border-radius: 10px;
+  background: rgba(30, 20, 50, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.fee-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .fee-item.fastest {
-  border: 1px solid #22c55e;
+  border-color: rgba(34, 197, 94, 0.5);
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.2);
 }
 
 .fee-item.medium {
-  border: 1px solid #eab308;
+  border-color: rgba(234, 179, 8, 0.5);
+  box-shadow: 0 0 12px rgba(234, 179, 8, 0.2);
 }
 
 .fee-item.slow {
-  border: 1px solid #f97316;
+  border-color: rgba(249, 115, 22, 0.5);
+  box-shadow: 0 0 12px rgba(249, 115, 22, 0.2);
 }
 
 .fee-item.economy {
-  border: 1px solid #ef4444;
+  border-color: rgba(239, 68, 68, 0.5);
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.2);
 }
 
 .fee-label {
   font-size: 0.7rem;
-  color: var(--color-primary-silver);
+  color: rgba(255, 255, 255, 0.6);
   margin-bottom: 4px;
+  text-transform: uppercase;
 }
 
 .fee-value {
   font-size: 1rem;
   font-weight: 700;
   color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 /* Blocks Card */
 .blocks-card {
-  background: var(--color-bg--300);
-  border-radius: 12px;
-  padding: 16px;
+  /* Lava lamp gradient */
+  background: 
+    radial-gradient(circle at 25% 25%, rgba(138, 43, 226, 0.5), transparent 50%),
+    radial-gradient(circle at 75% 75%, rgba(0, 119, 204, 0.4), transparent 50%),
+    linear-gradient(135deg, #2a1a4a 0%, #1a1a3a 100%);
+  background-size: 200% 200%;
+  animation: lavaLampCard 14s infinite ease-in-out;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 14px;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(138, 43, 226, 0.3);
+  transition: all 0.3s ease;
+}
+
+.blocks-card:hover {
+  box-shadow: 0 6px 28px rgba(138, 43, 226, 0.4);
 }
 
 .blocks-card h3 {
-  color: var(--color-primary-yellow);
+  color: white;
   font-size: 1rem;
   margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .blocks-list {
@@ -242,10 +353,17 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   align-items: center;
-  padding: 10px;
-  background: var(--color-bg--500);
-  border-radius: 8px;
+  padding: 10px 12px;
+  background: rgba(30, 20, 50, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
   font-size: 0.8rem;
+  transition: all 0.2s ease;
+}
+
+.block-item:hover {
+  background: rgba(40, 30, 60, 0.8);
+  border-color: rgba(138, 43, 226, 0.3);
 }
 
 .block-height {
@@ -293,10 +411,17 @@
 .jetton-item {
   display: flex;
   justify-content: space-between;
-  padding: 8px;
-  background: var(--color-bg--500);
-  border-radius: 6px;
+  padding: 10px 12px;
+  background: rgba(30, 20, 50, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
   font-size: 0.8rem;
+  transition: all 0.2s ease;
+}
+
+.jetton-item:hover {
+  background: rgba(40, 30, 60, 0.8);
+  border-color: rgba(138, 43, 226, 0.3);
 }
 
 .jetton-symbol {
