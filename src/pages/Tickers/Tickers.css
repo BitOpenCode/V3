@@ -62,11 +62,12 @@
   font-weight: 600;
 }
 
-/* Table header - exact column widths */
+/* Table header - using CSS Grid for perfect alignment */
 .tickers-table-header {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 0.8fr 1.2fr;
   align-items: center;
-  padding: 8px 8px;
+  padding: 8px 12px;
   background: var(--color-bg--300);
   border-radius: 8px 8px 0 0;
   font-size: 0.75rem;
@@ -84,23 +85,20 @@
   color: white;
 }
 
-/* Column widths - matching Calculator: 25% | 25% | 20% | 30% */
-.tickers-table-header span:nth-child(1) { 
-  width: 25%; 
+.tickers-table-header span:nth-child(1) {
   text-align: left;
 }
-.tickers-table-header span:nth-child(2) { 
-  width: 25%; 
+
+.tickers-table-header span:nth-child(2) {
   text-align: right;
 }
-.tickers-table-header span:nth-child(3) { 
-  width: 20%; 
+
+.tickers-table-header span:nth-child(3) {
   text-align: center;
 }
-.tickers-table-header span:nth-child(4) { 
-  width: 30%; 
+
+.tickers-table-header span:nth-child(4) {
   text-align: right;
-  padding-right: 4px;
 }
 
 .tickers-list {
@@ -110,28 +108,29 @@
   flex-direction: column;
   background: var(--color-bg--300);
   border-radius: 0 0 8px 8px;
-  padding: 4px 8px;
+  padding: 4px 0;
   max-height: calc(100vh - 320px);
 }
 
+/* Ticker row - using CSS Grid for perfect alignment */
 .ticker-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 0.8fr 1.2fr;
   align-items: center;
-  padding: 6px 0;
+  padding: 8px 12px;
   font-size: 0.8rem;
   font-family: 'Roboto Mono', monospace;
   transition: background 0.15s;
   cursor: pointer;
-  border-radius: 2px;
 }
 
 .ticker-row:hover {
   background: rgba(234, 179, 8, 0.15);
 }
 
-/* Column structure - exact widths */
+/* Column styles */
 .ticker-pair {
-  width: 25%;
+  text-align: left;
   color: var(--color-primary-silver);
   font-weight: 500;
   white-space: nowrap;
@@ -140,7 +139,6 @@
 }
 
 .ticker-price {
-  width: 25%;
   text-align: right;
   white-space: nowrap;
   overflow: hidden;
@@ -156,7 +154,6 @@
 }
 
 .ticker-change {
-  width: 20%;
   text-align: center;
   white-space: nowrap;
 }
@@ -170,7 +167,6 @@
 }
 
 .ticker-volume-container {
-  width: 30%;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -181,7 +177,6 @@
   color: var(--color-primary-silver);
   font-size: 0.75rem;
   white-space: nowrap;
-  text-align: right;
 }
 
 .favorite-btn {
@@ -197,20 +192,6 @@
 }
 
 .favorite-btn:hover {
-  color: var(--color-primary-yellow);
-}
-
-.ticker-row .favorite-btn {
-  color: #9ca3af;
-}
-
-.ticker-row .favorite-btn:has(+ .favorite-active),
-.ticker-row .favorite-btn[style*="★"] {
-  color: var(--color-primary-yellow);
-}
-
-/* Yellow star for favorites */
-.favorite-btn:first-child {
   color: var(--color-primary-yellow);
 }
 
@@ -234,26 +215,20 @@
 /* Responsive */
 @media (max-width: 480px) {
   .tickers-table-header {
+    grid-template-columns: 1.2fr 1fr 0.8fr 0.5fr;
     font-size: 0.65rem;
-    padding: 8px 4px;
+    padding: 8px;
   }
-  
-  /* Adjust columns on mobile */
-  .tickers-table-header span:nth-child(1) { width: 30%; }
-  .tickers-table-header span:nth-child(2) { width: 30%; }
-  .tickers-table-header span:nth-child(3) { width: 25%; }
-  .tickers-table-header span:nth-child(4) { width: 15%; }
 
   .ticker-row {
+    grid-template-columns: 1.2fr 1fr 0.8fr 0.5fr;
     font-size: 0.7rem;
-    padding: 5px 0;
+    padding: 6px 8px;
   }
 
-  .ticker-pair { width: 30%; }
-  .ticker-price { width: 30%; }
-  .ticker-change { width: 25%; }
-  .ticker-volume-container { width: 15%; }
-  .ticker-volume { display: none; }
+  .ticker-volume {
+    display: none;
+  }
 
   .filter-button {
     padding: 6px 8px;

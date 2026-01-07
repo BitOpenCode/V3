@@ -83,7 +83,9 @@
   background: var(--color-bg--300);
   border-radius: 8px;
   overflow: hidden;
-  padding-bottom: 8px;
+  padding: 8px 0;
+  max-height: 180px;
+  overflow-y: auto;
 }
 
 .orderbook-section.asks::before,
@@ -106,9 +108,10 @@
   color: #22c55e;
 }
 
-/* Header - Total | Size | Price */
+/* Header - CSS Grid for perfect alignment */
 .section-header {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   padding: 6px 12px;
   font-size: 0.7rem;
   color: #22c55e;
@@ -117,23 +120,21 @@
 }
 
 .section-header span:nth-child(1) {
-  width: 33.33%;
   text-align: left;
 }
 
 .section-header span:nth-child(2) {
-  width: 33.33%;
   text-align: center;
 }
 
 .section-header span:nth-child(3) {
-  width: 33.33%;
   text-align: right;
 }
 
-/* Order row - matching Calculator */
+/* Order row - CSS Grid for perfect alignment */
 .orderbook-row {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   padding: 4px 12px;
   font-size: 0.8rem;
   font-family: 'Roboto Mono', monospace;
@@ -160,21 +161,18 @@
   );
 }
 
-/* Columns - Total | Size | Price (33.33% each) */
+/* Columns - Total | Size | Price */
 .orderbook-row .total {
-  width: 33.33%;
   text-align: left;
   color: var(--color-primary-silver);
 }
 
 .orderbook-row .amount {
-  width: 33.33%;
   text-align: center;
   color: var(--color-primary-silver);
 }
 
 .orderbook-row .price {
-  width: 33.33%;
   text-align: right;
 }
 
@@ -204,12 +202,6 @@
   padding: 60px;
   color: var(--color-primary-silver);
   font-size: 1rem;
-}
-
-/* Scrollable sections */
-.orderbook-section {
-  max-height: 180px;
-  overflow-y: auto;
 }
 
 @media (max-width: 480px) {
