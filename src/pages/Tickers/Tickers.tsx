@@ -134,7 +134,7 @@ const Tickers: React.FC = () => {
   return (
     <div className="tickers-page">
       <div className="page-header">
-        <h1 className="page-title">Tickers</h1>
+        <h1 className="page-title">Tickers </h1>
         <button onClick={() => navigate('/')} className="close-button">
           Close
         </button>
