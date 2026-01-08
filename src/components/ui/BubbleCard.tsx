@@ -15,7 +15,7 @@ const BubbleCard: React.FC<BubbleCardProps> = ({ children, className, title, onC
 
   useEffect(() => {
     const card = cardRef.current;
-    if (!card || theme === 'space') return; // Don't generate bubbles for space theme
+    if (!card || theme !== 'bubbles') return; // Only generate bubbles for bubbles theme
 
     const createBubble = (element: HTMLDivElement) => {
       const bubble = document.createElement('div');

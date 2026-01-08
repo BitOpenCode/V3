@@ -15,7 +15,7 @@ const BubbleButton: React.FC<BubbleButtonProps> = ({ onClick, children, classNam
 
   useEffect(() => {
     const button = buttonRef.current;
-    if (!button || disabled || theme === 'space') return; // Don't generate bubbles for space theme
+    if (!button || disabled || theme !== 'bubbles') return; // Only generate bubbles for bubbles theme
 
     const startBubbleGeneration = () => {
       // Clear existing bubbles before starting new ones

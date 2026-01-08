@@ -176,9 +176,17 @@ body.theme-space .bubble-card:hover {
     inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
 }
 
-/* Скрыть пузырьки в теме Space */
+/* Скрыть пузырьки в темах Space и Light */
 body.theme-space .bubble,
-body.theme-space .bubble-card-bubble {
+body.theme-space .bubble-card-bubble,
+body.theme-light .bubble,
+body.theme-light .bubble-card-bubble {
   display: none !important;
+}
+
+/* Light Theme: Отключить lava-lamp анимации */
+body.theme-light button.nav-button,
+body.theme-light .bubble-card {
+  animation: none !important;
 }
 
