@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { fetchTickers, formatTickerPrice } from '../../services/api';
 import { Ticker } from '../../types';
+import { divide, multiply, minus, plus, calculatePercentChange } from '../../utils/bignumber';
 import './Calculator.css';
 
 interface CalculatorForm {
@@ -83,8 +84,6 @@ const Calculator: React.FC = () => {
       return null;
     }
 
-    const { divide, multiply, minus, plus, calculatePercentChange, toFixed } = require('../../utils/bignumber');
-    
     const investment = form.investment;
     const initialPrice = form.initialPrice;
     const projectedPrice = form.projectedPrice;

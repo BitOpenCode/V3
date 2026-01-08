@@ -5,6 +5,7 @@ import { fetchTickers } from '../../services/api';
 import { usePortfolioStore } from '../../store';
 import { Ticker } from '../../types';
 import { BubbleCard } from '../../components/ui';
+import { multiply, minus, plus, bn, calculateProfitPercent } from '../../utils/bignumber';
 import './Portfolio.css';
 
 const Portfolio: React.FC = () => {
@@ -34,8 +35,6 @@ const Portfolio: React.FC = () => {
   const portfolioWithPrices = useMemo(() => {
     if (!tickers) return positions;
     
-    const { multiply, minus, calculateProfitPercent, bn } = require('../../utils/bignumber');
-    
     return positions.map(pos => {
       const ticker = tickers.find((t: Ticker) => t.symbol === `${pos.symbol}USDT`);
       const currentPrice = ticker?.lastPrice || pos.currentPrice;
@@ -57,8 +56,6 @@ const Portfolio: React.FC = () => {
 
   // Portfolio totals using BigNumber
   const totals = useMemo(() => {
-    const { plus, minus, multiply, calculateProfitPercent, bn } = require('../../utils/bignumber');
-    
     const totalValue = portfolioWithPrices.reduce(
       (sum, p) => plus(sum, p.value), 
       bn(0)
