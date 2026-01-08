@@ -682,14 +682,75 @@ body.theme-light .share-page {
   color: var(--color-text) !important;
 }
 
-body.theme-light .share-card {
+body.theme-light .share-search {
+  background: var(--color-card-bg) !important;
+  border: 1px solid var(--color-border) !important;
+  color: var(--color-text) !important;
+}
+
+body.theme-light .share-filter {
+  background: var(--color-card-bg) !important;
+  border: 1px solid var(--color-border) !important;
+  color: var(--color-text) !important;
+}
+
+body.theme-light .share-filter:hover {
+  background: var(--color-bg--300) !important;
+  border-color: var(--color-primary-purple) !important;
+}
+
+body.theme-light .share-filter.active {
+  background: var(--color-accent-gradient) !important;
+  border-color: transparent !important;
+  color: white !important;
+}
+
+body.theme-light .action-btn {
+  background: var(--color-card-bg) !important;
+  border: 1px solid var(--color-border) !important;
+  color: var(--color-text) !important;
+}
+
+body.theme-light .action-btn:hover {
+  background: var(--color-bg--300) !important;
+  border-color: var(--color-primary-purple) !important;
+}
+
+body.theme-light .share-ticker {
   background: var(--color-card-bg) !important;
   border: 1px solid var(--color-border) !important;
 }
 
-body.theme-light .share-title,
-body.theme-light .share-link {
+body.theme-light .share-ticker:hover {
+  border-color: var(--color-primary-purple) !important;
+  background: var(--color-bg--300) !important;
+}
+
+body.theme-light .share-ticker.selected {
+  background: var(--color-accent-gradient) !important;
+  border-color: transparent !important;
+}
+
+body.theme-light .ticker-symbol {
   color: var(--color-text) !important;
+}
+
+body.theme-light .share-ticker.selected .ticker-symbol,
+body.theme-light .share-ticker.selected .ticker-price,
+body.theme-light .share-ticker.selected .ticker-change {
+  color: white !important;
+}
+
+body.theme-light .share-footer {
+  border-color: var(--color-border) !important;
+}
+
+body.theme-light .selected-count {
+  color: var(--color-text-secondary) !important;
+}
+
+body.theme-light .share-loading {
+  color: var(--color-text-secondary) !important;
 }
 
 /* ============================================
