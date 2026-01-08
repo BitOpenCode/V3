@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import { useSettingsStore } from '../../store';
 import './BubbleCard.css';
 
 interface BubbleCardProps {
@@ -10,10 +11,11 @@ interface BubbleCardProps {
 
 const BubbleCard: React.FC<BubbleCardProps> = ({ children, className, title, onClick }) => {
   const cardRef = useRef<HTMLDivElement>(null);
+  const { theme } = useSettingsStore();
 
   useEffect(() => {
     const card = cardRef.current;
-    if (!card) return;
+    if (!card || theme === 'space') return; // Don't generate bubbles for space theme
 
     const createBubble = (element: HTMLDivElement) => {
       const bubble = document.createElement('div');
@@ -42,7 +44,7 @@ const BubbleCard: React.FC<BubbleCardProps> = ({ children, className, title, onC
       clearInterval(intervalId);
       card.querySelectorAll('.bubble-card-bubble').forEach(bubble => bubble.remove());
     };
-  }, []);
+  }, [theme]);
 
   return (
     <div ref={cardRef} className={`bubble-card ${className || ''}`} onClick={onClick}>

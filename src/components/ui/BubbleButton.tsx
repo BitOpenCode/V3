@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from 'react';
+import { useSettingsStore } from '../../store';
 import './BubbleButton.css';
 
 interface BubbleButtonProps {
@@ -10,10 +11,11 @@ interface BubbleButtonProps {
 
 const BubbleButton: React.FC<BubbleButtonProps> = ({ onClick, children, className, disabled }) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const { theme } = useSettingsStore();
 
   useEffect(() => {
     const button = buttonRef.current;
-    if (!button || disabled) return;
+    if (!button || disabled || theme === 'space') return; // Don't generate bubbles for space theme
 
     const startBubbleGeneration = () => {
       // Clear existing bubbles before starting new ones
@@ -64,7 +66,7 @@ const BubbleButton: React.FC<BubbleButtonProps> = ({ onClick, children, classNam
       button.removeEventListener('mouseenter', stopBubbleGeneration);
       button.removeEventListener('mouseleave', startBubbleGeneration);
     };
-  }, [disabled]);
+  }, [disabled, theme]);
 
   return (
     <button 
