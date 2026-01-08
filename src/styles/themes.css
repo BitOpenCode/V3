@@ -540,6 +540,65 @@ body.theme-light .error-boundary button {
   color: white !important;
 }
 
+/* ============================================
+   TonConnect Button - Light Theme Overrides
+   ============================================ */
+body.theme-light [data-tc-wallets-modal-container],
+body.theme-light [data-tc-connect-button],
+body.theme-light [data-tc-connect-button-universal-button],
+body.theme-light .tc-connect-button,
+body.theme-light button[data-tc-connect-button] {
+  color: var(--color-text) !important;
+}
+
+body.theme-light [data-tc-connect-button] > div,
+body.theme-light [data-tc-connect-button] span,
+body.theme-light [data-tc-connect-button] button {
+  color: var(--color-text) !important;
+}
+
+/* TonConnect кнопка в Header */
+body.theme-light .connect-wallet-button button,
+body.theme-light .connect-wallet-button > div,
+body.theme-light .connect-wallet-button [class*="button"],
+body.theme-light .connect-wallet-button [class*="address"],
+body.theme-light .connect-wallet-button [class*="wallet"] {
+  color: var(--color-text) !important;
+  background: linear-gradient(145deg, #ffffff 0%, #f1f5f9 100%) !important;
+  border: 1px solid rgba(124, 58, 237, 0.2) !important;
+}
+
+body.theme-light .connect-wallet-button button:hover,
+body.theme-light .connect-wallet-button > div:hover {
+  background: linear-gradient(145deg, #f8fafc 0%, #e2e8f0 100%) !important;
+  border-color: rgba(124, 58, 237, 0.4) !important;
+}
+
+/* TonConnect модальное окно */
+body.theme-light [data-tc-wallets-modal-container] {
+  --tc-color-background: #ffffff !important;
+  --tc-color-text-primary: #1f2937 !important;
+  --tc-color-text-secondary: #4b5563 !important;
+}
+
+body.theme-light [class*="tonconnect"] {
+  color: var(--color-text) !important;
+}
+
+body.theme-light [class*="tonconnect"] button {
+  color: var(--color-text) !important;
+}
+
+/* Глобальное переопределение для TonConnect */
+body.theme-light div[style*="color: rgb(255, 255, 255)"],
+body.theme-light span[style*="color: rgb(255, 255, 255)"],
+body.theme-light div[style*="color: white"],
+body.theme-light span[style*="color: white"],
+body.theme-light div[style*="color:#fff"],
+body.theme-light span[style*="color:#fff"] {
+  color: var(--color-text) !important;
+}
+
 /* Space Theme: Отключить пузырьки и lava-lamp анимации */
 body.theme-space button.nav-button {
   animation: none !important;
