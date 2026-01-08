@@ -434,9 +434,40 @@ body.theme-light .position-item {
 /* Wallet Page */
 body.theme-light .wallet-page,
 body.theme-light .wallet-card,
+body.theme-light .wallet-header h2,
+body.theme-light .address-label,
+body.theme-light .address-value,
+body.theme-light .balance-label,
+body.theme-light .balance-value,
+body.theme-light .balance-usd,
+body.theme-light .analytics-card,
+body.theme-light .analytics-title,
+body.theme-light .analytics-label,
+body.theme-light .analytics-value,
+body.theme-light .connect-card h2,
+body.theme-light .connect-card p,
 body.theme-light .balance-item,
 body.theme-light .transaction-item {
   color: var(--color-text) !important;
+}
+
+body.theme-light .wallet-address {
+  background: rgba(124, 58, 237, 0.08) !important;
+}
+
+body.theme-light .wallet-balance {
+  background: rgba(124, 58, 237, 0.08) !important;
+}
+
+body.theme-light .analytics-card {
+  background: linear-gradient(145deg, #ffffff 0%, #f8fafc 100%) !important;
+  border-color: rgba(124, 58, 237, 0.15) !important;
+}
+
+body.theme-light .address-label,
+body.theme-light .balance-label,
+body.theme-light .analytics-label {
+  color: var(--color-text-muted) !important;
 }
 
 /* News Page */
