@@ -35,25 +35,12 @@ body.theme-space {
   --color-primary-green: #06ffa5;
   --color-primary-red: #ff006e;
   --color-bg--300: #0a0a0f;
-  --color-bg--500: #1a1a2e;
+  --color-bg--500: #090a0f;
   --color-text: #f0f0f0;
-  --theme-bg-pattern: 
-    radial-gradient(2px 2px at 20% 30%, white, transparent),
-    radial-gradient(2px 2px at 60% 70%, white, transparent),
-    radial-gradient(1px 1px at 50% 50%, white, transparent),
-    radial-gradient(1px 1px at 80% 10%, white, transparent),
-    radial-gradient(2px 2px at 90% 60%, white, transparent),
-    radial-gradient(1px 1px at 33% 80%, white, transparent),
-    radial-gradient(1px 1px at 10% 40%, white, transparent),
-    radial-gradient(2px 2px at 40% 90%, white, transparent),
-    radial-gradient(1px 1px at 70% 20%, white, transparent),
-    linear-gradient(135deg, #0a0a0f 0%, #1a1a2e 50%, #16213e 100%);
   
-  background: var(--color-bg--500);
-  background-image: var(--theme-bg-pattern);
-  background-size: 200% 200%, 200% 200%, 200% 200%, 200% 200%, 200% 200%, 200% 200%, 200% 200%, 200% 200%, 200% 200%, 100% 100%;
-  animation: spaceStars 20s infinite linear;
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
   position: relative;
+  overflow-x: hidden;
 }
 
 body.theme-space::before {
@@ -64,18 +51,28 @@ body.theme-space::before {
   right: 0;
   bottom: 0;
   background: 
-    radial-gradient(circle at 25% 25%, rgba(157, 78, 221, 0.1), transparent),
-    radial-gradient(circle at 75% 75%, rgba(76, 201, 240, 0.1), transparent);
+    radial-gradient(2px 2px at 20% 30%, white, transparent),
+    radial-gradient(2px 2px at 60% 70%, white, transparent),
+    radial-gradient(1px 1px at 50% 50%, white, transparent),
+    radial-gradient(1px 1px at 80% 10%, white, transparent),
+    radial-gradient(2px 2px at 90% 60%, white, transparent),
+    radial-gradient(1px 1px at 33% 80%, white, transparent),
+    radial-gradient(1px 1px at 10% 40%, white, transparent),
+    radial-gradient(2px 2px at 40% 90%, white, transparent),
+    radial-gradient(1px 1px at 70% 20%, white, transparent);
+  background-size: 200% 200%;
   pointer-events: none;
   z-index: 0;
+  opacity: 0.6;
+  animation: spaceStars 20s infinite linear;
 }
 
 @keyframes spaceStars {
   0% {
-    background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+    background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
   }
   100% {
-    background-position: 100% 100%, 200% 200%, 150% 150%, 250% 250%, 300% 300%, 180% 180%, 220% 220%, 280% 280%, 190% 190%, 0% 0%;
+    background-position: 100% 100%, 200% 200%, 150% 150%, 250% 250%, 300% 300%, 180% 180%, 220% 220%, 280% 280%, 190% 190%;
   }
 }
 
