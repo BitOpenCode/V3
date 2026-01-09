@@ -188,22 +188,31 @@ body.theme-light .bubble-card-bubble {
    Light Theme: Современная светлая тема
    ============================================ */
 body.theme-light {
-  --color-primary-purple: #8b5cf6;
-  --color-primary-blue: #3b82f6;
+  --color-primary-purple: #a855f7;
+  --color-primary-blue: #06b6d4;
+  --color-primary-pink: #ec4899;
   --color-primary-silver: #64748b;
-  --color-primary-yellow: #f59e0b;
-  --color-primary-green: #22c55e;
-  --color-primary-red: #ef4444;
-  --color-bg--300: #f1f5f9;
-  --color-bg--500: #f8fafc;
-  --color-text: #0f172a;
+  --color-primary-yellow: #fbbf24;
+  --color-primary-green: #10b981;
+  --color-primary-red: #f43f5e;
+  --color-bg--300: #f8fafc;
+  --color-bg--500: #ffffff;
+  --color-text: #1e293b;
   --color-text-secondary: #475569;
   --color-text-muted: #94a3b8;
-  --color-border: #e2e8f0;
-  --color-card-bg: #ffffff;
-  --color-accent-gradient: linear-gradient(135deg, #8b5cf6 0%, #3b82f6 100%);
+  --color-border: rgba(168, 85, 247, 0.15);
+  --color-card-bg: rgba(255, 255, 255, 0.7);
+  --color-accent-gradient: linear-gradient(135deg, #a855f7 0%, #06b6d4 50%, #ec4899 100%);
+  --color-glow-purple: rgba(168, 85, 247, 0.4);
+  --color-glow-cyan: rgba(6, 182, 212, 0.3);
   
-  background: #f8fafc;
+  /* Web3 градиентный фон */
+  background: 
+    radial-gradient(ellipse at 0% 0%, rgba(168, 85, 247, 0.12) 0%, transparent 50%),
+    radial-gradient(ellipse at 100% 0%, rgba(6, 182, 212, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 100%, rgba(236, 72, 153, 0.08) 0%, transparent 50%),
+    linear-gradient(180deg, #fafbff 0%, #f0f4ff 100%);
+  background-attachment: fixed;
   color: var(--color-text);
 }
 
@@ -214,72 +223,96 @@ body.theme-light .bubble-card {
 }
 
 /* ============================================
-   Light Theme: Навигационные панели
+   Light Theme: Навигационные панели (Glassmorphism)
    ============================================ */
 body.theme-light .upper-nav-panel {
-  background: rgba(255, 255, 255, 0.9) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-  border-bottom: 1px solid var(--color-border) !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) !important;
+  background: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border-bottom: 1px solid rgba(168, 85, 247, 0.1) !important;
+  box-shadow: 
+    0 4px 30px rgba(168, 85, 247, 0.08),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.5) !important;
 }
 
 body.theme-light .bottom-nav,
 body.theme-light .fixed.bottom-0 {
-  background: rgba(255, 255, 255, 0.9) !important;
-  backdrop-filter: blur(20px) !important;
-  -webkit-backdrop-filter: blur(20px) !important;
-  border-top: 1px solid var(--color-border) !important;
-  box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.05) !important;
+  background: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border-top: 1px solid rgba(168, 85, 247, 0.1) !important;
+  box-shadow: 
+    0 -4px 30px rgba(168, 85, 247, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
 }
 
 /* ============================================
-   Light Theme: Кнопки навигации
+   Light Theme: Кнопки навигации (Web3 Style)
    ============================================ */
 body.theme-light button.nav-button {
-  background: var(--color-card-bg) !important;
-  border: 1px solid var(--color-border) !important;
-  border-radius: 12px !important;
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(168, 85, 247, 0.2) !important;
+  border-radius: 14px !important;
   color: var(--color-text) !important;
   text-shadow: none !important;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05) !important;
+  box-shadow: 
+    0 2px 8px rgba(168, 85, 247, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
   font-weight: 600 !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 body.theme-light button.nav-button:hover {
-  background: var(--color-bg--300) !important;
-  border-color: var(--color-primary-purple) !important;
-  color: var(--color-primary-purple) !important;
-  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.15) !important;
-  transform: translateY(-2px) !important;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(6, 182, 212, 0.1)) !important;
+  border-color: rgba(168, 85, 247, 0.4) !important;
+  color: #7c3aed !important;
+  box-shadow: 
+    0 8px 25px rgba(168, 85, 247, 0.2),
+    0 0 0 1px rgba(168, 85, 247, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+  transform: translateY(-3px) scale(1.02) !important;
 }
 
 body.theme-light button.nav-button:active {
-  background: var(--color-border) !important;
-  transform: translateY(0) !important;
-  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1) !important;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(6, 182, 212, 0.15)) !important;
+  transform: translateY(-1px) scale(0.98) !important;
+  box-shadow: 
+    0 2px 10px rgba(168, 85, 247, 0.15),
+    inset 0 2px 4px rgba(0, 0, 0, 0.05) !important;
 }
 
 /* ============================================
-   Light Theme: Карточки
+   Light Theme: Карточки (Glassmorphism Web3)
    ============================================ */
 body.theme-light .bubble-card {
-  background: var(--color-card-bg) !important;
-  border: 1px solid var(--color-border) !important;
-  border-radius: 16px !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.03) !important;
+  background: rgba(255, 255, 255, 0.6) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1px solid rgba(168, 85, 247, 0.15) !important;
+  border-radius: 20px !important;
+  box-shadow: 
+    0 4px 24px rgba(168, 85, 247, 0.08),
+    0 1px 2px rgba(0, 0, 0, 0.04),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
   color: var(--color-text) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 body.theme-light .bubble-card:hover {
-  border-color: rgba(139, 92, 246, 0.3) !important;
-  box-shadow: 0 4px 20px rgba(139, 92, 246, 0.1), 0 8px 32px rgba(0, 0, 0, 0.06) !important;
-  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.8) !important;
+  border-color: rgba(168, 85, 247, 0.3) !important;
+  box-shadow: 
+    0 12px 40px rgba(168, 85, 247, 0.15),
+    0 0 0 1px rgba(168, 85, 247, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+  transform: translateY(-4px) scale(1.01);
 }
 
 body.theme-light .bubble-card-title {
   color: var(--color-text) !important;
-  font-weight: 600 !important;
+  font-weight: 700 !important;
 }
 
 body.theme-light .bubble-card-content {
@@ -287,30 +320,45 @@ body.theme-light .bubble-card-content {
 }
 
 /* ============================================
-   Light Theme: Заголовки страниц
+   Light Theme: Заголовки страниц (Web3)
    ============================================ */
 body.theme-light .page-header {
-  background: var(--color-card-bg) !important;
-  border: 1px solid var(--color-border) !important;
-  border-radius: 12px !important;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04) !important;
+  background: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1px solid rgba(168, 85, 247, 0.12) !important;
+  border-radius: 16px !important;
+  box-shadow: 
+    0 4px 20px rgba(168, 85, 247, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
 }
 
 body.theme-light .page-title {
   color: var(--color-text) !important;
-  font-weight: 700 !important;
+  font-weight: 800 !important;
+  background: linear-gradient(135deg, #7c3aed, #0891b2) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
 }
 
 body.theme-light .close-button {
-  background: var(--color-accent-gradient) !important;
+  background: linear-gradient(135deg, #a855f7, #06b6d4) !important;
   color: white !important;
   border: none !important;
-  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3) !important;
+  border-radius: 12px !important;
+  box-shadow: 
+    0 4px 15px rgba(168, 85, 247, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+  transition: all 0.3s ease !important;
 }
 
 body.theme-light .close-button:hover {
-  box-shadow: 0 4px 16px rgba(139, 92, 246, 0.4) !important;
-  transform: translateY(-1px);
+  background: linear-gradient(135deg, #9333ea, #0e7490) !important;
+  box-shadow: 
+    0 6px 25px rgba(168, 85, 247, 0.45),
+    0 0 20px rgba(6, 182, 212, 0.2) !important;
+  transform: translateY(-2px) scale(1.02);
 }
 
 /* ============================================
@@ -344,16 +392,19 @@ body.theme-light label {
 }
 
 /* ============================================
-   Light Theme: Формы и инпуты
+   Light Theme: Формы и инпуты (Web3)
    ============================================ */
 body.theme-light input,
 body.theme-light textarea,
 body.theme-light select {
-  background: var(--color-card-bg) !important;
-  border: 1px solid var(--color-border) !important;
-  border-radius: 8px !important;
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(168, 85, 247, 0.15) !important;
+  border-radius: 12px !important;
   color: var(--color-text) !important;
   padding: 12px 16px !important;
+  transition: all 0.3s ease !important;
 }
 
 body.theme-light input::placeholder,
@@ -364,8 +415,11 @@ body.theme-light textarea::placeholder {
 body.theme-light input:focus,
 body.theme-light textarea:focus,
 body.theme-light select:focus {
-  border-color: var(--color-primary-purple) !important;
-  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.1) !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-color: rgba(168, 85, 247, 0.5) !important;
+  box-shadow: 
+    0 0 0 4px rgba(168, 85, 247, 0.1),
+    0 4px 20px rgba(168, 85, 247, 0.15) !important;
   outline: none !important;
 }
 
@@ -389,55 +443,66 @@ body.theme-light .text-red {
 }
 
 /* ============================================
-   Light Theme: Tickers Page
+   Light Theme: Tickers Page (Web3)
    ============================================ */
 body.theme-light .tickers-page {
   color: var(--color-text) !important;
 }
 
 body.theme-light .tickers-table-header {
-  background: var(--color-bg--300) !important;
+  background: rgba(168, 85, 247, 0.06) !important;
   color: var(--color-text-secondary) !important;
-  border-radius: 12px 12px 0 0 !important;
+  border-radius: 16px 16px 0 0 !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
 }
 
 body.theme-light .tickers-list {
-  background: var(--color-card-bg) !important;
-  border: 1px solid var(--color-border) !important;
+  background: rgba(255, 255, 255, 0.6) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(168, 85, 247, 0.1) !important;
   border-top: none !important;
+  border-radius: 0 0 16px 16px !important;
 }
 
 body.theme-light .ticker-row {
   color: var(--color-text) !important;
-  border-bottom: 1px solid var(--color-border) !important;
+  border-bottom: 1px solid rgba(168, 85, 247, 0.08) !important;
+  transition: all 0.2s ease !important;
 }
 
 body.theme-light .ticker-row:hover {
-  background: var(--color-bg--300) !important;
+  background: linear-gradient(90deg, rgba(168, 85, 247, 0.06), rgba(6, 182, 212, 0.04)) !important;
 }
 
 body.theme-light .ticker-pair {
   color: var(--color-text) !important;
-  font-weight: 600 !important;
+  font-weight: 700 !important;
 }
 
 body.theme-light .filter-button {
-  background: var(--color-card-bg) !important;
-  border: 1px solid var(--color-border) !important;
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(168, 85, 247, 0.15) !important;
   color: var(--color-text-secondary) !important;
-  border-radius: 8px !important;
+  border-radius: 10px !important;
+  transition: all 0.3s ease !important;
 }
 
 body.theme-light .filter-button:hover {
-  background: var(--color-bg--300) !important;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.08), rgba(6, 182, 212, 0.06)) !important;
+  border-color: rgba(168, 85, 247, 0.3) !important;
   border-color: var(--color-primary-purple) !important;
   color: var(--color-primary-purple) !important;
 }
 
 body.theme-light .filter-button.active {
-  background: var(--color-accent-gradient) !important;
+  background: linear-gradient(135deg, #a855f7, #06b6d4) !important;
   border-color: transparent !important;
   color: white !important;
+  box-shadow: 0 4px 15px rgba(168, 85, 247, 0.35) !important;
 }
 
 /* ============================================
@@ -596,30 +661,42 @@ body.theme-light .connect-btn {
 }
 
 /* ============================================
-   Light Theme: Calculator Page
+   Light Theme: Calculator Page (Web3)
    ============================================ */
 body.theme-light .calculator-page {
   color: var(--color-text) !important;
 }
 
 body.theme-light .calculator-card {
-  background: var(--color-card-bg) !important;
-  border: 1px solid var(--color-border) !important;
+  background: rgba(255, 255, 255, 0.6) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1px solid rgba(168, 85, 247, 0.15) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 8px 32px rgba(168, 85, 247, 0.1) !important;
 }
 
 body.theme-light .calc-label {
-  color: var(--color-text) !important;
+  color: var(--color-text-secondary) !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  font-size: 0.7rem !important;
+  letter-spacing: 0.5px !important;
 }
 
 body.theme-light .calc-input {
-  background: var(--color-bg--300) !important;
-  border: 1px solid var(--color-border) !important;
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(168, 85, 247, 0.15) !important;
   color: var(--color-text) !important;
+  border-radius: 12px !important;
 }
 
 body.theme-light .calc-results {
-  background: var(--color-bg--300) !important;
-  border-radius: 12px !important;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.06), rgba(6, 182, 212, 0.04)) !important;
+  border: 1px solid rgba(168, 85, 247, 0.1) !important;
+  border-radius: 16px !important;
 }
 
 body.theme-light .result-label {
@@ -628,20 +705,28 @@ body.theme-light .result-label {
 
 body.theme-light .result-value {
   color: var(--color-text) !important;
+  font-weight: 700 !important;
 }
 
 body.theme-light .coin-dropdown {
-  background: var(--color-card-bg) !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(168, 85, 247, 0.2) !important;
+  box-shadow: 0 12px 40px rgba(168, 85, 247, 0.15) !important;
+  border-radius: 12px !important;
   border: 1px solid var(--color-border) !important;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1) !important;
 }
 
 body.theme-light .coin-option {
   color: var(--color-text) !important;
+  transition: all 0.2s ease !important;
 }
 
 body.theme-light .coin-option:hover {
-  background: var(--color-bg--300) !important;
+  background: linear-gradient(90deg, rgba(168, 85, 247, 0.1), rgba(6, 182, 212, 0.08)) !important;
+  color: #7c3aed !important;
 }
 
 /* ============================================
@@ -676,26 +761,67 @@ body.theme-light .games-page {
 
 body.theme-light .news-card,
 body.theme-light .game-card {
-  background: var(--color-card-bg) !important;
-  border: 1px solid var(--color-border) !important;
+  background: rgba(255, 255, 255, 0.6) !important;
+  backdrop-filter: blur(15px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(15px) saturate(180%) !important;
+  border: 1px solid rgba(168, 85, 247, 0.15) !important;
   color: var(--color-text) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
 body.theme-light .news-card:hover,
 body.theme-light .game-card:hover {
-  border-color: rgba(139, 92, 246, 0.3) !important;
-  box-shadow: 0 8px 32px rgba(139, 92, 246, 0.1) !important;
+  background: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(168, 85, 247, 0.35) !important;
+  box-shadow: 
+    0 12px 40px rgba(168, 85, 247, 0.18),
+    0 0 0 1px rgba(168, 85, 247, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9) !important;
+  transform: translateY(-5px) scale(1.02) !important;
 }
 
 body.theme-light .news-title,
 body.theme-light .game-title {
   color: var(--color-text) !important;
+  font-weight: 700 !important;
 }
 
 body.theme-light .news-source,
 body.theme-light .news-date,
 body.theme-light .game-description {
   color: var(--color-text-secondary) !important;
+}
+
+body.theme-light .play-badge {
+  background: linear-gradient(135deg, #10b981, #059669) !important;
+  box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35) !important;
+}
+
+body.theme-light .game-icon {
+  filter: drop-shadow(0 4px 12px rgba(168, 85, 247, 0.3)) !important;
+}
+
+/* ============================================
+   Light Theme: Hero Card (Web3)
+   ============================================ */
+body.theme-light .hero-card {
+  background: rgba(255, 255, 255, 0.5) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+  border: 1px solid rgba(168, 85, 247, 0.12) !important;
+  border-radius: 24px !important;
+  box-shadow: 
+    0 8px 40px rgba(168, 85, 247, 0.1),
+    0 0 80px rgba(6, 182, 212, 0.05),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+}
+
+body.theme-light .hero-card:hover {
+  background: rgba(255, 255, 255, 0.7) !important;
+  border-color: rgba(168, 85, 247, 0.25) !important;
+  box-shadow: 
+    0 12px 50px rgba(168, 85, 247, 0.15),
+    0 0 100px rgba(6, 182, 212, 0.08) !important;
 }
 
 /* ============================================
@@ -804,34 +930,45 @@ body.theme-light .share-loading {
 }
 
 /* ============================================
-   Light Theme: Error Boundary
+   Light Theme: Error Boundary (Web3)
    ============================================ */
 body.theme-light .error-boundary {
-  background: var(--color-card-bg) !important;
-  border: 1px solid var(--color-border) !important;
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(244, 63, 94, 0.2) !important;
+  border-radius: 20px !important;
   color: var(--color-text) !important;
+  box-shadow: 0 8px 32px rgba(244, 63, 94, 0.1) !important;
 }
 
 body.theme-light .error-boundary button {
-  background: var(--color-accent-gradient) !important;
+  background: linear-gradient(135deg, #a855f7, #06b6d4) !important;
   color: white !important;
+  border-radius: 12px !important;
+  box-shadow: 0 4px 15px rgba(168, 85, 247, 0.35) !important;
 }
 
 /* ============================================
-   Light Theme: TonConnect
+   Light Theme: TonConnect (Web3)
    ============================================ */
 body.theme-light .connect-wallet-button button,
 body.theme-light .connect-wallet-button > div {
-  background: var(--color-card-bg) !important;
-  border: 1px solid var(--color-border) !important;
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(168, 85, 247, 0.2) !important;
   color: var(--color-text) !important;
-  border-radius: 12px !important;
+  border-radius: 14px !important;
+  box-shadow: 0 2px 8px rgba(168, 85, 247, 0.08) !important;
+  transition: all 0.3s ease !important;
 }
 
 body.theme-light .connect-wallet-button button:hover,
 body.theme-light .connect-wallet-button > div:hover {
-  background: var(--color-bg--300) !important;
-  border-color: var(--color-primary-purple) !important;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.1), rgba(6, 182, 212, 0.1)) !important;
+  border-color: rgba(168, 85, 247, 0.4) !important;
+  box-shadow: 0 8px 25px rgba(168, 85, 247, 0.2) !important;
 }
 
 body.theme-light [data-tc-connect-button] > div,
@@ -840,23 +977,37 @@ body.theme-light [data-tc-connect-button] span {
 }
 
 /* ============================================
-   Light Theme: Scrollbar
+   Light Theme: Scrollbar (Web3)
    ============================================ */
 body.theme-light::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
 }
 
 body.theme-light::-webkit-scrollbar-track {
-  background: var(--color-bg--300);
-  border-radius: 4px;
+  background: rgba(168, 85, 247, 0.05);
+  border-radius: 10px;
 }
 
 body.theme-light::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #a78bfa, #8b5cf6);
-  border-radius: 4px;
+  background: linear-gradient(180deg, #a855f7, #06b6d4);
+  border-radius: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
 }
 
 body.theme-light::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, #8b5cf6, #7c3aed);
+  background: linear-gradient(180deg, #9333ea, #0891b2);
+}
+
+/* ============================================
+   Light Theme: Selection (Web3)
+   ============================================ */
+body.theme-light ::selection {
+  background: rgba(168, 85, 247, 0.25);
+  color: #1e293b;
+}
+
+body.theme-light ::-moz-selection {
+  background: rgba(168, 85, 247, 0.25);
+  color: #1e293b;
 }
