@@ -545,29 +545,39 @@ body.theme-light .mempool-page {
 }
 
 body.theme-light .currency-btn {
-  background: var(--color-card-bg) !important;
-  border: 1px solid var(--color-border) !important;
+  background: rgba(255, 255, 255, 0.8) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+  border: 1px solid rgba(168, 85, 247, 0.15) !important;
   color: var(--color-text-secondary) !important;
-  border-radius: 8px !important;
+  border-radius: 12px !important;
+  animation: none !important;
+  box-shadow: 0 2px 8px rgba(168, 85, 247, 0.08) !important;
 }
 
 body.theme-light .currency-btn:hover {
-  background: var(--color-bg--300) !important;
-  border-color: var(--color-primary-purple) !important;
-  color: var(--color-primary-purple) !important;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.08), rgba(6, 182, 212, 0.06)) !important;
+  border-color: rgba(168, 85, 247, 0.3) !important;
+  color: #7c3aed !important;
+  box-shadow: 0 4px 15px rgba(168, 85, 247, 0.15) !important;
 }
 
 body.theme-light .currency-btn.active {
-  background: var(--color-accent-gradient) !important;
+  background: linear-gradient(135deg, #a855f7, #06b6d4) !important;
   border-color: transparent !important;
   color: white !important;
+  box-shadow: 0 4px 20px rgba(168, 85, 247, 0.4) !important;
+  animation: none !important;
 }
 
 body.theme-light .lookup-card,
 body.theme-light .stat-card,
 body.theme-light .fees-card,
 body.theme-light .blocks-card {
-  background: var(--color-card-bg) !important;
+  background: rgba(255, 255, 255, 0.6) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  animation: none !important;
   border: 1px solid var(--color-border) !important;
   color: var(--color-text) !important;
 }
@@ -579,21 +589,96 @@ body.theme-light .lookup-input {
 }
 
 body.theme-light .lookup-btn {
-  background: var(--color-accent-gradient) !important;
+  background: linear-gradient(135deg, #a855f7, #06b6d4) !important;
   color: white !important;
+  box-shadow: 0 4px 15px rgba(168, 85, 247, 0.35) !important;
 }
 
 body.theme-light .result-row {
   color: var(--color-text) !important;
-  border-bottom: 1px solid var(--color-border) !important;
+  border-bottom: 1px solid rgba(168, 85, 247, 0.1) !important;
+}
+
+body.theme-light .result-row span:first-child {
+  color: var(--color-text-secondary) !important;
+}
+
+body.theme-light .result-row span:last-child {
+  color: var(--color-text) !important;
+}
+
+body.theme-light .lookup-result {
+  background: rgba(168, 85, 247, 0.04) !important;
+  border: 1px solid rgba(168, 85, 247, 0.1) !important;
 }
 
 body.theme-light .fee-item,
 body.theme-light .block-item,
 body.theme-light .jetton-item {
-  background: var(--color-bg--300) !important;
-  border: 1px solid var(--color-border) !important;
+  background: rgba(255, 255, 255, 0.6) !important;
+  border: 1px solid rgba(168, 85, 247, 0.1) !important;
   color: var(--color-text) !important;
+}
+
+/* Mempool stat cards */
+body.theme-light .stat-label {
+  color: var(--color-text-secondary) !important;
+}
+
+body.theme-light .stat-value {
+  color: var(--color-text) !important;
+  text-shadow: none !important;
+}
+
+/* Mempool fees */
+body.theme-light .fee-label {
+  color: var(--color-text-secondary) !important;
+}
+
+body.theme-light .fee-value {
+  color: var(--color-text) !important;
+  text-shadow: none !important;
+}
+
+body.theme-light .fees-card h3,
+body.theme-light .blocks-card h3 {
+  color: var(--color-text) !important;
+  text-shadow: none !important;
+}
+
+/* Mempool blocks */
+body.theme-light .block-height {
+  color: #7c3aed !important;
+}
+
+body.theme-light .block-time {
+  color: var(--color-text-secondary) !important;
+}
+
+body.theme-light .block-txs {
+  color: var(--color-text) !important;
+}
+
+body.theme-light .block-size {
+  color: var(--color-text-secondary) !important;
+}
+
+/* Mempool jettons */
+body.theme-light .jettons-section h4 {
+  color: #7c3aed !important;
+}
+
+body.theme-light .jetton-symbol {
+  color: var(--color-text-secondary) !important;
+}
+
+body.theme-light .jetton-balance {
+  color: var(--color-text) !important;
+}
+
+/* Mempool lookup card title */
+body.theme-light .lookup-card h3 {
+  color: #7c3aed !important;
 }
 
 /* ============================================
