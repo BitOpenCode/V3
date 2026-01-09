@@ -126,27 +126,15 @@ body.theme-space .bubble-card:hover {
     inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
 }
 
-/* Space Theme: Hero card - same style as bubble-card */
+/* Space Theme: Hero card - transparent glass effect */
 body.theme-space .hero-card {
-  animation: none !important;
-  background: 
-    radial-gradient(circle at 20% 20%, rgba(157, 78, 221, 0.6), transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(76, 201, 240, 0.4), transparent 50%),
-    linear-gradient(135deg, #1a1a2e 0%, #0a0a0f 100%) !important;
-  background-size: 200% 200% !important;
-  border: 2px solid rgba(157, 78, 221, 0.4) !important;
-  box-shadow: 
-    0 4px 24px rgba(157, 78, 221, 0.3),
-    0 0 40px rgba(76, 201, 240, 0.15),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
+  background: transparent !important;
+  border: 1px solid rgba(157, 78, 221, 0.3) !important;
+  box-shadow: none !important;
 }
 
 body.theme-space .hero-card:hover {
-  border-color: rgba(76, 201, 240, 0.6) !important;
-  box-shadow: 
-    0 8px 32px rgba(157, 78, 221, 0.4),
-    0 0 50px rgba(76, 201, 240, 0.25),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(157, 78, 221, 0.5) !important;
 }
 
 /* Скрыть пузырьки в темах Space и Light */
