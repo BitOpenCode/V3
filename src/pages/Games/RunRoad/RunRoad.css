@@ -1,142 +1,206 @@
-/* RunRoad game page styles */
-.runroad-page {
+/* RunRoad Game Styles */
+.runroad-game {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #87ceeb;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.game-container {
+  width: 100%;
+  height: 100%;
+}
+
+.game-container canvas {
+  display: block;
+}
+
+/* HUD */
+.game-hud {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 1001;
+}
+
+.hud-score {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 2rem;
+  color: white;
+  text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
+}
+
+/* Controls */
+.controls {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   flex-direction: column;
-  width: 100vw;
-  height: 100vh;
-  padding: 0;
-  margin: 0;
-  overflow: hidden;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 9000;
-  background: #000;
-}
-
-.runroad-header {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 8px 12px;
-  background: var(--color-bg--300);
-  border-bottom: 1px solid var(--color-primary-purple);
-  flex-shrink: 0;
-  position: relative;
-  z-index: 9001;
+  gap: 10px;
+  pointer-events: auto;
 }
 
-.runroad-page .back-button {
-  padding: 5px 10px;
-  background: transparent;
-  border: 1px solid var(--color-primary-purple);
-  border-radius: 6px;
-  color: var(--color-primary-silver);
-  font-size: 0.75rem;
+.control-row {
+  display: flex;
+  gap: 10px;
+}
+
+.control-btn {
+  width: 70px;
+  height: 70px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 3px solid #333;
+  border-radius: 12px;
+  font-size: 1.8rem;
+  color: #333;
   cursor: pointer;
-  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 3px 5px 0px 0px rgba(0, 0, 0, 0.75);
+  transition: all 0.1s ease;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.runroad-page .back-button:hover {
-  background: var(--color-primary-purple);
-  color: white;
+.control-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0px 0px rgba(0, 0, 0, 0.75);
+  background: rgba(255, 255, 255, 0.7);
 }
 
-.runroad-title {
-  font-size: 0.9rem;
-  font-weight: bold;
-  color: white;
-  margin: 0;
-}
-
-.runroad-page .fullscreen-button {
-  padding: 5px 10px;
-  background: var(--color-primary-purple);
-  border: none;
-  border-radius: 6px;
-  color: white;
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.runroad-page .fullscreen-button:hover {
-  background: var(--color-primary-blue);
-}
-
-.runroad-page .game-container {
-  flex: 1;
-  min-height: 0;
-  background: #000;
-  overflow: hidden;
-}
-
-.runroad-page .game-iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-}
-
-/* Fullscreen mode */
-.runroad-fullscreen {
+/* Menu */
+.game-menu {
   position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 9999;
-  background: #000;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.85);
+  padding: 30px 40px;
+  border-radius: 20px;
+  text-align: center;
+  z-index: 1002;
+  min-width: 280px;
+  border: 3px solid #fff;
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
 }
 
-.runroad-fullscreen .exit-fullscreen-btn {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  z-index: 10000;
-  padding: 8px 16px;
-  background: rgba(138, 43, 226, 0.9);
-  border: none;
-  border-radius: 6px;
+.game-menu h1 {
   color: white;
-  font-size: 0.85rem;
-  font-weight: bold;
-  cursor: pointer;
-  transition: background 0.2s;
+  font-size: 2rem;
+  margin-bottom: 20px;
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  text-shadow: 2px 2px 0 #ff6b6b;
 }
 
-.runroad-fullscreen .exit-fullscreen-btn:hover {
-  background: rgba(239, 68, 68, 0.9);
+.highscore {
+  color: gold;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+  font-family: 'Press Start 2P', 'Courier New', monospace;
 }
 
-.runroad-fullscreen .game-iframe-fullscreen {
+.final-score {
+  color: white;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+}
+
+.menu-btn {
+  display: block;
   width: 100%;
-  height: 100%;
+  padding: 15px 25px;
+  margin: 10px 0;
+  font-size: 1.1rem;
+  font-weight: bold;
   border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  box-shadow: 3px 5px 0px 0px rgba(0, 0, 0, 0.75);
 }
 
-@media (max-width: 640px) {
-  .runroad-header {
-    padding: 6px 8px;
+.menu-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0px 0px rgba(0, 0, 0, 0.75);
+}
+
+.menu-btn.play-btn {
+  background: #4caf50;
+  color: white;
+}
+
+.menu-btn.play-btn:hover {
+  background: #45a049;
+}
+
+.menu-btn.back-btn {
+  background: #ff5722;
+  color: white;
+  margin-top: 20px;
+}
+
+.menu-btn.back-btn:hover {
+  background: #e64a19;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hud-score {
+    font-size: 1.5rem;
+    top: 15px;
+    right: 15px;
   }
 
-  .runroad-title {
-    font-size: 0.8rem;
+  .control-btn {
+    width: 60px;
+    height: 60px;
+    font-size: 1.5rem;
   }
 
-  .runroad-page .back-button,
-  .runroad-page .fullscreen-button {
-    padding: 4px 8px;
-    font-size: 0.7rem;
+  .controls {
+    bottom: 20px;
   }
 
-  .runroad-fullscreen .exit-fullscreen-btn {
-    padding: 6px 12px;
-    font-size: 0.75rem;
+  .game-menu {
+    padding: 20px 30px;
+    min-width: 250px;
+  }
+
+  .game-menu h1 {
+    font-size: 1.5rem;
+  }
+
+  .menu-btn {
+    padding: 12px 20px;
+    font-size: 0.9rem;
   }
 }
 
+@media (max-width: 400px) {
+  .control-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 1.2rem;
+  }
 
+  .control-row {
+    gap: 8px;
+  }
+}
