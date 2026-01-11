@@ -44,6 +44,20 @@ const HugMe: React.FC = () => {
   const [gameStarted, setGameStarted] = useState(false);
   const [sadCount, setSadCount] = useState(45);
   const [gameWon, setGameWon] = useState(false);
+  const [score, setScore] = useState(0);
+  const [coins, setCoins] = useState(0);
+  const [combo, setCombo] = useState(0);
+  const [timer, setTimer] = useState(0);
+  const [highScore, setHighScore] = useState(() => {
+    const saved = localStorage.getItem('hugme-highscore');
+    return saved ? parseInt(saved, 10) : 0;
+  });
+  const [totalCoins, setTotalCoins] = useState(() => {
+    const saved = localStorage.getItem('hugme-coins');
+    return saved ? parseInt(saved, 10) : 0;
+  });
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const lastHugTimeRef = useRef<number>(0);
 
   const settingsRef = useRef({
     d: 20,
@@ -151,11 +165,61 @@ const HugMe: React.FC = () => {
 
   const updateSadBunnyCount = useCallback(() => {
     const count = settingsRef.current.bunnies.filter((b) => b.sad).length;
+    const prevCount = sadCount;
     setSadCount(count);
+    
+    // Calculate score when a bunny is hugged
+    if (count < prevCount) {
+      const now = Date.now();
+      const timeSinceLastHug = now - lastHugTimeRef.current;
+      
+      // Combo system - hug within 5 seconds for combo
+      let newCombo = combo;
+      if (timeSinceLastHug < 5000 && lastHugTimeRef.current > 0) {
+        newCombo = Math.min(combo + 1, 10);
+      } else {
+        newCombo = 1;
+      }
+      setCombo(newCombo);
+      lastHugTimeRef.current = now;
+      
+      // Base points + combo bonus
+      const basePoints = 100;
+      const comboBonus = basePoints * (newCombo - 1) * 0.5;
+      const pointsEarned = Math.round(basePoints + comboBonus);
+      
+      // Coins (1-3 based on combo)
+      const coinsEarned = Math.min(newCombo, 3);
+      
+      setScore(prev => prev + pointsEarned);
+      setCoins(prev => prev + coinsEarned);
+    }
+    
     if (count === 0) {
+      // Game won - bonus points for time!
+      const timeBonus = Math.max(0, 3000 - timer * 10);
+      setScore(prev => prev + timeBonus);
+      
+      // Save high score
+      const finalScore = score + Math.max(0, 3000 - timer * 10);
+      if (finalScore > highScore) {
+        setHighScore(finalScore);
+        localStorage.setItem('hugme-highscore', finalScore.toString());
+      }
+      
+      // Save total coins
+      const newTotalCoins = totalCoins + coins;
+      setTotalCoins(newTotalCoins);
+      localStorage.setItem('hugme-coins', newTotalCoins.toString());
+      
+      // Stop timer
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+      }
+      
       setGameWon(true);
     }
-  }, []);
+  }, [sadCount, combo, timer, score, highScore, totalCoins, coins]);
 
   const noWall = useCallback((actor: typeof playerStateRef.current | Bunny): boolean => {
     const settings = settingsRef.current;
@@ -359,6 +423,19 @@ const HugMe: React.FC = () => {
     setGameStarted(true);
     setGameWon(false);
     setSadCount(45);
+    setScore(0);
+    setCoins(0);
+    setCombo(0);
+    setTimer(0);
+    lastHugTimeRef.current = 0;
+    
+    // Start timer
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+    }
+    timerRef.current = setInterval(() => {
+      setTimer(prev => prev + 1);
+    }, 1000);
 
     const settings = settingsRef.current;
     const player = playerStateRef.current;
@@ -533,6 +610,10 @@ const HugMe: React.FC = () => {
         <div className="hugme-menu">
           <h1>🐰 Hug Me</h1>
           <p className="game-description">Find and hug all the sad bunnies!</p>
+          <div className="menu-stats">
+            <div className="stat-item">🏆 Best: {highScore}</div>
+            <div className="stat-item">💰 Coins: {totalCoins}</div>
+          </div>
           <button onClick={startGame} className="menu-btn play-btn">🎮 Play</button>
           <button onClick={() => navigate('/games')} className="menu-btn back-btn">← Back</button>
         </div>
@@ -543,6 +624,12 @@ const HugMe: React.FC = () => {
         <div className="hugme-menu" ref={endMessageRef}>
           <h1>🎉 Hooray!</h1>
           <p className="game-description">You hugged all the sad bunnies!</p>
+          <div className="result-stats">
+            <div className="result-item">⭐ Score: {score}</div>
+            <div className="result-item">⏱️ Time: {Math.floor(timer / 60)}:{(timer % 60).toString().padStart(2, '0')}</div>
+            <div className="result-item">💰 Coins: +{coins}</div>
+            {score >= highScore && <div className="new-record">🎊 NEW RECORD!</div>}
+          </div>
           <button onClick={startGame} className="menu-btn play-btn">🔄 Play Again</button>
           <button onClick={() => navigate('/games')} className="menu-btn back-btn">← Back</button>
         </div>
@@ -575,9 +662,21 @@ const HugMe: React.FC = () => {
             </div>
           </div>
 
-          {/* Indicator */}
-          <div className={`indicator ${sadCount === 0 ? 'happy' : ''}`} ref={indicatorRef}>
-            {sadCount > 0 ? `x ${sadCount}` : ''}
+          {/* Game HUD */}
+          <div className="game-hud">
+            <div className="hud-left">
+              <div className="hud-score">⭐ {score}</div>
+              <div className="hud-coins">💰 {coins}</div>
+            </div>
+            <div className="hud-center">
+              <div className="hud-timer">⏱️ {Math.floor(timer / 60)}:{(timer % 60).toString().padStart(2, '0')}</div>
+              {combo > 1 && <div className="hud-combo">🔥 x{combo}</div>}
+            </div>
+            <div className="hud-right">
+              <div className={`indicator ${sadCount === 0 ? 'happy' : ''}`} ref={indicatorRef}>
+                {sadCount > 0 ? `🐰 x ${sadCount}` : ''}
+              </div>
+            </div>
           </div>
 
           {/* Back button */}
