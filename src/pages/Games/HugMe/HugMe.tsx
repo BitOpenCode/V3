@@ -492,17 +492,17 @@ const HugMe: React.FC = () => {
     const existingElements = mapRef.current.querySelectorAll('.sprite-container:not(.player-wrapper .sprite-container), .tree');
     existingElements.forEach((el) => el.remove());
 
-    // Add bunnies to DOM
+    // Add bears (sad creatures) to DOM - player is bunny who hugs them
     settings.bunnies.forEach((bunny) => {
       const el = document.createElement('div');
       el.className = 'sprite-container sad';
-      el.innerHTML = '<div class="bunny sprite"></div>';
+      el.innerHTML = '<div class="bear sprite"></div>';  // Bears are sad, bunny hugs them
       el.style.left = px(bunny.x);
       el.style.top = px(bunny.y);
       el.style.zIndex = String(bunny.y);
       mapRef.current?.appendChild(el);
       bunny.el = el;
-      bunny.sprite.el = el.querySelector('.bunny') as HTMLDivElement;
+      bunny.sprite.el = el.querySelector('.bear') as HTMLDivElement;
 
       if (randomN(2) === 2) {
         triggerBunnyWalk(bunny);
@@ -609,7 +609,7 @@ const HugMe: React.FC = () => {
       {!gameStarted && (
         <div className="hugme-menu">
           <h1>🐰 Hug Me</h1>
-          <p className="game-description">Find and hug all the sad bunnies!</p>
+          <p className="game-description">Find and hug all the sad bears!</p>
           <div className="menu-stats">
             <div className="stat-item">🏆 Best: {highScore}</div>
             <div className="stat-item">💰 Coins: {totalCoins}</div>
@@ -623,7 +623,7 @@ const HugMe: React.FC = () => {
       {gameWon && (
         <div className="hugme-menu" ref={endMessageRef}>
           <h1>🎉 Hooray!</h1>
-          <p className="game-description">You hugged all the sad bunnies!</p>
+          <p className="game-description">You hugged all the sad bears!</p>
           <div className="result-stats">
             <div className="result-item">⭐ Score: {score}</div>
             <div className="result-item">⏱️ Time: {Math.floor(timer / 60)}:{(timer % 60).toString().padStart(2, '0')}</div>
@@ -656,7 +656,7 @@ const HugMe: React.FC = () => {
             <div className="map" ref={mapRef} style={{ width: px(settingsRef.current.map.w), height: px(settingsRef.current.map.h) }}>
               <div className="player-wrapper flex-center">
                 <div className="player sprite-container" ref={playerRef}>
-                  <div className="bear sprite"></div>
+                  <div className="bunny sprite"></div>
                 </div>
               </div>
             </div>
@@ -674,7 +674,7 @@ const HugMe: React.FC = () => {
             </div>
             <div className="hud-right">
               <div className={`indicator ${sadCount === 0 ? 'happy' : ''}`} ref={indicatorRef}>
-                {sadCount > 0 ? `🐰 x ${sadCount}` : ''}
+                {sadCount > 0 ? `🐻 x ${sadCount}` : ''}
               </div>
             </div>
           </div>
