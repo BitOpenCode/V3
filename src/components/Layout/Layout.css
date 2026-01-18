@@ -173,3 +173,337 @@
     font-size: 0.7rem;
   }
 }
+
+/* Page header common styles */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-shrink: 0;
+}
+
+.page-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--color-text, white);
+  margin: 0;
+}
+
+.close-button {
+  padding: 8px 16px;
+  background: var(--color-primary-purple);
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.close-button:hover {
+  background: var(--color-primary-blue);
+}
+
+/* ============================================
+   Header panel (Upper navigation)
+   ============================================ */
+.upper-nav-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 150;
+  
+  /* Dark gradient background */
+  background: linear-gradient(180deg, 
+    rgba(20, 15, 35, 0.98) 0%, 
+    rgba(25, 20, 40, 0.95) 100%
+  );
+  backdrop-filter: blur(12px);
+  
+  /* Bottom border glow */
+  border-bottom: 1px solid rgba(138, 43, 226, 0.5);
+  box-shadow: 0 2px 20px rgba(138, 43, 226, 0.2);
+  
+  /* Layout */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 8px;
+  gap: 4px;
+}
+
+.header-button-container {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+}
+
+/* TonConnect button special handling */
+.header-button-container:nth-child(3) {
+  flex: 0 0 auto;
+  min-width: fit-content;
+}
+
+/* ============================================
+   Bottom navigation panel
+   ============================================ */
+.bottom-nav,
+.fixed.bottom-0 {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 150;
+  
+  /* Dark gradient background */
+  background: linear-gradient(0deg, 
+    rgba(20, 15, 35, 0.98) 0%, 
+    rgba(25, 20, 40, 0.95) 100%
+  );
+  backdrop-filter: blur(12px);
+  
+  /* Top border glow */
+  border-top: 1px solid rgba(138, 43, 226, 0.5);
+  box-shadow: 0 -2px 20px rgba(138, 43, 226, 0.2);
+  
+  padding: 10px 4px;
+}
+
+.bottom-nav .container,
+.fixed.bottom-0 .container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 2px;
+}
+
+/* ============================================
+   Responsive adjustments
+   ============================================ */
+@media (max-width: 640px) {
+  .upper-nav-panel {
+    padding: 8px 4px;
+    gap: 2px;
+  }
+  
+  .bottom-nav,
+  .fixed.bottom-0 {
+    padding: 12px 2px 8px 2px; /* Увеличен верхний отступ, уменьшен нижний */
+  }
+  
+  .bottom-nav .container,
+  .fixed.bottom-0 .container {
+    align-items: flex-start; /* Выравнивание кнопок по верху */
+    padding-top: 4px; /* Дополнительный отступ сверху для кнопок */
+  }
+  
+  .page-header {
+    margin-bottom: 12px;
+  }
+  
+  .page-title {
+    font-size: 1.2rem;
+  }
+  
+  .close-button {
+    padding: 6px 12px;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .upper-nav-panel {
+    padding: 6px 2px;
+    gap: 1px;
+  }
+  
+  .bottom-nav,
+  .fixed.bottom-0 {
+    padding: 10px 1px 6px 1px; /* Увеличен верхний отступ, уменьшен нижний */
+  }
+  
+  .bottom-nav .container,
+  .fixed.bottom-0 .container {
+    align-items: flex-start; /* Выравнивание кнопок по верху */
+    padding-top: 3px; /* Дополнительный отступ сверху для кнопок */
+  }
+  
+  .page-title {
+    font-size: 1rem;
+  }
+  
+  .close-button {
+    padding: 5px 10px;
+    font-size: 0.7rem;
+  }
+}
+
+/* Page header common styles */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  flex-shrink: 0;
+}
+
+.page-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--color-text, white);
+  margin: 0;
+}
+
+.close-button {
+  padding: 8px 16px;
+  background: var(--color-primary-purple);
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.close-button:hover {
+  background: var(--color-primary-blue);
+}
+
+/* ============================================
+   Header panel (Upper navigation)
+   ============================================ */
+.upper-nav-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 150;
+  
+  /* Dark gradient background */
+  background: linear-gradient(180deg, 
+    rgba(20, 15, 35, 0.98) 0%, 
+    rgba(25, 20, 40, 0.95) 100%
+  );
+  backdrop-filter: blur(12px);
+  
+  /* Bottom border glow */
+  border-bottom: 1px solid rgba(138, 43, 226, 0.5);
+  box-shadow: 0 2px 20px rgba(138, 43, 226, 0.2);
+  
+  /* Layout */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 8px;
+  gap: 4px;
+}
+
+.header-button-container {
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+}
+
+/* TonConnect button special handling */
+.header-button-container:nth-child(3) {
+  flex: 0 0 auto;
+  min-width: fit-content;
+}
+
+/* ============================================
+   Bottom navigation panel
+   ============================================ */
+.bottom-nav,
+.fixed.bottom-0 {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 150;
+  
+  /* Dark gradient background */
+  background: linear-gradient(0deg, 
+    rgba(20, 15, 35, 0.98) 0%, 
+    rgba(25, 20, 40, 0.95) 100%
+  );
+  backdrop-filter: blur(12px);
+  
+  /* Top border glow */
+  border-top: 1px solid rgba(138, 43, 226, 0.5);
+  box-shadow: 0 -2px 20px rgba(138, 43, 226, 0.2);
+  
+  padding: 10px 4px;
+}
+
+.bottom-nav .container,
+.fixed.bottom-0 .container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 2px;
+}
+
+/* ============================================
+   Responsive adjustments
+   ============================================ */
+@media (max-width: 640px) {
+  .upper-nav-panel {
+    padding: 8px 4px;
+    gap: 2px;
+  }
+  
+  .bottom-nav,
+  .fixed.bottom-0 {
+    padding: 12px 2px 8px 2px; /* Увеличен верхний отступ, уменьшен нижний */
+  }
+  
+  .bottom-nav .container,
+  .fixed.bottom-0 .container {
+    align-items: flex-start; /* Выравнивание кнопок по верху */
+    padding-top: 4px; /* Дополнительный отступ сверху для кнопок */
+  }
+  
+  .page-header {
+    margin-bottom: 12px;
+  }
+  
+  .page-title {
+    font-size: 1.2rem;
+  }
+  
+  .close-button {
+    padding: 6px 12px;
+    font-size: 0.75rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .upper-nav-panel {
+    padding: 6px 2px;
+    gap: 1px;
+  }
+  
+  .bottom-nav,
+  .fixed.bottom-0 {
+    padding: 10px 1px 6px 1px; /* Увеличен верхний отступ, уменьшен нижний */
+  }
+  
+  .bottom-nav .container,
+  .fixed.bottom-0 .container {
+    align-items: flex-start; /* Выравнивание кнопок по верху */
+    padding-top: 3px; /* Дополнительный отступ сверху для кнопок */
+  }
+  
+  .page-title {
+    font-size: 1rem;
+  }
+  
+  .close-button {
+    padding: 5px 10px;
+    font-size: 0.7rem;
+  }
+}

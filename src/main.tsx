@@ -64,51 +64,87 @@ const queryClient = new QueryClient({
   },
 });
 
-createRoot(document.getElementById('root')!).render(
+const rootElement = document.getElementById('root');
+if (!rootElement) {
+  throw new Error('Root element not found');
+}
+
+// Test if React is working
+console.log('React app starting...');
+
+try {
+  createRoot(rootElement).render(
   <StrictMode>
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
         <TonConnectUIProvider manifestUrl={manifestUrl}>
-          <HashRouter>
-            <Routes>
-              <Route path="/" element={<Layout />}>
-                {/* Main routes */}
-                <Route index element={<Home />} />
-                <Route path="games" element={<Games />} />
-                <Route path="games/spaceship" element={<SpaceShip />} />
-                <Route path="games/runroad" element={<RunRoad />} />
-                <Route path="games/hugme" element={<HugMe />} />
-                <Route path="avatars" element={<Avatars />} />
-                <Route path="menu" element={<Menu />} />
-                
-                {/* Functional pages */}
-                <Route path="tickers" element={<Tickers />} />
-                <Route path="news" element={<News />} />
-                <Route path="calculator" element={<Calculator />} />
-                <Route path="orderbook" element={<OrderBook />} />
-                <Route path="portfolio" element={<Portfolio />} />
-                <Route path="wallet" element={<Wallet />} />
-                <Route path="mempool" element={<Mempool />} />
-                <Route path="chart" element={<Chart />} />
-                <Route path="share" element={<Share />} />
-                
-                {/* Fallback */}
-                <Route path="*" element={<Home />} />
-              </Route>
-            </Routes>
-          </HashRouter>
-          <Toaster 
-            position="top-center"
-            toastOptions={{
-              style: {
-                background: '#1e1e1e',
-                color: '#c0c0c0',
-                border: '1px solid #8a2be2',
-              },
-            }}
-          />
+          <>
+            <HashRouter>
+              <Routes>
+                <Route path="/" element={<Layout />}>
+                  {/* Main routes */}
+                  <Route index element={<Home />} />
+                  <Route path="games" element={<Games />} />
+                  <Route path="games/spaceship" element={<SpaceShip />} />
+                  <Route path="games/runroad" element={<RunRoad />} />
+                  <Route path="games/hugme" element={<HugMe />} />
+                  <Route path="avatars" element={<Avatars />} />
+                  <Route path="menu" element={<Menu />} />
+                  
+                  {/* Functional pages */}
+                  <Route path="tickers" element={<Tickers />} />
+                  <Route path="news" element={<News />} />
+                  <Route path="calculator" element={<Calculator />} />
+                  <Route path="orderbook" element={<OrderBook />} />
+                  <Route path="portfolio" element={<Portfolio />} />
+                  <Route path="wallet" element={<Wallet />} />
+                  <Route path="mempool" element={<Mempool />} />
+                  <Route path="chart" element={<Chart />} />
+                  <Route path="share" element={<Share />} />
+                  
+                  {/* Fallback */}
+                  <Route path="*" element={<Home />} />
+                </Route>
+              </Routes>
+            </HashRouter>
+            <Toaster 
+              position="top-center"
+              toastOptions={{
+                style: {
+                  background: '#1e1e1e',
+                  color: '#c0c0c0',
+                  border: '1px solid #8a2be2',
+                },
+              }}
+            />
+          </>
         </TonConnectUIProvider>
       </QueryClientProvider>
     </ErrorBoundary>
   </StrictMode>
-);
+  );
+} catch (error) {
+  console.error('Failed to render app:', error);
+  rootElement.innerHTML = `
+    <div style="
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: #1e1e1e;
+      color: #ff0000;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      text-align: center;
+    ">
+      <div>
+        <h1>⚠️ Application Error</h1>
+        <p>Failed to start the application.</p>
+        <pre style="background: #2e2e2e; padding: 10px; border-radius: 5px; margin-top: 20px; text-align: left; overflow: auto;">
+          ${error instanceof Error ? error.message : String(error)}
+          ${error instanceof Error ? '\n\n' + error.stack : ''}
+        </pre>
+      </div>
+    </div>
+  `;
+}

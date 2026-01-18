@@ -3,8 +3,12 @@ import react from '@vitejs/plugin-react';
 import { nodePolyfills } from 'vite-plugin-node-polyfills';
 import path from 'path';
 
-export default defineConfig({
-  base: '/V3/',
+export default defineConfig(({ command }) => ({
+  // Use /V3/ for production build (GitHub Pages), / for local development
+  base: command === 'build' ? '/V3/' : '/',
+  server: {
+    port: 5174,
+  },
   plugins: [
     react(),
     nodePolyfills({
@@ -37,4 +41,4 @@ export default defineConfig({
       transformMixedEsModules: true,
     },
   },
-});
+}));
