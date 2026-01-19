@@ -412,9 +412,7 @@
 .header-button-container:nth-child(3) {
   flex: 0 0 auto;
   min-width: fit-content;
-}
-
-/* ============================================
+}/* ============================================
    Bottom navigation panel
    ============================================ */
 .bottom-nav,

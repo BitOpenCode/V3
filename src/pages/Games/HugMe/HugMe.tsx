@@ -15,6 +15,7 @@ const HugMe: React.FC = () => {
   const bunnyPosRefs = useRef<HTMLDivElement[]>([]);
 
   const [gameStarted, setGameStarted] = useState(false);
+  const [showMenu, setShowMenu] = useState(true);
 
   const elementsRef = useRef<any>(null);
   const playerRef_state = useRef<any>(null);
@@ -479,6 +480,14 @@ const HugMe: React.FC = () => {
 
   const startGame = () => {
     setGameStarted(true);
+    setShowMenu(false);
+  };
+
+  const returnToMenu = () => {
+    setGameStarted(false);
+    setShowMenu(true);
+    // Reload to reset game state
+    window.location.reload();
   };
 
   return (
@@ -486,7 +495,6 @@ const HugMe: React.FC = () => {
       {!gameStarted ? (
         <div className="hugme-menu">
           <h1>Hug Me</h1>
-          <p>Обнимай грустных зайцев!</p>
           <button className="menu-btn play-btn" onClick={startGame}>🎮 Play</button>
           <button className="menu-btn back-btn" onClick={() => navigate('/games')}>← Back</button>
         </div>
@@ -511,7 +519,7 @@ const HugMe: React.FC = () => {
             </div>
           </div>
           <div className="indicator" ref={indicatorRef}>x 45</div>
-          <button className="hugme-back-btn" onClick={() => navigate('/games')}>← Back</button>
+          <button className="hugme-back-btn" onClick={returnToMenu}>← Back</button>
         </>
       )}
     </div>
