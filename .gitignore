@@ -23,3 +23,17 @@ dist-ssr
 *.sln
 *.sw?
 .env
+
+# Original game files (not needed in repo)
+*-original.html
+*-original/
+HugMe-original.html
+SpaceShip-original.html
+HugMe-original/
+
+# Documentation files not related to game work
+MY_SHAMEFUL_ERRORS.md
+DIFFERENCES_ANALYSIS.md
+DIFFERENCES_LIST.md
+ORIGINAL_GAME_TECHNICAL_REPORT.md
+GAME_LOGIC_DESCRIPTION.md

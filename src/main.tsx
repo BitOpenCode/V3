@@ -26,6 +26,8 @@ import {
 import SpaceShip from './pages/Games/SpaceShip';
 import RunRoad from './pages/Games/RunRoad';
 import HugMe from './pages/Games/HugMe';
+import Castles from './pages/Games/Castles';
+import Conquer from './pages/Games/Conquer';
 
 import './index.css';
 import './App.css';
@@ -88,6 +90,8 @@ try {
                   <Route path="games/spaceship" element={<SpaceShip />} />
                   <Route path="games/runroad" element={<RunRoad />} />
                   <Route path="games/hugme" element={<HugMe />} />
+                  <Route path="games/castles" element={<Castles />} />
+                  <Route path="games/conquer" element={<Conquer />} />
                   <Route path="avatars" element={<Avatars />} />
                   <Route path="menu" element={<Menu />} />
                   

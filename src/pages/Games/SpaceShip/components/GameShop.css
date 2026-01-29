@@ -1,0 +1,390 @@
+.game-shop-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+  overflow: hidden;
+  z-index: 10000;
+  font-family: 'Rajdhani', sans-serif;
+}
+
+/* Static twinkling stars container */
+.static_stars_container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0 !important;
+  overflow: hidden;
+}
+
+/* Static twinkling stars */
+.static_star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 2s infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* Stars background animation */
+.game-shop-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(2px 2px at 20% 30%, white, transparent),
+    radial-gradient(2px 2px at 60% 70%, white, transparent),
+    radial-gradient(1px 1px at 50% 50%, white, transparent),
+    radial-gradient(1px 1px at 80% 10%, white, transparent),
+    radial-gradient(2px 2px at 90% 60%, white, transparent),
+    radial-gradient(1px 1px at 33% 80%, white, transparent),
+    radial-gradient(1px 1px at 10% 40%, white, transparent),
+    radial-gradient(2px 2px at 40% 90%, white, transparent),
+    radial-gradient(1px 1px at 70% 20%, white, transparent);
+  background-size: 200% 200%;
+  pointer-events: none;
+  z-index: 0 !important;
+  opacity: 0.6;
+  animation: spaceStars 20s infinite linear;
+}
+
+@keyframes spaceStars {
+  0% {
+    background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+  }
+  100% {
+    background-position: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+  }
+}
+
+.shop-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 100%;
+  max-width: 90vw;
+  max-height: 85vh;
+  padding: 20px;
+  font-family: 'Rajdhani', sans-serif !important;
+  z-index: 10001 !important;
+  pointer-events: auto !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  display: flex;
+  flex-direction: column;
+}
+
+.shop-filters {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.filter-btn {
+  padding: 8px 16px;
+  background: rgba(157, 78, 221, 0.2);
+  border: 1px solid rgba(157, 78, 221, 0.4);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+  background: rgba(157, 78, 221, 0.3);
+  color: #fff;
+}
+
+.filter-btn.active {
+  background: rgba(157, 78, 221, 0.5);
+  border-color: rgba(157, 78, 221, 0.8);
+  color: #fff;
+}
+
+.shop-scrollable {
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex: 1;
+  padding-right: 10px;
+}
+
+.shop-scrollable::-webkit-scrollbar {
+  width: 8px;
+}
+
+.shop-scrollable::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.shop-scrollable::-webkit-scrollbar-thumb {
+  background: rgba(157, 78, 221, 0.5);
+  border-radius: 4px;
+}
+
+.shop-scrollable::-webkit-scrollbar-thumb:hover {
+  background: rgba(157, 78, 221, 0.7);
+}
+
+.shop-title {
+  color: #fff !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  font-size: 2.2rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 24px;
+  text-shadow: 0 0 10px rgba(157, 78, 221, 0.5) !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+  line-height: 1.3 !important;
+}
+
+.currency-text {
+  color: #fff;
+  font-size: 1.2rem;
+  margin-bottom: 24px;
+}
+
+.shop-section {
+  margin-bottom: 40px;
+}
+
+.section-title {
+  color: #fff;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.upgrades-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 15px;
+  margin: 20px auto;
+  width: 100%;
+  max-width: 800px;
+  justify-content: center;
+}
+
+.upgrade-card {
+  background: rgba(10, 10, 20, 0.6) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(157, 78, 221, 0.3) !important;
+  transition: all 0.3s ease;
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  min-height: 160px;
+}
+
+.upgrade-card:hover {
+  border-color: rgba(157, 78, 221, 0.6) !important;
+  transform: translateY(-4px);
+  box-shadow: 
+    0 8px 30px rgba(0, 0, 0, 0.5),
+    0 0 20px rgba(157, 78, 221, 0.3) !important;
+}
+
+.upgrade-icon {
+  font-size: 2rem;
+  margin-bottom: 8px;
+}
+
+.upgrade-card h3 {
+  color: #fff;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin: 4px 0;
+  text-transform: uppercase;
+}
+
+.upgrade-description {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.7rem;
+  margin: 6px 0;
+  line-height: 1.3;
+  flex-grow: 1;
+}
+
+.upgrade-cost {
+  color: rgba(255, 215, 0, 0.9);
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin: 6px 0;
+}
+
+.ships-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 15px;
+  margin: 20px auto;
+  width: 100%;
+  max-width: 500px;
+  justify-content: center;
+}
+
+.ship-card {
+  background: rgba(10, 10, 20, 0.6) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(157, 78, 221, 0.3) !important;
+  transition: all 0.3s ease;
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  overflow: visible !important;
+  min-height: auto !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  z-index: 10002 !important;
+  position: relative !important;
+}
+
+.ship-card img {
+  width: 60px !important;
+  height: 60px !important;
+  object-fit: contain;
+  margin: 0 auto 8px;
+  display: block;
+  filter: drop-shadow(0 0 8px rgba(157, 78, 221, 0.6));
+  transition: transform 0.3s ease, filter 0.3s ease;
+  flex-shrink: 0;
+}
+
+.ship-card h3 {
+  color: #fff;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 4px 0;
+  text-transform: uppercase;
+}
+
+.ship-card p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.75rem;
+  margin: 2px 0;
+}
+
+.ship-cost {
+  color: rgba(255, 215, 0, 0.9) !important;
+  font-weight: 600;
+  font-size: 0.85rem !important;
+}
+
+.buy-btn {
+  margin-top: 8px;
+  padding: 6px 12px;
+  background: rgba(157, 78, 221, 0.3);
+  border: 1px solid rgba(157, 78, 221, 0.5);
+  border-radius: 6px;
+  color: #fff;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.buy-btn:hover:not(:disabled) {
+  background: rgba(157, 78, 221, 0.5);
+  transform: translateY(-2px);
+}
+
+.buy-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.menu-btn.back-btn {
+  position: fixed !important;
+  bottom: 5px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: auto !important;
+  min-width: 200px !important;
+  max-width: calc(100vw - 40px) !important;
+  min-height: 50px !important;
+  padding: 12px 24px !important;
+  border-color: rgba(255, 127, 80, 0.5) !important;
+  margin: 0 !important;
+  z-index: 99999 !important;
+  background: rgba(10, 10, 20, 0.6) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 127, 80, 0.5) !important;
+  border-radius: 12px;
+  color: #fff !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 1rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .ships-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)) !important;
+  }
+
+  .upgrades-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)) !important;
+  }
+
+  .ship-card img {
+    width: 50px !important;
+    height: 50px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .ships-grid {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)) !important;
+  }
+
+  .upgrades-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)) !important;
+  }
+
+  .ship-card img {
+    width: 45px !important;
+    height: 45px !important;
+  }
+}

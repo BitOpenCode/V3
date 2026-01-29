@@ -1,0 +1,442 @@
+.game-inventory-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+  overflow: hidden;
+  z-index: 10000;
+  font-family: 'Rajdhani', sans-serif;
+}
+
+/* Static twinkling stars container */
+.static_stars_container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0 !important;
+  overflow: hidden;
+}
+
+/* Static twinkling stars */
+.static_star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle 2s infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+/* Stars background animation */
+.game-inventory-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(2px 2px at 20% 30%, white, transparent),
+    radial-gradient(2px 2px at 60% 70%, white, transparent),
+    radial-gradient(1px 1px at 50% 50%, white, transparent),
+    radial-gradient(1px 1px at 80% 10%, white, transparent),
+    radial-gradient(2px 2px at 90% 60%, white, transparent),
+    radial-gradient(1px 1px at 33% 80%, white, transparent),
+    radial-gradient(1px 1px at 10% 40%, white, transparent),
+    radial-gradient(2px 2px at 40% 90%, white, transparent),
+    radial-gradient(1px 1px at 70% 20%, white, transparent);
+  background-size: 200% 200%;
+  pointer-events: none;
+  z-index: 0 !important;
+  opacity: 0.6;
+  animation: spaceStars 20s infinite linear;
+}
+
+@keyframes spaceStars {
+  0% {
+    background-position: 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%, 0% 0%;
+  }
+  100% {
+    background-position: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+  }
+}
+
+.inventory-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 100%;
+  max-width: 90vw;
+  max-height: 90vh;
+  padding: 10px;
+  font-family: 'Rajdhani', sans-serif !important;
+  z-index: 10001 !important;
+  pointer-events: auto !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.inventory-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.inventory-content::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.inventory-content::-webkit-scrollbar-thumb {
+  background: rgba(157, 78, 221, 0.5);
+  border-radius: 4px;
+}
+
+.inventory-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(157, 78, 221, 0.7);
+}
+
+.inventory-title {
+  color: #fff !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  font-size: 1.5rem !important;
+  font-weight: 600 !important;
+  margin-bottom: 16px;
+  text-shadow: 0 0 10px rgba(157, 78, 221, 0.5) !important;
+  letter-spacing: 0.05em !important;
+  text-transform: uppercase !important;
+  line-height: 1.3 !important;
+}
+
+.ships-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 15px;
+  margin: 16px auto;
+  width: 100%;
+  max-width: 500px;
+  justify-content: center;
+}
+
+.ship-card {
+  background: rgba(10, 10, 20, 0.6) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(157, 78, 221, 0.3) !important;
+  transition: all 0.3s ease;
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  cursor: pointer;
+  overflow: visible !important;
+  min-height: auto !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  z-index: 10002 !important;
+  position: relative !important;
+}
+
+.ship-card.selected {
+  border-color: rgba(6, 255, 165, 0.8) !important;
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.4),
+    0 0 30px rgba(6, 255, 165, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+}
+
+.ship-card img {
+  width: 80px !important;
+  height: 80px !important;
+  object-fit: contain;
+  margin: 0 auto 8px;
+  display: block;
+  filter: drop-shadow(0 0 8px rgba(157, 78, 221, 0.6));
+  transition: transform 0.3s ease, filter 0.3s ease;
+  flex-shrink: 0;
+}
+
+.ship-card h3 {
+  color: #fff;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin: 4px 0;
+  text-transform: uppercase;
+}
+
+.ship-card p {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.75rem;
+  margin: 2px 0;
+}
+
+.select-btn {
+  margin-top: 8px;
+  padding: 6px 12px;
+  background: rgba(157, 78, 221, 0.3);
+  border: 1px solid rgba(157, 78, 221, 0.5);
+  border-radius: 6px;
+  color: #fff;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+.select-btn:hover:not(:disabled) {
+  background: rgba(157, 78, 221, 0.5);
+  transform: translateY(-2px);
+}
+
+.select-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.menu-btn.back-btn {
+  position: fixed !important;
+  bottom: 5px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: auto !important;
+  min-width: 200px !important;
+  max-width: calc(100vw - 40px) !important;
+  min-height: 50px !important;
+  padding: 12px 24px !important;
+  border-color: rgba(255, 127, 80, 0.5) !important;
+  margin: 0 !important;
+  z-index: 99999 !important;
+  background: rgba(10, 10, 20, 0.6) !important;
+  backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 127, 80, 0.5) !important;
+  border-radius: 12px;
+  color: #fff !important;
+  font-family: 'Rajdhani', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 1rem !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.05em !important;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .ships-grid {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)) !important;
+  }
+
+  .ship-card img {
+    width: 100px !important;
+    height: 100px !important;
+  }
+}
+
+.inventory-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.ships-section {
+  width: 100%;
+}
+
+.upgrades-section {
+  width: 100%;
+}
+
+.section-title {
+  color: #fff;
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.section-hint {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.upgrade-slots {
+  margin: 12px 0;
+  width: 100%;
+}
+
+.upgrade-slots h4 {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.8rem;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.slots-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.upgrade-slot {
+  min-height: 50px;
+  border: 2px dashed rgba(157, 78, 221, 0.4);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(157, 78, 221, 0.1);
+}
+
+.upgrade-slot.empty:hover {
+  border-color: rgba(157, 78, 221, 0.8);
+  background: rgba(157, 78, 221, 0.2);
+}
+
+.upgrade-slot.filled {
+  border-color: rgba(6, 255, 165, 0.6);
+  background: rgba(6, 255, 165, 0.1);
+  border-style: solid;
+}
+
+.upgrade-slot.filled:hover {
+  border-color: rgba(255, 0, 0, 0.6);
+  background: rgba(255, 0, 0, 0.1);
+}
+
+.slot-placeholder {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 1.5rem;
+}
+
+.slot-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 4px;
+}
+
+.slot-icon {
+  font-size: 1.2rem;
+}
+
+.slot-name {
+  font-size: 0.65rem;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.owned-upgrades-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.owned-upgrade-item {
+  background: rgba(157, 78, 221, 0.2);
+  border: 1px solid rgba(157, 78, 221, 0.4);
+  border-radius: 8px;
+  padding: 12px;
+  cursor: grab;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.owned-upgrade-item:hover {
+  background: rgba(157, 78, 221, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(157, 78, 221, 0.3);
+}
+
+.owned-upgrade-item:active {
+  cursor: grabbing;
+  transform: scale(0.95);
+}
+
+.owned-upgrade-item .upgrade-icon {
+  font-size: 2rem;
+}
+
+.owned-upgrade-item .upgrade-name {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.9);
+  text-align: center;
+}
+
+.no-upgrades {
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  padding: 20px;
+  font-style: italic;
+}
+
+@media (max-width: 1024px) {
+  .inventory-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .ships-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
+  }
+
+  .ship-card img {
+    width: 70px !important;
+    height: 70px !important;
+  }
+
+  .slots-container {
+    grid-template-columns: 1fr;
+  }
+
+  .owned-upgrades-grid {
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  }
+}
+
+@media (max-width: 480px) {
+  .ships-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)) !important;
+  }
+
+  .ship-card img {
+    width: 60px !important;
+    height: 60px !important;
+  }
+}
