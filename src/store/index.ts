@@ -15,7 +15,7 @@ interface SettingsState {
 export const useSettingsStore = create<SettingsState>()(
   persist(
     (set) => ({
-      theme: 'bubbles',
+      theme: 'space',
       currency: 'USD',
       setTheme: (theme) => {
         set({ theme });

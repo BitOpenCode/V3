@@ -46,11 +46,12 @@ if (savedTheme) {
       document.body.classList.add(`theme-${settings.state.theme}`);
     }
   } catch (e) {
-    // Fallback to default theme
-    document.body.classList.add('theme-bubbles');
+    // Fallback to default theme (Space)
+    document.body.classList.add('theme-space');
   }
 } else {
-  document.body.classList.add('theme-bubbles');
+  // Default theme is Space
+  document.body.classList.add('theme-space');
 }
 
 // Используем рабочий URL манифеста
