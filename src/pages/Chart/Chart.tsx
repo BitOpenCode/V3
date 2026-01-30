@@ -143,11 +143,25 @@ function ChartViewOverview() {
   );
 }
 
-/* Скрыть подпись "Market summary by TradingView" внутри Shadow DOM виджета tv-market-summary */
+/* Скрыть подпись "Market summary by TradingView" и принудительно тёмная тема внутри Shadow DOM виджета tv-market-summary */
 function hideMarketSummaryBranding(container: HTMLElement) {
   const widget = container.querySelector('tv-market-summary');
   if (!widget?.shadowRoot) return;
   const sr = widget.shadowRoot;
+
+  /* Тёмная тема: виджет часто рендерит светлый фон по умолчанию; задаём :host и корневые контейнеры. */
+  if (!sr.querySelector('style[data-dark-theme]')) {
+    const themeSheet = document.createElement('style');
+    themeSheet.setAttribute('data-dark-theme', 'true');
+    themeSheet.textContent = `
+      :host { background-color: #131722 !important; }
+      [class*="container"], [class*="layout"], [class*="wrapper"], [class*="root"],
+      [class*="theme-light"], [class*="light"], [class*="chart"], [class*="table"] { background-color: #131722 !important; }
+      [class*="cell"], [class*="card"], [class*="item"], [class*="row"] { background-color: #1e222d !important; }
+      [class*="header"], [class*="tab"], [class*="toolbar"] { background-color: #1e222d !important; border-color: #2a2e39 !important; }
+    `;
+    sr.insertBefore(themeSheet, sr.firstChild);
+  }
 
   /* Не скрываем все ссылки на tradingview — иначе пропадают кнопки Gainers/Losers/Active. Скрываем только подпись по тексту ниже. */
   if (!sr.querySelector('style[data-hide-branding]')) {
@@ -194,6 +208,8 @@ function ChartViewMarket() {
     widget.setAttribute('time-frame', '7D');
     widget.setAttribute('theme', 'dark');
     widget.setAttribute('color-theme', 'dark');
+    (widget as unknown as { colorTheme?: string }).colorTheme = 'dark';
+    (widget as unknown as { colorTheme?: string }).theme = 'dark';
     root.appendChild(widget);
 
     const hideBranding = () => {
