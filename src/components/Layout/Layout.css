@@ -86,10 +86,13 @@
 .bottom-nav,
 .fixed.bottom-0 {
   position: fixed;
-  bottom: 0;
+  bottom: 14px;
   left: 0;
   right: 0;
   z-index: 150;
+  height: 90px;
+  margin-top: -15px;
+  margin-bottom: -15px;
   
   /* Dark gradient background */
   background: linear-gradient(0deg, 
@@ -102,15 +105,31 @@
   border-top: 1px solid rgba(138, 43, 226, 0.5);
   box-shadow: 0 -2px 20px rgba(138, 43, 226, 0.2);
   
-  padding: 10px 4px;
+  padding: 11px 4px;
 }
 
 .bottom-nav .container,
 .fixed.bottom-0 .container {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   gap: 2px;
+  width: 100% !important;
+  max-width: none !important; /* переопределяем Tailwind .container (max-width на брейкпоинтах) */
+  margin-left: 0;
+  margin-right: 0;
+  box-sizing: border-box;
+}
+
+/* Кнопки нижней панели растягиваются с равным интервалом на широких экранах */
+.bottom-nav .container .nav-button,
+.bottom-nav .container button.nav-button,
+.fixed.bottom-0 .container .nav-button,
+.fixed.bottom-0 .container button.nav-button {
+  flex: 1 1 0;
+  min-width: 0;
+  width: auto !important;
+  max-width: none;
 }
 
 /* ============================================
@@ -253,10 +272,13 @@
 .bottom-nav,
 .fixed.bottom-0 {
   position: fixed;
-  bottom: 0;
+  bottom: 14px;
   left: 0;
   right: 0;
   z-index: 150;
+  height: 90px;
+  margin-top: -15px;
+  margin-bottom: -15px;
   
   /* Dark gradient background */
   background: linear-gradient(0deg, 
@@ -269,15 +291,31 @@
   border-top: 1px solid rgba(138, 43, 226, 0.5);
   box-shadow: 0 -2px 20px rgba(138, 43, 226, 0.2);
   
-  padding: 10px 4px;
+  padding: 11px 4px;
 }
 
 .bottom-nav .container,
 .fixed.bottom-0 .container {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   gap: 2px;
+  width: 100% !important;
+  max-width: none !important; /* переопределяем Tailwind .container (max-width на брейкпоинтах) */
+  margin-left: 0;
+  margin-right: 0;
+  box-sizing: border-box;
+}
+
+/* Кнопки нижней панели растягиваются с равным интервалом на широких экранах */
+.bottom-nav .container .nav-button,
+.bottom-nav .container button.nav-button,
+.fixed.bottom-0 .container .nav-button,
+.fixed.bottom-0 .container button.nav-button {
+  flex: 1 1 0;
+  min-width: 0;
+  width: auto !important;
+  max-width: none;
 }
 
 /* ============================================
@@ -418,10 +456,13 @@
 .bottom-nav,
 .fixed.bottom-0 {
   position: fixed;
-  bottom: 0;
+  bottom: 14px;
   left: 0;
   right: 0;
   z-index: 150;
+  height: 90px;
+  margin-top: -15px;
+  margin-bottom: -15px;
   
   /* Dark gradient background */
   background: linear-gradient(0deg, 
@@ -434,15 +475,31 @@
   border-top: 1px solid rgba(138, 43, 226, 0.5);
   box-shadow: 0 -2px 20px rgba(138, 43, 226, 0.2);
   
-  padding: 10px 4px;
+  padding: 11px 4px;
 }
 
 .bottom-nav .container,
 .fixed.bottom-0 .container {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
   gap: 2px;
+  width: 100% !important;
+  max-width: none !important; /* переопределяем Tailwind .container (max-width на брейкпоинтах) */
+  margin-left: 0;
+  margin-right: 0;
+  box-sizing: border-box;
+}
+
+/* Кнопки нижней панели растягиваются с равным интервалом на широких экранах */
+.bottom-nav .container .nav-button,
+.bottom-nav .container button.nav-button,
+.fixed.bottom-0 .container .nav-button,
+.fixed.bottom-0 .container button.nav-button {
+  flex: 1 1 0;
+  min-width: 0;
+  width: auto !important;
+  max-width: none;
 }
 
 /* ============================================

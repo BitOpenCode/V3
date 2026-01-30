@@ -57,12 +57,21 @@ body {
   overflow-y: auto;
 }
 
+/* Страница Chart: контент чуть выше, но панель не должна уходить под верхний хедер (~56–60px) */
+.main-content:has(.chart-page) {
+  padding-top: 84px;
+}
+
 @media (max-width: 640px) {
   .main-content {
     padding-top: 90px;
     padding-bottom: 100px;
     padding-left: 4px;
     padding-right: 4px;
+  }
+
+  .main-content:has(.chart-page) {
+    padding-top: 78px;
   }
 }
 

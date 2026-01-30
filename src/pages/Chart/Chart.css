@@ -23,6 +23,7 @@ body:has(.chart-page) {
   align-items: center;
   gap: 8px;
   padding: 12px 8px;
+  margin-top: -10px; /* чуть выше, но не под верхнюю панель навигации */
 }
 
 /* Кнопки панели графика — компактный размер по умолчанию, тач-дружественные */
@@ -88,6 +89,12 @@ body:has(.chart-page) {
   overflow: hidden;
 }
 
+/* Только Advanced и Overview: нижняя часть графика чуть выше, не уходит под нижнюю панель */
+.chart-content:has(.chart-view-advanced),
+.chart-content:has(.chart-view-overview) {
+  padding-bottom: 14px;
+}
+
 .tradingview-widget-container {
   width: 100%;
   height: 100%;
@@ -106,6 +113,7 @@ body:has(.chart-page) {
 }
 
 /* Market summary: растягивается по ширине контейнера. Тёмный фон — как у Web3, виджет с theme="dark". */
+/* Важно: фон #131722 обязателен, иначе при ошибке виджета или до загрузки виден светлый фон. */
 .chart-view-market {
   padding: 0 12px 12px 12px;
   width: 100%;
@@ -115,7 +123,7 @@ body:has(.chart-page) {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  background-color: #131722;
+  background-color: #131722 !important;
 }
 
 /* Высота фиксирована (430px), ширина — 100%: адаптация к формату экрана по ширине. */
@@ -198,6 +206,7 @@ body:has(.chart-page) {
     flex-wrap: nowrap;
     gap: 4px;
     padding: 6px 4px;
+    margin-top: -10px;
   }
 
   .chart-toolbar .chart-mode-btn {
@@ -218,6 +227,7 @@ body:has(.chart-page) {
   .chart-toolbar {
     gap: 3px;
     padding: 4px 2px;
+    margin-top: -10px;
   }
 
   .chart-toolbar .chart-mode-btn {
