@@ -660,6 +660,17 @@ const RunRoad: React.FC = () => {
       {screen === 'playing' && (
         <div className="game-hud">
           <div className="hud-score">{score}</div>
+          <button 
+            onClick={() => { 
+              if (gameRef.current) {
+                gameRef.current.cleanup();
+              }
+              setScreen('menu');
+            }} 
+            className="hud-back-btn"
+          >
+            ← Back
+          </button>
           
           <div className="controls">
             <button className="control-btn up" onClick={() => handleMove('forward')}>↑</button>
@@ -674,12 +685,14 @@ const RunRoad: React.FC = () => {
 
       {/* Menu */}
       {screen === 'menu' && (
-        <div className="game-menu">
-          <h1>🏃 Run the Road</h1>
-          <p className="highscore">🏆 High Score: {highScore}</p>
-          <button onClick={initGame} className="menu-btn play-btn">🎮 Play</button>
+        <>
+          <div className="game-menu">
+            <h1>🏃 Run the Road</h1>
+            <p className="highscore">🏆 High Score: {highScore}</p>
+            <button onClick={initGame} className="menu-btn play-btn">🎮 Play</button>
+          </div>
           <button onClick={() => navigate('/games')} className="menu-btn back-btn">← Back</button>
-        </div>
+        </>
       )}
 
       {/* Game Over */}

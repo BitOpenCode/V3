@@ -40,6 +40,35 @@
   text-shadow: 2px 2px 0 #000, -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000;
 }
 
+.hud-back-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  padding: 10px 20px;
+  background: rgba(255, 87, 34, 0.9);
+  border: 3px solid #fff;
+  border-radius: 10px;
+  color: white;
+  font-family: 'Press Start 2P', 'Courier New', monospace;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 3px 5px 0px 0px rgba(0, 0, 0, 0.75);
+  pointer-events: auto;
+  z-index: 1002;
+}
+
+.hud-back-btn:hover {
+  background: rgba(230, 74, 25, 0.95);
+  transform: translateY(-2px);
+  box-shadow: 4px 6px 0px 0px rgba(0, 0, 0, 0.75);
+}
+
+.hud-back-btn:active {
+  transform: translateY(3px);
+  box-shadow: 0 2px 0px 0px rgba(0, 0, 0, 0.75);
+}
+
 /* Controls */
 .controls {
   position: absolute;
@@ -144,7 +173,6 @@
 .menu-btn.play-btn {
   background: #4caf50;
   color: white;
-  margin-bottom: 20px;
 }
 
 .menu-btn.play-btn:hover {
@@ -154,7 +182,15 @@
 .menu-btn.back-btn {
   background: #ff5722;
   color: white;
-  margin-top: 30px;
+  position: fixed !important;
+  bottom: 5px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: auto !important;
+  min-width: 200px !important;
+  max-width: calc(100vw - 40px) !important;
+  margin: 0 !important;
+  z-index: 1003 !important;
 }
 
 .menu-btn.back-btn:hover {
@@ -167,6 +203,13 @@
     font-size: 1.5rem;
     top: 15px;
     right: 15px;
+  }
+
+  .hud-back-btn {
+    top: 15px;
+    left: 15px;
+    padding: 8px 16px;
+    font-size: 0.8rem;
   }
 
   .control-btn {
@@ -192,6 +235,12 @@
     padding: 12px 20px;
     font-size: 0.9rem;
   }
+
+  .menu-btn.back-btn {
+    bottom: 10px !important;
+    min-width: 180px !important;
+    padding: 10px 20px !important;
+  }
 }
 
 @media (max-width: 400px) {
@@ -203,5 +252,11 @@
 
   .control-row {
     gap: 8px;
+  }
+
+  .menu-btn.back-btn {
+    bottom: 5px !important;
+    min-width: 160px !important;
+    padding: 8px 16px !important;
   }
 }
