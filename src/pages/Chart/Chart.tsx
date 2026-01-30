@@ -192,6 +192,8 @@ function ChartViewMarket() {
     const widget = document.createElement('tv-market-summary');
     widget.setAttribute('layout-mode', 'grid');
     widget.setAttribute('time-frame', '7D');
+    widget.setAttribute('theme', 'dark');
+    widget.setAttribute('color-theme', 'dark');
     root.appendChild(widget);
 
     const hideBranding = () => {
