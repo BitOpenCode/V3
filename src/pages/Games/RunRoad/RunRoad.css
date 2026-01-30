@@ -144,6 +144,7 @@
 .menu-btn.play-btn {
   background: #4caf50;
   color: white;
+  margin-bottom: 20px;
 }
 
 .menu-btn.play-btn:hover {
@@ -153,7 +154,7 @@
 .menu-btn.back-btn {
   background: #ff5722;
   color: white;
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 .menu-btn.back-btn:hover {
