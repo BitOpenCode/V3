@@ -7,7 +7,7 @@ export default defineConfig(({ command }) => ({
   // Use /V3/ for production build (GitHub Pages), / for local development
   base: command === 'build' ? '/V3/' : '/',
   server: {
-    port: 5174,
+    port: 5180,
   },
   plugins: [
     react(),

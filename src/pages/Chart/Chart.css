@@ -1,32 +1,228 @@
-/* Chart page styles - fullscreen */
-.chart-page-fullscreen {
+/* На странице Chart экран НЕ скроллится. */
+body:has(.chart-page) {
+  overflow: hidden !important;
+}
+.main-content:has(.chart-page) {
+  overflow: hidden !important;
+}
+
+.chart-page {
   width: 100%;
   height: calc(100vh - 140px);
   padding: 0;
   margin: 0;
-}
-
-.chart-container-full {
-  width: 100%;
-  height: 100%;
-  background: var(--color-bg--300);
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
 }
 
-.tradingview-widget {
+.chart-toolbar {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 8px;
+}
+
+/* Кнопки панели графика — компактный размер по умолчанию, тач-дружественные */
+.chart-toolbar .chart-mode-btn {
+  min-width: 58px;
+  width: auto;
+  height: 34px;
+  padding: 6px 10px;
+  font-size: 0.75rem;
+  outline: none;
+  border-radius: 12px;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  color: rgba(255, 255, 255, 1);
+  background: none !important;
+  background-image: none !important;
+  border-image: radial-gradient(circle at 50% 50%, rgba(76, 201, 240, 0) 0%, rgba(255, 255, 255, 0) 100%) 1;
+}
+
+.chart-toolbar .chart-mode-btn:focus {
+  outline: none;
+}
+
+.chart-toolbar .chart-mode-btn:hover {
+  /* Как у основного приложения: фиолетово-синее свечение, без оранжевого */
+  background-color: transparent !important;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(138, 43, 226, 0.8), transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(0, 119, 204, 0.6), transparent 50%),
+    linear-gradient(135deg, #2a1a4a 0%, #1a1a3a 100%) !important;
+  box-shadow:
+    0 4px 16px rgba(138, 43, 226, 0.6),
+    0 0 20px rgba(0, 119, 204, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+}
+
+.chart-toolbar .chart-mode-btn:active {
+  background-color: transparent !important;
+  box-shadow:
+    0 1px 4px rgba(138, 43, 226, 0.5),
+    inset 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Активная кнопка режима графика — перекрываем глобальные nav-button, явное «свечение» */
+.chart-page .chart-toolbar button.chart-mode-btn.chart-mode-btn--active {
+  border-color: rgba(255, 255, 255, 0.85) !important;
+  box-shadow:
+    0 0 20px rgba(138, 43, 226, 0.9),
+    0 0 35px rgba(0, 119, 204, 0.5),
+    inset 0 0 20px rgba(138, 43, 226, 0.35) !important;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(138, 43, 226, 0.95), transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(0, 119, 204, 0.8), transparent 50%),
+    linear-gradient(135deg, #321a5a 0%, #1a1a4a 100%) !important;
+  transform: scale(1.02) !important;
+}
+
+.chart-content {
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  overflow: hidden;
+}
+
+.tradingview-widget-container {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.tradingview-widget-container__widget {
   width: 100%;
   height: 100%;
 }
 
-/* Адаптивность для мобильных */
+/* Overview: без скролла — виджет целиком в экране, как на эталоне */
+.chart-view-overview {
+  overflow: hidden;
+}
+
+/* Market summary: растягивается по ширине контейнера на любом экране. */
+.chart-view-market {
+  padding: 0 12px 12px 12px;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* Высота фиксирована (430px), ширина — 100%: адаптация к формату экрана по ширине. */
+.chart-view-market tv-market-summary {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  min-height: 430px !important;
+  height: 430px !important;
+  flex: 1 1 auto !important;
+  align-self: stretch !important;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  opacity: 0.8;
+  border: 0.5px solid transparent;
+  border-image: none;
+  background-color: rgba(255, 255, 255, 0);
+  border-radius: 20px;
+  box-sizing: content-box;
+}
+
+.chart-view-market-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  color: var(--color-text, #ccc);
+  font-size: 1rem;
+}
+
+/* Убрать подпись "Market Summary by TradingView" под виджетом */
+.chart-view-market a[href*='tradingview'],
+.chart-view-market a[href*='tradingview-widget'],
+.chart-view-market [class*='trademark'],
+.chart-view-market [class*='widget-logo'],
+.chart-view-market [class*='footer'] {
+  display: none !important;
+}
+
+/* Web3: Crypto Screener (embed-widget-screener). Тёмный фон — виджет не поддерживает полную прозрачность кнопок. */
+/* Блокировка переходов по ссылкам — через sandbox на iframe в JS (скролл сохраняется). */
+.chart-view-web3 {
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background-color: #131722;
+}
+
+/* Summary (market-overview): скролл только внутри виджета, без скролла страницы */
+.chart-view-summary {
+  padding: 8px;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+/* Убрать подпись TradingView под виджетом Summary */
+.chart-view-summary a[href*='tradingview'],
+.chart-view-summary a[href*='tradingview-widget'],
+.chart-view-summary [class*='trademark'],
+.chart-view-summary [class*='widget-logo'],
+.chart-view-summary [class*='footer'] {
+  display: none !important;
+}
+
+/* Скрыть подписи TradingView в контейнере */
+.tradingview-widget-container a[href*='tradingview'],
+.tradingview-widget-container a[href*='utm_'],
+.tradingview-widget-container .trademark {
+  display: none !important;
+}
+
 @media (max-width: 640px) {
-  .chart-page-fullscreen {
+  .chart-page {
     height: calc(100vh - 130px);
+  }
+
+  .chart-toolbar {
+    flex-wrap: nowrap;
+    gap: 4px;
+    padding: 6px 4px;
+  }
+
+  .chart-toolbar .chart-mode-btn {
+    flex: 1 1 0;
+    min-width: 0;
+    height: 32px;
+    padding: 4px 4px;
+    font-size: 0.6rem;
+    border-radius: 10px;
   }
 }
 
 @media (max-width: 400px) {
-  .chart-page-fullscreen {
+  .chart-page {
     height: calc(100vh - 120px);
+  }
+
+  .chart-toolbar {
+    gap: 3px;
+    padding: 4px 2px;
+  }
+
+  .chart-toolbar .chart-mode-btn {
+    height: 28px;
+    padding: 2px 2px;
+    font-size: 0.55rem;
+    border-radius: 8px;
   }
 }
