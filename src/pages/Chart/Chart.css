@@ -2,17 +2,28 @@
 body:has(.chart-page) {
   overflow: hidden !important;
 }
+/* Область контента Chart = строго между верхней и нижней панелью навигации */
 .main-content:has(.chart-page) {
   overflow: hidden !important;
+  display: flex;
+  flex-direction: column;
+  padding-top: 62px;
+  padding-bottom: 104px;
+  height: 100vh;
+  box-sizing: border-box;
+}
+
+.main-content:has(.chart-page) .chart-page {
+  flex: 1 1 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .chart-page {
   width: 100%;
-  height: calc(100vh - 140px);
   padding: 0;
   margin: 0;
-  display: flex;
-  flex-direction: column;
   overflow: hidden;
 }
 
@@ -23,7 +34,6 @@ body:has(.chart-page) {
   align-items: center;
   gap: 8px;
   padding: 12px 8px;
-  margin-top: -10px; /* чуть выше, но не под верхнюю панель навигации */
 }
 
 /* Кнопки панели графика — компактный размер по умолчанию, тач-дружественные */
@@ -83,23 +93,19 @@ body:has(.chart-page) {
 }
 
 .chart-content {
-  flex: 1;
+  flex: 1 1 0;
   min-height: 0;
   width: 100%;
   overflow: hidden;
-}
-
-/* Только Advanced и Overview: нижняя часть графика чуть выше, не уходит под нижнюю панель */
-.chart-content:has(.chart-view-advanced),
-.chart-content:has(.chart-view-overview) {
-  padding-bottom: 14px;
+  display: flex;
+  flex-direction: column;
 }
 
 .tradingview-widget-container {
+  flex: 1 1 0;
+  min-height: 0;
   width: 100%;
-  height: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden;
 }
 
 .tradingview-widget-container__widget {
@@ -107,42 +113,46 @@ body:has(.chart-page) {
   height: 100%;
 }
 
-/* Overview: без скролла — виджет целиком в экране, как на эталоне */
+/* Advanced и Overview: на всю ширину и высоту */
+.chart-view-advanced,
 .chart-view-overview {
+  flex: 1 1 0;
+  min-height: 0;
   overflow: hidden;
 }
 
-/* Market summary: растягивается по ширине контейнера. Тёмный фон — как у Web3, виджет с theme="dark". */
-/* Важно: фон #131722 обязателен, иначе при ошибке виджета или до загрузки виден светлый фон. */
+/* Market summary: на всю ширину и высоту контейнера */
 .chart-view-market {
-  padding: 0 12px 12px 12px;
+  padding: 0;
   width: 100%;
-  height: 100%;
+  flex: 1 1 0;
   min-height: 0;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  align-items: stretch;
   background-color: #131722 !important;
 }
 
-/* Высота фиксирована (430px), ширина — 100%: адаптация к формату экрана по ширине. */
 .chart-view-market tv-market-summary {
   display: block !important;
   width: 100% !important;
   max-width: 100% !important;
-  min-height: 430px !important;
-  height: 430px !important;
-  flex: 1 1 auto !important;
+  flex: 1 1 0 !important;
+  min-height: 0 !important;
   align-self: stretch !important;
   padding-top: 2px;
-  padding-bottom: 2px;
+  padding-bottom: 0;
   opacity: 0.8;
   border: 0.5px solid transparent;
   border-image: none;
   background-color: rgba(255, 255, 255, 0);
   border-radius: 20px;
-  box-sizing: content-box;
+  box-sizing: border-box;
+}
+
+.chart-content:has(.chart-view-market) {
+  padding-bottom: 0;
+  margin-bottom: -40px; /* вытянуть график ниже */
 }
 
 .chart-view-market-loading {
@@ -163,20 +173,22 @@ body:has(.chart-page) {
   display: none !important;
 }
 
-/* Web3: Crypto Screener (embed-widget-screener). Тёмный фон — виджет не поддерживает полную прозрачность кнопок. */
-/* Блокировка переходов по ссылкам — через sandbox на iframe в JS (скролл сохраняется). */
+/* Web3: на всю ширину и высоту */
 .chart-view-web3 {
   width: 100%;
-  height: 100%;
+  flex: 1 1 0;
+  min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
   background-color: #131722;
 }
 
-/* Summary (market-overview): скролл только внутри виджета, без скролла страницы */
+/* Summary: на всю ширину и высоту */
 .chart-view-summary {
-  padding: 8px;
-  height: 100%;
+  padding: 0;
+  width: 100%;
+  flex: 1 1 0;
+  min-height: 0;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -198,15 +210,15 @@ body:has(.chart-page) {
 }
 
 @media (max-width: 640px) {
-  .chart-page {
-    height: calc(100vh - 130px);
+  .main-content:has(.chart-page) {
+    padding-top: 58px;
+    padding-bottom: 110px;
   }
 
   .chart-toolbar {
     flex-wrap: nowrap;
     gap: 4px;
     padding: 6px 4px;
-    margin-top: -10px;
   }
 
   .chart-toolbar .chart-mode-btn {
@@ -220,14 +232,14 @@ body:has(.chart-page) {
 }
 
 @media (max-width: 400px) {
-  .chart-page {
-    height: calc(100vh - 120px);
+  .main-content:has(.chart-page) {
+    padding-top: 54px;
+    padding-bottom: 110px;
   }
 
   .chart-toolbar {
     gap: 3px;
     padding: 4px 2px;
-    margin-top: -10px;
   }
 
   .chart-toolbar .chart-mode-btn {
