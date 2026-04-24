@@ -99,6 +99,7 @@ export const fetchTonTickers = async (): Promise<Ticker[]> => {
 export const fetchNews = async (categories?: string): Promise<NewsItem[]> => {
   const params = categories ? `?categories=${categories}` : '';
   const response = await axios.get(`${CRYPTOCOMPARE_NEWS_API}/news/${params}`);
+  console.log('News API response:', response.data);
   return response.data.Data || [];
 };
 
