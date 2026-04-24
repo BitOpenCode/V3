@@ -95,20 +95,21 @@ export const fetchTonTickers = async (): Promise<Ticker[]> => {
   }
 };
 
-// Fetch news from CryptoPanic RSS
+// Fetch news from NewsData.io
 export const fetchNews = async (categories?: string): Promise<NewsItem[]> => {
-  const currency = categories ? `?currencies=${categories}` : '';
-  const rssUrl = `https://cryptopanic.com/news/rss/${currency}`;
-  const response = await axios.get(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`);
-  
-  const items = response.data.items || [];
+  const apiKey = 'pub_9fa0610a6ae5436086a15d68a372af7e';
+  const coin = categories ? `&coin=${categories}` : '';
+  const response = await axios.get(
+    `https://newsdata.io/api/1/crypto?apikey=${apiKey}&language=en${coin}`
+  );
+  const items = response.data.results || [];
   return items.map((item: any) => ({
-    id: item.guid,
+    id: item.article_id,
     title: item.title,
     body: item.description || item.title,
     url: item.link,
-    imageurl: item.thumbnail || '',
-    source: item.author || 'CryptoPanic',
+    imageurl: item.image_url || '',
+    source: item.source_name || '',
     published_on: Math.floor(new Date(item.pubDate).getTime() / 1000),
     categories: categories || '',
   }));
