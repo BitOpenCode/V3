@@ -95,12 +95,23 @@ export const fetchTonTickers = async (): Promise<Ticker[]> => {
   }
 };
 
-// Fetch news from CryptoCompare
+// Fetch news from CryptoPanic RSS
 export const fetchNews = async (categories?: string): Promise<NewsItem[]> => {
-  const params = categories ? `?categories=${categories}` : '';
-  const response = await axios.get(`${CRYPTOCOMPARE_NEWS_API}/news/${params}`);
-  console.log('News API response:', response.data);
-  return response.data.Data || [];
+  const currency = categories ? `?currencies=${categories}` : '';
+  const rssUrl = `https://cryptopanic.com/news/rss/${currency}`;
+  const response = await axios.get(`https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`);
+  
+  const items = response.data.items || [];
+  return items.map((item: any) => ({
+    id: item.guid,
+    title: item.title,
+    body: item.description || item.title,
+    url: item.link,
+    imageurl: item.thumbnail || '',
+    source: item.author || 'CryptoPanic',
+    published_on: Math.floor(new Date(item.pubDate).getTime() / 1000),
+    categories: categories || '',
+  }));
 };
 
 // Fetch order book from Binance
