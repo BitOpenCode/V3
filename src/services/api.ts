@@ -6,6 +6,7 @@ const BINANCE_API = 'https://api.binance.com/api/v3';
 const BINANCE_WS = 'wss://stream.binance.com:9443/ws';
 const TONAPI_BASE_URL = 'https://tonapi.io/v2';
 const CRYPTOCOMPARE_API = 'https://min-api.cryptocompare.com/data/v2';
+const CRYPTOCOMPARE_NEWS_API = 'https://min-api.cryptocompare.com/data';
 
 // Special tokens for price formatting
 const SPECIAL_PRICE_TOKENS = ['PEPE', 'BONK', 'SHIB', '1000SATS', 'BTTC'];
