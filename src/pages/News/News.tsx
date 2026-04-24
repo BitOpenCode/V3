@@ -28,14 +28,14 @@ const News: React.FC = () => {
   });
 
   // Filter by search
-  const filteredNews = newsItems?.filter((item: NewsItem) => {
+  const filteredNews = (Array.isArray(newsItems) ? newsItems : []).filter((item: NewsItem) => {
     if (!searchQuery) return true;
     const query = searchQuery.toLowerCase();
     return (
       item.title.toLowerCase().includes(query) ||
       item.body.toLowerCase().includes(query)
     );
-  }) || [];
+  });
 
   // Format date
   const formatDate = (timestamp: number) => {
