@@ -1,24 +1,32 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
+import { Newspaper } from 'lucide-react';
 import { fetchNews } from '../../services/api';
 import { NewsItem } from '../../types';
 import { formatDistanceToNow } from 'date-fns';
 import './News.css';
 
+// newsdata.io's crypto endpoint only accepts real coin tickers for its
+// `coin` filter (arbitrary labels like "Trading"/"Technology" get
+// rejected with an UnsupportedFilter error, breaking the whole list).
 const NEWS_CATEGORIES = [
   { value: '', label: 'All' },
-  { value: 'BTC', label: 'Bitcoin' },
-  { value: 'ETH', label: 'Ethereum' },
-  { value: 'Trading', label: 'Trading' },
-  { value: 'Technology', label: 'Technology' },
-  { value: 'Regulation', label: 'Regulation' },
+  { value: 'btc', label: 'Bitcoin' },
+  { value: 'eth', label: 'Ethereum' },
+  { value: 'ton', label: 'TON' },
+  { value: 'xrp', label: 'XRP' },
+  { value: 'bnb', label: 'BNB' },
+  { value: 'doge', label: 'Dogecoin' },
+  { value: 'ada', label: 'Cardano' },
+  { value: 'sol', label: 'Solana' },
 ];
 
 const News: React.FC = () => {
   const navigate = useNavigate();
   const [category, setCategory] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
+  const [brokenImages, setBrokenImages] = useState<Set<string>>(new Set());
 
   // Fetch news with React Query
   const { data: newsItems, isLoading, error } = useQuery({
@@ -107,13 +115,19 @@ const News: React.FC = () => {
             className="news-card"
             onClick={() => openArticle(item.url)}
           >
-            {item.imageurl && (
-              <img 
-                src={item.imageurl} 
+            {item.imageurl && !brokenImages.has(item.id.toString()) ? (
+              <img
+                src={item.imageurl}
                 alt={item.title}
                 className="news-image"
                 loading="lazy"
+                onError={() => setBrokenImages((prev) => new Set(prev).add(item.id.toString()))}
               />
+            ) : (
+              <div className="news-image news-image-placeholder">
+                <Newspaper size={24} />
+                <span>NEWS</span>
+              </div>
             )}
             <div className="news-content">
               <h3 className="news-title">{item.title}</h3>
