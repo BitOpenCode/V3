@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useLayoutEffect } from 'react';
 import { useSettingsStore } from '../../store';
 import './BubbleButton.css';
 
@@ -9,9 +9,48 @@ interface BubbleButtonProps {
   disabled?: boolean;
 }
 
+// Translated labels vary a lot in length (e.g. "SHARE" vs "ПОДЕЛИТЬСЯ"),
+// but the buttons have a fixed size. Shrink the label's font-size just
+// enough to fit instead of letting it overflow or wrap.
+const MIN_FONT_SCALE = 0.55;
+
 const BubbleButton: React.FC<BubbleButtonProps> = ({ onClick, children, className, disabled }) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
+  const labelRef = useRef<HTMLSpanElement>(null);
   const { theme } = useSettingsStore();
+
+  useLayoutEffect(() => {
+    const button = buttonRef.current;
+    const label = labelRef.current;
+    if (!button || !label) return;
+
+    const fitText = () => {
+      label.style.fontSize = '';
+      const buttonStyle = getComputedStyle(button);
+      const paddingX = parseFloat(buttonStyle.paddingLeft) + parseFloat(buttonStyle.paddingRight);
+      const available = button.clientWidth - paddingX;
+      const needed = label.scrollWidth;
+      if (available > 0 && needed > available) {
+        const baseFontSize = parseFloat(getComputedStyle(label).fontSize);
+        const scale = Math.max(available / needed, MIN_FONT_SCALE);
+        label.style.fontSize = `${baseFontSize * scale}px`;
+      }
+    };
+
+    fitText();
+    // Web fonts (Google Fonts) load asynchronously, so the initial
+    // measurement can be taken against a fallback font's metrics. Re-fit
+    // once the real fonts are ready, and once more shortly after in case
+    // sibling layout (e.g. the TonConnect button) settles a beat later.
+    document.fonts?.ready.then(fitText);
+    const settleTimer = setTimeout(fitText, 300);
+
+    window.addEventListener('resize', fitText);
+    return () => {
+      window.removeEventListener('resize', fitText);
+      clearTimeout(settleTimer);
+    };
+  }, [children]);
 
   useEffect(() => {
     const button = buttonRef.current;
@@ -69,13 +108,15 @@ const BubbleButton: React.FC<BubbleButtonProps> = ({ onClick, children, classNam
   }, [disabled, theme]);
 
   return (
-    <button 
-      ref={buttonRef} 
-      className={`nav-button ${className || ''}`} 
+    <button
+      ref={buttonRef}
+      className={`nav-button ${className || ''}`}
       onClick={onClick}
       disabled={disabled}
     >
-      {children}
+      <span ref={labelRef} className="nav-button-content">
+        {children}
+      </span>
     </button>
   );
 };
