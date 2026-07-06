@@ -152,6 +152,11 @@ const Portfolio: React.FC = () => {
             placeholder="Amount"
             value={newPosition.amount}
             onChange={(e) => setNewPosition({...newPosition, amount: e.target.value})}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.currentTarget.blur();
+              }
+            }}
             className="form-input"
           />
           <input
@@ -159,6 +164,12 @@ const Portfolio: React.FC = () => {
             placeholder="Buy Price (USD)"
             value={newPosition.buyPrice}
             onChange={(e) => setNewPosition({...newPosition, buyPrice: e.target.value})}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.currentTarget.blur();
+                handleAddPosition();
+              }
+            }}
             className="form-input"
           />
           <button onClick={handleAddPosition} className="form-submit">Add</button>

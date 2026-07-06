@@ -117,6 +117,11 @@ const Share: React.FC = () => {
           placeholder="Search tickers..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.currentTarget.blur();
+            }
+          }}
           className="share-search"
         />
       </div>

@@ -131,6 +131,11 @@ const Calculator: React.FC = () => {
               setShowDropdown(true);
             }}
             onFocus={() => setShowDropdown(true)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.currentTarget.blur();
+              }
+            }}
           />
           
           {showDropdown && filteredCoins.length > 0 && (
@@ -159,6 +164,11 @@ const Calculator: React.FC = () => {
             placeholder="Enter amount..."
             value={form.investment || ''}
             onChange={(e) => updateForm({ investment: parseFloat(e.target.value) || null })}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.currentTarget.blur();
+              }
+            }}
           />
         </div>
 
@@ -173,6 +183,11 @@ const Calculator: React.FC = () => {
             placeholder="Enter price..."
             value={form.initialPrice || ''}
             onChange={(e) => updateForm({ initialPrice: parseFloat(e.target.value) || null })}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.currentTarget.blur();
+              }
+            }}
           />
         </div>
 
@@ -187,6 +202,11 @@ const Calculator: React.FC = () => {
             placeholder="Enter projected price..."
             value={form.projectedPrice || ''}
             onChange={(e) => updateForm({ projectedPrice: parseFloat(e.target.value) || null })}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.currentTarget.blur();
+              }
+            }}
           />
         </div>
 

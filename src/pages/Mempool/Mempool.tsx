@@ -370,6 +370,12 @@ const Mempool: React.FC = () => {
                 placeholder="Enter BTC address"
                 value={btcAddress}
                 onChange={(e) => setBtcAddress(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.currentTarget.blur();
+                    lookupBtcAddress();
+                  }
+                }}
                 className="lookup-input"
               />
               <button 
@@ -414,6 +420,12 @@ const Mempool: React.FC = () => {
                 placeholder="Enter Transaction ID (TXID)"
                 value={btcTxId}
                 onChange={(e) => setBtcTxId(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.currentTarget.blur();
+                    lookupBtcTransaction();
+                  }
+                }}
                 className="lookup-input"
               />
               <button 
@@ -523,6 +535,12 @@ const Mempool: React.FC = () => {
                 placeholder="Enter TON address"
                 value={tonAddress}
                 onChange={(e) => setTonAddress(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.currentTarget.blur();
+                    lookupTonAddress();
+                  }
+                }}
                 className="lookup-input"
               />
               <button 
@@ -593,6 +611,12 @@ const Mempool: React.FC = () => {
                 placeholder="Enter TRON address (T...)"
                 value={tronAddress}
                 onChange={(e) => setTronAddress(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.currentTarget.blur();
+                    lookupTronAddress();
+                  }
+                }}
                 className="lookup-input"
               />
               <button 
@@ -652,6 +676,12 @@ const Mempool: React.FC = () => {
                 placeholder="Enter Transaction Hash"
                 value={tronTxId}
                 onChange={(e) => setTronTxId(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.currentTarget.blur();
+                    lookupTronTransaction();
+                  }
+                }}
                 className="lookup-input"
               />
               <button 

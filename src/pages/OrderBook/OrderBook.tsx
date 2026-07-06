@@ -85,6 +85,11 @@ const OrderBook: React.FC = () => {
           onChange={(e) => setSearchQuery(e.target.value)}
           onFocus={() => setIsDropdownOpen(true)}
           onBlur={() => setTimeout(() => setIsDropdownOpen(false), 200)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.currentTarget.blur();
+            }
+          }}
           className="orderbook-search"
         />
         

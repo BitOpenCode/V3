@@ -48,6 +48,12 @@ const LoginScreen: React.FC<LoginScreenProps> = ({ userId, onUserIdChange, onLog
           placeholder="Enter your login"
           value={userId}
           onChange={(e) => onUserIdChange(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.currentTarget.blur();
+              onLogin();
+            }
+          }}
           maxLength={20}
           className="login-input"
         />

@@ -67,6 +67,11 @@ const News: React.FC = () => {
           placeholder="Search news..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.currentTarget.blur();
+            }
+          }}
           className="news-search"
         />
       </div>

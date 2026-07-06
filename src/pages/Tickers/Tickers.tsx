@@ -147,6 +147,11 @@ const Tickers: React.FC = () => {
           placeholder="Search symbol..."
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              e.currentTarget.blur();
+            }
+          }}
           className="tickers-search"
         />
       </div>
