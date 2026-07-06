@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Ticker, NewsItem, OrderBook, OrderBookEntry } from '../types';
+import { Ticker, NewsItem, OrderBook, OrderBookEntry, TonTransaction } from '../types';
 
 // API endpoints
 const BINANCE_API = 'https://api.binance.com/api/v3';
@@ -172,5 +172,50 @@ export const fetchTonPrice = async (): Promise<{ price: number; change24h: numbe
     };
   } catch {
     return { price: 0, change24h: 0 };
+  }
+};
+
+interface RawTonMessage {
+  value?: number;
+  source?: { address?: string };
+  destination?: { address?: string };
+}
+
+interface RawTonTransaction {
+  hash: string;
+  utime: number;
+  total_fees: number;
+  in_msg?: RawTonMessage;
+  out_msgs?: RawTonMessage[];
+}
+
+// Fetch TON wallet transaction history (most recent first)
+export const fetchTonTransactions = async (address: string, limit = 20): Promise<TonTransaction[]> => {
+  try {
+    const response = await axios.get(`${TONAPI_BASE_URL}/blockchain/accounts/${address}/transactions`, {
+      params: { limit },
+    });
+    const transactions: RawTonTransaction[] = response.data.transactions || [];
+    return transactions.map((tx): TonTransaction => {
+      const outMsgs = tx.out_msgs || [];
+      const isOutgoing = outMsgs.length > 0;
+      const amountNano = isOutgoing
+        ? outMsgs.reduce((sum, msg) => sum + (msg.value || 0), 0)
+        : (tx.in_msg?.value || 0);
+      const counterparty = isOutgoing
+        ? (outMsgs[0]?.destination?.address || '')
+        : (tx.in_msg?.source?.address || '');
+
+      return {
+        hash: tx.hash,
+        timestamp: tx.utime,
+        direction: isOutgoing ? 'out' : 'in',
+        amount: (amountNano / 1e9).toFixed(4),
+        counterparty,
+        fee: (tx.total_fees / 1e9).toFixed(5),
+      };
+    });
+  } catch {
+    return [];
   }
 };
