@@ -30,16 +30,9 @@ import './index.css';
 import './App.css';
 import './styles/themes.css';
 
-// Initialize Telegram WebApp
 WebApp.ready();
 WebApp.expand();
 
-// Lock app height to the tallest viewport height observed so far. The
-// keyboard only ever shrinks the visible viewport, so a "grows but never
-// shrinks" height never follows the keyboard up. It also self-corrects if
-// the very first reading is taken before Telegram finishes expanding the
-// WebView to full height (a plain one-shot window.innerHeight read can
-// otherwise lock in a too-small height that nothing later fixes).
 let maxAppHeight = 0;
 const setAppHeight = () => {
   const height = WebApp.viewportStableHeight || window.innerHeight;
@@ -52,16 +45,13 @@ setAppHeight();
 WebApp.onEvent('viewportChanged', setAppHeight);
 window.addEventListener('resize', setAppHeight);
 window.addEventListener('orientationchange', () => {
-  // A real orientation change can legitimately shrink the viewport
-  // (portrait -> landscape), so allow re-measuring from scratch.
   maxAppHeight = 0;
   setAppHeight();
 });
-// Catch any late height settling shortly after the WebView finishes expanding.
+
 setTimeout(setAppHeight, 300);
 setTimeout(setAppHeight, 1000);
 
-// Initialize theme on app start
 const savedTheme = localStorage.getItem('settings-storage');
 if (savedTheme) {
   try {
@@ -71,22 +61,18 @@ if (savedTheme) {
       document.body.classList.add(`theme-${settings.state.theme}`);
     }
   } catch (e) {
-    // Fallback to default theme (Space)
     document.body.classList.add('theme-space');
   }
 } else {
-  // Default theme is Space
   document.body.classList.add('theme-space');
 }
 
-// Используем рабочий URL манифеста
-const manifestUrl = "https://oni-wan-shinobi.github.io/V3/tonconnect-manifest.json";
+const manifestUrl = "https://bitopencode.github.io/V3/tonconnect-manifest.json";
 
-// Create React Query client
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 30000, // 30 seconds
+      staleTime: 30000, 
       retry: 2,
     },
   },
@@ -97,7 +83,6 @@ if (!rootElement) {
   throw new Error('Root element not found');
 }
 
-// Test if React is working
 console.log('React app starting...');
 
 try {
