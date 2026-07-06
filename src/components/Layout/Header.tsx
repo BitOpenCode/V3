@@ -2,9 +2,11 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TonConnectButton } from '@tonconnect/ui-react';
 import { BubbleButton } from '../ui';
+import { useTranslation } from '../../hooks/useTranslation';
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   return (
     <header className="upper-nav-panel">
@@ -13,7 +15,7 @@ const Header: React.FC = () => {
           className="nav-button"
           onClick={() => navigate('/mempool')}
         >
-          Mempool
+          {t('mempool')}
         </BubbleButton>
       </div>
 
@@ -22,7 +24,7 @@ const Header: React.FC = () => {
           className="nav-button"
           onClick={() => navigate('/news')}
         >
-          News
+          {t('news')}
         </BubbleButton>
       </div>
 
@@ -35,7 +37,7 @@ const Header: React.FC = () => {
           className="nav-button"
           onClick={() => navigate('/wallet')}
         >
-          Wallet Info
+          {t('wallet')}
         </BubbleButton>
       </div>
 
@@ -44,7 +46,7 @@ const Header: React.FC = () => {
           className="nav-button"
           onClick={() => navigate('/menu')}
         >
-          Menu
+          {t('menu')}
         </BubbleButton>
       </div>
     </header>
@@ -52,4 +54,3 @@ const Header: React.FC = () => {
 };
 
 export default Header;
-

@@ -4,12 +4,14 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchTickers, formatTickerPrice } from '../../services/api';
 import { useFavoritesStore } from '../../store';
 import { Ticker } from '../../types';
+import { useTranslation } from '../../hooks/useTranslation';
 import './Share.css';
 
 type AssetFilter = 'USDT' | 'BTC' | 'FAV';
 
 const Share: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [filter, setFilter] = useState<AssetFilter>('USDT');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedTickers, setSelectedTickers] = useState<string[]>([]);
@@ -104,9 +106,9 @@ const Share: React.FC = () => {
   return (
     <div className="share-page">
       <div className="page-header">
-        <h1 className="page-title">Share Tickers</h1>
+        <h1 className="page-title">{t('share')}</h1>
         <button onClick={() => navigate('/')} className="close-button">
-          Close
+          {t('close')}
         </button>
       </div>
 
@@ -114,7 +116,7 @@ const Share: React.FC = () => {
       <div className="share-search-container">
         <input
           type="text"
-          placeholder="Search tickers..."
+          placeholder={t('search_tickers')}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           onKeyDown={(e) => {
@@ -144,19 +146,19 @@ const Share: React.FC = () => {
           className={`share-filter ${filter === 'FAV' ? 'active' : ''}`}
           onClick={() => setFilter('FAV')}
         >
-          FAV {favorites.length > 0 && <span className="fav-star">★</span>}
+          {t('fav')} {favorites.length > 0 && <span className="fav-star">★</span>}
         </button>
       </div>
 
       {/* Quick actions */}
       <div className="share-actions">
-        <button className="action-btn" onClick={selectAll}>Select Top 20</button>
-        <button className="action-btn" onClick={clearSelection}>Clear</button>
+        <button className="action-btn" onClick={selectAll}>{t('select_top_20')}</button>
+        <button className="action-btn" onClick={clearSelection}>{t('clear')}</button>
       </div>
 
       {/* Tickers grid */}
       {isLoading ? (
-        <div className="share-loading">Loading tickers...</div>
+        <div className="share-loading">{t('loading_tickers')}</div>
       ) : (
         <div className="share-tickers-grid">
           {filteredTickers.slice(0, 100).map((ticker: Ticker) => (
@@ -182,14 +184,14 @@ const Share: React.FC = () => {
       {/* Footer */}
       <div className="share-footer">
         <div className="selected-count">
-          Selected: {selectedTickers.length} tickers
+          {t('selected_count', { count: selectedTickers.length })}
         </div>
         <button
           className={`share-btn ${selectedTickers.length === 0 ? 'disabled' : ''}`}
           onClick={shareSelected}
           disabled={selectedTickers.length === 0}
         >
-          Share to Telegram
+          {t('share_to_telegram')}
         </button>
       </div>
     </div>

@@ -27,27 +27,6 @@ const games: GameCard[] = [
     icon: '🏃',
     route: '/games/runroad',
   },
-  {
-    id: 'hugme',
-    title: 'Hug Me',
-    description: 'Hug the bunnies and earn points!',
-    icon: '🐰',
-    route: '/games/hugme',
-  },
-  {
-    id: 'castles',
-    title: 'Castles',
-    description: 'Build your settlement, gather resources and defend your castle!',
-    icon: '🏰',
-    route: '/games/castles',
-  },
-  {
-    id: 'conquer',
-    title: 'Conquer',
-    description: 'Conquer territories and expand your empire!',
-    icon: '⚔️',
-    route: '/games/conquer',
-  },
 ];
 
 const Games: React.FC = () => {

@@ -3,10 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { fetchTickers, formatTickerPrice, createTickerWebSocket } from '../../services/api';
 import { Ticker, TickerFilter, TickerSort, SortDirection } from '../../types';
+import { useTranslation } from '../../hooks/useTranslation';
 import './Tickers.css';
 
 const Tickers: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   
   // Local state
   const [filter, setFilter] = useState<TickerFilter>('USDT');
@@ -134,9 +136,9 @@ const Tickers: React.FC = () => {
   return (
     <div className="tickers-page">
       <div className="page-header">
-        <h1 className="page-title">Tickers </h1>
+        <h1 className="page-title">{t('tickers')}</h1>
         <button onClick={() => navigate('/')} className="close-button">
-          Close
+          {t('close')}
         </button>
       </div>
 
@@ -144,7 +146,7 @@ const Tickers: React.FC = () => {
       <div className="tickers-search-container">
         <input
           type="text"
-          placeholder="Search symbol..."
+          placeholder={t('search_symbol')}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           onKeyDown={(e) => {
@@ -172,28 +174,28 @@ const Tickers: React.FC = () => {
       {/* Table header */}
       <div className="tickers-table-header">
         <div onClick={() => handleSort('symbol')} className="sortable">
-          Pair {sortBy === 'symbol' && (sortDir === 'asc' ? '↑' : '↓')}
+          {t('pair')} {sortBy === 'symbol' && (sortDir === 'asc' ? '↑' : '↓')}
         </div>
         <div onClick={() => handleSort('price')} className="sortable">
-          Price {sortBy === 'price' && (sortDir === 'asc' ? '↑' : '↓')}
+          {t('price')} {sortBy === 'price' && (sortDir === 'asc' ? '↑' : '↓')}
         </div>
         <div onClick={() => handleSort('change')} className="sortable">
-          24h {sortBy === 'change' && (sortDir === 'asc' ? '↑' : '↓')}
+          {t('change_24h')} {sortBy === 'change' && (sortDir === 'asc' ? '↑' : '↓')}
         </div>
         <div onClick={() => handleSort('volume')} className="sortable">
-          Vol {sortBy === 'volume' && (sortDir === 'asc' ? '↑' : '↓')}
+          {t('volume')} {sortBy === 'volume' && (sortDir === 'asc' ? '↑' : '↓')}
         </div>
         <div className="fav-header">⭐</div>
       </div>
 
       {/* Loading state */}
       {isLoading && (
-        <div className="tickers-loading">Loading tickers...</div>
+        <div className="tickers-loading">{t('loading_tickers')}</div>
       )}
 
       {/* Error state */}
       {error && (
-        <div className="tickers-error">Failed to load tickers</div>
+        <div className="tickers-error">{t('error_tickers')}</div>
       )}
 
       {/* Tickers list */}
@@ -227,11 +229,10 @@ const Tickers: React.FC = () => {
 
       {/* Empty state */}
       {!isLoading && filteredTickers.length === 0 && (
-        <div className="tickers-empty">No tickers found</div>
+        <div className="tickers-empty">{t('no_tickers')}</div>
       )}
     </div>
   );
 };
 
 export default Tickers;
-

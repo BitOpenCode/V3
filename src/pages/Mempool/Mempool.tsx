@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { BubbleCard } from '../../components/ui';
+import { useTranslation } from '../../hooks/useTranslation';
 import './Mempool.css';
 
 type Currency = 'BTC' | 'TON' | 'TRC20';
@@ -89,6 +90,7 @@ const TRONSCAN_API = 'https://apilist.tronscan.org/api';
 
 const Mempool: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [currency, setCurrency] = useState<Currency>('BTC');
   
   // BTC State
@@ -244,7 +246,7 @@ const Mempool: React.FC = () => {
   // TON Address Lookup
   const lookupTonAddress = async () => {
     if (!tonAddress.trim()) {
-      setTonAddressError('Please enter a TON address');
+      setTonAddressError('Please enter a GRAM address');
       return;
     }
 
@@ -330,9 +332,9 @@ const Mempool: React.FC = () => {
   return (
     <div className="mempool-page">
       <div className="page-header">
-        <h1 className="page-title">Mempool Explorer</h1>
+        <h1 className="page-title">{t('mempool')}</h1>
         <button onClick={() => navigate('/')} className="close-button">
-          Close
+          {t('close')}
         </button>
       </div>
 
@@ -348,7 +350,7 @@ const Mempool: React.FC = () => {
           className={`currency-btn ${currency === 'TON' ? 'active' : ''}`}
           onClick={() => setCurrency('TON')}
         >
-          💎 TON
+          💎 GRAM
         </button>
         <button 
           className={`currency-btn ${currency === 'TRC20' ? 'active' : ''}`}
@@ -363,11 +365,11 @@ const Mempool: React.FC = () => {
         <>
           {/* Address Lookup */}
           <BubbleCard className="lookup-card">
-            <h3>Bitcoin Address Lookup</h3>
+            <h3>{t('btc_address_lookup')}</h3>
             <div className="lookup-input-group">
               <input
                 type="text"
-                placeholder="Enter BTC address"
+                placeholder={t('enter_btc_address')}
                 value={btcAddress}
                 onChange={(e) => setBtcAddress(e.target.value)}
                 onKeyDown={(e) => {
@@ -383,7 +385,7 @@ const Mempool: React.FC = () => {
                 disabled={btcAddressLoading}
                 className="lookup-btn"
               >
-                {btcAddressLoading ? '...' : 'Lookup'}
+                {btcAddressLoading ? '...' : t('lookup')}
               </button>
             </div>
             
@@ -392,19 +394,19 @@ const Mempool: React.FC = () => {
             {btcAddressData && (
               <div className="lookup-result">
                 <div className="result-row">
-                  <span>Balance:</span>
+                  <span>{t('balance')}:</span>
                   <span>{formatBtc((btcAddressData.chain_stats?.funded_txo_sum || 0) - (btcAddressData.chain_stats?.spent_txo_sum || 0))} BTC</span>
                 </div>
                 <div className="result-row">
-                  <span>Transactions:</span>
+                  <span>{t('transactions')}:</span>
                   <span>{btcAddressData.chain_stats?.tx_count || 0}</span>
                 </div>
                 <div className="result-row">
-                  <span>Received:</span>
+                  <span>{t('received')}:</span>
                   <span>{formatBtc(btcAddressData.chain_stats?.funded_txo_sum || 0)} BTC</span>
                 </div>
                 <div className="result-row">
-                  <span>Spent:</span>
+                  <span>{t('spent')}:</span>
                   <span>{formatBtc(btcAddressData.chain_stats?.spent_txo_sum || 0)} BTC</span>
                 </div>
               </div>
@@ -413,11 +415,11 @@ const Mempool: React.FC = () => {
 
           {/* Transaction Lookup */}
           <BubbleCard className="lookup-card">
-            <h3>Transaction Lookup</h3>
+            <h3>{t('btc_transaction_lookup')}</h3>
             <div className="lookup-input-group">
               <input
                 type="text"
-                placeholder="Enter Transaction ID (TXID)"
+                placeholder={t('enter_txid')}
                 value={btcTxId}
                 onChange={(e) => setBtcTxId(e.target.value)}
                 onKeyDown={(e) => {
@@ -433,7 +435,7 @@ const Mempool: React.FC = () => {
                 disabled={btcTxLoading}
                 className="lookup-btn"
               >
-                {btcTxLoading ? '...' : 'Lookup'}
+                {btcTxLoading ? '...' : t('lookup')}
               </button>
             </div>
             
@@ -442,29 +444,29 @@ const Mempool: React.FC = () => {
             {btcTxData && (
               <div className="lookup-result">
                 <div className="result-row">
-                  <span>Status:</span>
+                  <span>{t('status')}:</span>
                   <span className={btcTxData.status?.confirmed ? 'text-green' : 'text-yellow'}>
-                    {btcTxData.status?.confirmed ? 'Confirmed' : 'Unconfirmed'}
+                    {btcTxData.status?.confirmed ? t('confirmed') : t('unconfirmed')}
                   </span>
                 </div>
                 <div className="result-row">
-                  <span>Block:</span>
-                  <span>{btcTxData.status?.block_height || 'Pending'}</span>
+                  <span>{t('block')}:</span>
+                  <span>{btcTxData.status?.block_height || t('pending')}</span>
                 </div>
                 <div className="result-row">
-                  <span>Size:</span>
+                  <span>{t('size')}:</span>
                   <span>{btcTxData.size} bytes</span>
                 </div>
                 <div className="result-row">
-                  <span>Fee:</span>
+                  <span>{t('fee')}:</span>
                   <span>{formatBtc(btcTxData.fee)} BTC</span>
                 </div>
                 <div className="result-row">
-                  <span>Inputs:</span>
+                  <span>{t('inputs')}:</span>
                   <span>{btcTxData.vin.length}</span>
                 </div>
                 <div className="result-row">
-                  <span>Outputs:</span>
+                  <span>{t('outputs')}:</span>
                   <span>{btcTxData.vout.length}</span>
                 </div>
               </div>
@@ -474,33 +476,33 @@ const Mempool: React.FC = () => {
           {/* Hashrate & Difficulty */}
           <div className="stats-row">
             <div className="stat-card">
-              <span className="stat-label">Hashrate</span>
+              <span className="stat-label">{t('hashrate')}</span>
               <span className="stat-value">{hashrateData?.currentHashrate || '—'}</span>
             </div>
             <div className="stat-card">
-              <span className="stat-label">Difficulty</span>
+              <span className="stat-label">{t('difficulty')}</span>
               <span className="stat-value">{hashrateData?.currentDifficulty || '—'}</span>
             </div>
           </div>
 
           {/* Recommended Fees */}
           <div className="fees-card">
-            <h3>Recommended Fees (sat/vB)</h3>
+            <h3>{t('recommended_fees')}</h3>
             <div className="fees-grid">
               <div className="fee-item fastest">
-                <span className="fee-label">Fastest</span>
+                <span className="fee-label">{t('fastest')}</span>
                 <span className="fee-value">{fees?.fastestFee || '—'}</span>
               </div>
               <div className="fee-item medium">
-                <span className="fee-label">30 min</span>
+                <span className="fee-label">{t('fast')}</span>
                 <span className="fee-value">{fees?.halfHourFee || '—'}</span>
               </div>
               <div className="fee-item slow">
-                <span className="fee-label">1 hour</span>
+                <span className="fee-label">{t('medium')}</span>
                 <span className="fee-value">{fees?.hourFee || '—'}</span>
               </div>
               <div className="fee-item economy">
-                <span className="fee-label">Economy</span>
+                <span className="fee-label">{t('slow')}</span>
                 <span className="fee-value">{fees?.economyFee || '—'}</span>
               </div>
             </div>
@@ -508,13 +510,13 @@ const Mempool: React.FC = () => {
 
           {/* Recent Blocks */}
           <div className="blocks-card">
-            <h3>Latest Blocks</h3>
+            <h3>{t('latest_blocks')}</h3>
             <div className="blocks-list">
               {blocks?.map((block) => (
                 <div key={block.id} className="block-item">
                   <span className="block-height">#{block.height}</span>
                   <span className="block-time">{formatTimeAgo(block.timestamp)}</span>
-                  <span className="block-txs">{block.tx_count} txs</span>
+                  <span className="block-txs">{block.tx_count} {t('txs')}</span>
                   <span className="block-size">{formatBytes(block.size)}</span>
                 </div>
               ))}
@@ -528,11 +530,11 @@ const Mempool: React.FC = () => {
         <>
           {/* TON Address Lookup */}
           <BubbleCard className="lookup-card">
-            <h3>TON Address Lookup</h3>
+            <h3>{t('gram_address_lookup')}</h3>
             <div className="lookup-input-group">
               <input
                 type="text"
-                placeholder="Enter TON address"
+                placeholder={t('enter_gram_address')}
                 value={tonAddress}
                 onChange={(e) => setTonAddress(e.target.value)}
                 onKeyDown={(e) => {
@@ -548,7 +550,7 @@ const Mempool: React.FC = () => {
                 disabled={tonAddressLoading}
                 className="lookup-btn"
               >
-                {tonAddressLoading ? '...' : 'Lookup'}
+                {tonAddressLoading ? '...' : t('lookup')}
               </button>
             </div>
             
@@ -557,22 +559,22 @@ const Mempool: React.FC = () => {
             {tonAddressData && (
               <div className="lookup-result">
                 <div className="result-row">
-                  <span>Balance:</span>
-                  <span>{formatTon(tonAddressData.balance)} TON</span>
+                  <span>{t('balance')}:</span>
+                  <span>{formatTon(tonAddressData.balance)} GRAM</span>
                 </div>
                 <div className="result-row">
-                  <span>Status:</span>
+                  <span>{t('status')}:</span>
                   <span>{tonAddressData.status || 'N/A'}</span>
                 </div>
                 <div className="result-row">
-                  <span>Is Scam:</span>
+                  <span>{t('is_scam')}:</span>
                   <span className={tonAddressData.is_scam ? 'text-red' : 'text-green'}>
-                    {tonAddressData.is_scam ? 'Yes ⚠️' : 'No ✓'}
+                    {tonAddressData.is_scam ? t('yes_scam') : t('no_scam')}
                   </span>
                 </div>
                 {tonAddressData.interfaces && tonAddressData.interfaces.length > 0 && (
                   <div className="result-row">
-                    <span>Interfaces:</span>
+                    <span>{t('interfaces')}:</span>
                     <span>{tonAddressData.interfaces.join(', ')}</span>
                   </div>
                 )}
@@ -582,7 +584,7 @@ const Mempool: React.FC = () => {
             {/* Jetton Balances */}
             {tonJettons.length > 0 && (
               <div className="jettons-section">
-                <h4>Jetton Balances</h4>
+                <h4>{t('jetton_balances')}</h4>
                 <div className="jettons-list">
                   {tonJettons.map((jetton) => (
                     <div key={jetton.jetton.address} className="jetton-item">
@@ -604,11 +606,11 @@ const Mempool: React.FC = () => {
         <>
           {/* TRON Address Lookup */}
           <BubbleCard className="lookup-card">
-            <h3>TRON/TRC20 Address Lookup</h3>
+            <h3>{t('tron_address_lookup')}</h3>
             <div className="lookup-input-group">
               <input
                 type="text"
-                placeholder="Enter TRON address (T...)"
+                placeholder={t('enter_tron_address')}
                 value={tronAddress}
                 onChange={(e) => setTronAddress(e.target.value)}
                 onKeyDown={(e) => {
@@ -624,7 +626,7 @@ const Mempool: React.FC = () => {
                 disabled={tronAddressLoading}
                 className="lookup-btn"
               >
-                {tronAddressLoading ? '...' : 'Lookup'}
+                {tronAddressLoading ? '...' : t('lookup')}
               </button>
             </div>
             
@@ -633,15 +635,15 @@ const Mempool: React.FC = () => {
             {tronAddressData && (
               <div className="lookup-result">
                 <div className="result-row">
-                  <span>TRX Balance:</span>
+                  <span>TRX {t('balance')}:</span>
                   <span>{formatTrx(tronAddressData.balance)} TRX</span>
                 </div>
                 <div className="result-row">
-                  <span>Transactions:</span>
+                  <span>{t('transactions')}:</span>
                   <span>{tronAddressData.transactions || 0}</span>
                 </div>
                 <div className="result-row">
-                  <span>Bandwidth:</span>
+                  <span>{t('bandwidth')}:</span>
                   <span>{tronAddressData.bandwidth?.freeNetUsed || 0} / {tronAddressData.bandwidth?.freeNetLimit || 0}</span>
                 </div>
               </div>
@@ -650,7 +652,7 @@ const Mempool: React.FC = () => {
             {/* TRC20 Token Balances */}
             {tronAddressData?.trc20token_balances && tronAddressData.trc20token_balances.length > 0 && (
               <div className="jettons-section">
-                <h4>TRC20 Tokens</h4>
+                <h4>TRC20 {t('tokens')}</h4>
                 <div className="jettons-list">
                   {tronAddressData.trc20token_balances
                     .filter(token => parseFloat(token.balance) > 0)
@@ -669,11 +671,11 @@ const Mempool: React.FC = () => {
 
           {/* TRON Transaction Lookup */}
           <BubbleCard className="lookup-card">
-            <h3>TRON Transaction Lookup</h3>
+            <h3>{t('tron_transaction_lookup')}</h3>
             <div className="lookup-input-group">
               <input
                 type="text"
-                placeholder="Enter Transaction Hash"
+                placeholder={t('enter_tron_tx_hash')}
                 value={tronTxId}
                 onChange={(e) => setTronTxId(e.target.value)}
                 onKeyDown={(e) => {
@@ -689,7 +691,7 @@ const Mempool: React.FC = () => {
                 disabled={tronTxLoading}
                 className="lookup-btn"
               >
-                {tronTxLoading ? '...' : 'Lookup'}
+                {tronTxLoading ? '...' : t('lookup')}
               </button>
             </div>
             
@@ -698,35 +700,35 @@ const Mempool: React.FC = () => {
             {tronTxData && (
               <div className="lookup-result">
                 <div className="result-row">
-                  <span>Status:</span>
+                  <span>{t('status')}:</span>
                   <span className={tronTxData.confirmed ? 'text-green' : 'text-yellow'}>
-                    {tronTxData.confirmed ? 'Confirmed' : 'Unconfirmed'}
+                    {tronTxData.confirmed ? t('confirmed') : t('unconfirmed')}
                   </span>
                 </div>
                 <div className="result-row">
-                  <span>Block:</span>
-                  <span>{tronTxData.block || 'Pending'}</span>
+                  <span>{t('block')}:</span>
+                  <span>{tronTxData.block || t('pending')}</span>
                 </div>
                 <div className="result-row">
-                  <span>From:</span>
+                  <span>{t('from')}:</span>
                   <span className="address-text">{tronTxData.ownerAddress?.slice(0, 8)}...{tronTxData.ownerAddress?.slice(-6)}</span>
                 </div>
                 <div className="result-row">
-                  <span>To:</span>
+                  <span>{t('to')}:</span>
                   <span className="address-text">{tronTxData.toAddress?.slice(0, 8)}...{tronTxData.toAddress?.slice(-6)}</span>
                 </div>
                 {tronTxData.amount && (
                   <div className="result-row">
-                    <span>Amount:</span>
+                    <span>{t('amount')}:</span>
                     <span>{formatTrx(tronTxData.amount)} TRX</span>
                   </div>
                 )}
                 <div className="result-row">
-                  <span>Net Fee:</span>
+                  <span>{t('net_fee')}:</span>
                   <span>{tronTxData.cost?.net_fee || 0} sun</span>
                 </div>
                 <div className="result-row">
-                  <span>Energy Fee:</span>
+                  <span>{t('energy_fee')}:</span>
                   <span>{tronTxData.cost?.energy_fee || 0} sun</span>
                 </div>
               </div>

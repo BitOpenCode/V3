@@ -1,9 +1,11 @@
 import React, { useEffect, useRef, memo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { fetchTickers } from '../../services/api';
+import { useTranslation } from '../../hooks/useTranslation';
 import './Chart.css';
 
-type ChartMode = 'advanced' | 'overview' | 'market' | 'web3' | 'summary';
+type ChartMode = 'advanced' | 'overview' | 'web3' | 'summary';
 
 /** Пары без графика в TradingView — исключаем из подборки. */
 const EXCLUDED_CHART_SYMBOLS = new Set([
@@ -26,7 +28,7 @@ const EXCLUDED_CHART_SYMBOLS = new Set([
   'OMNI',
 ]);
 
-/* ========== 1. Advanced — один полноэкранный график (advanced-chart), без подписи ========== */
+/* ========== 1. Advanced — один полноэкранный график ========== */
 function ChartViewAdvanced() {
   const container = useRef<HTMLDivElement>(null);
 
@@ -73,7 +75,7 @@ function ChartViewAdvanced() {
   );
 }
 
-/* ========== 2. Overview — текущий symbol-overview (все пары Binance USDT) ========== */
+/* ========== 2. Overview ========== */
 function ChartViewOverview() {
   const container = useRef<HTMLDivElement>(null);
   const { data: tickers = [] } = useQuery({ queryKey: ['tickers'], queryFn: fetchTickers, staleTime: 60000 });
@@ -143,102 +145,7 @@ function ChartViewOverview() {
   );
 }
 
-/* Скрыть подпись "Market summary by TradingView" и принудительно тёмная тема внутри Shadow DOM виджета tv-market-summary */
-function hideMarketSummaryBranding(container: HTMLElement) {
-  const widget = container.querySelector('tv-market-summary');
-  if (!widget?.shadowRoot) return;
-  const sr = widget.shadowRoot;
-
-  /* Тёмная тема: виджет часто рендерит светлый фон по умолчанию; задаём :host и корневые контейнеры. */
-  if (!sr.querySelector('style[data-dark-theme]')) {
-    const themeSheet = document.createElement('style');
-    themeSheet.setAttribute('data-dark-theme', 'true');
-    themeSheet.textContent = `
-      :host { background-color: #131722 !important; }
-      [class*="container"], [class*="layout"], [class*="wrapper"], [class*="root"],
-      [class*="theme-light"], [class*="light"], [class*="chart"], [class*="table"] { background-color: #131722 !important; }
-      [class*="cell"], [class*="card"], [class*="item"], [class*="row"] { background-color: #1e222d !important; }
-      [class*="header"], [class*="tab"], [class*="toolbar"] { background-color: #1e222d !important; border-color: #2a2e39 !important; }
-    `;
-    sr.insertBefore(themeSheet, sr.firstChild);
-  }
-
-  /* Не скрываем все ссылки на tradingview — иначе пропадают кнопки Gainers/Losers/Active. Скрываем только подпись по тексту ниже. */
-  if (!sr.querySelector('style[data-hide-branding]')) {
-    const sheet = document.createElement('style');
-    sheet.setAttribute('data-hide-branding', 'true');
-    sheet.textContent = `
-      [class*="trademark"], [class*="widget-logo"], [class*="footer"],
-      [class*="copyright"], [class*="branding"], [class*="attribution"] { display: none !important; }
-    `;
-    sr.appendChild(sheet);
-  }
-
-  const walk = (root: DocumentFragment | Element) => {
-    root.querySelectorAll('*').forEach((el) => {
-      const text = (el as HTMLElement).innerText?.trim() || el.textContent?.trim() || '';
-      const lower = text.toLowerCase();
-      if (lower.includes('market summary') && lower.includes('tradingview')) {
-        const target = el.tagName === 'A' ? el : (el.closest('a') || el);
-        (target as HTMLElement).style.setProperty('display', 'none', 'important');
-      }
-    });
-  };
-  walk(sr);
-}
-
-/* ========== 4. Market — tv-market-summary direction="horizontal" (как в примере) ========== */
-function ChartViewMarket() {
-  const container = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const root = container.current;
-    if (!root) return;
-
-    if (!document.querySelector('script[src*="tv-market-summary"]')) {
-      const script = document.createElement('script');
-      script.type = 'module';
-      script.src = 'https://widgets.tradingview-widget.com/w/en/tv-market-summary.js';
-      document.head.appendChild(script);
-    }
-
-    root.innerHTML = '';
-    const widget = document.createElement('tv-market-summary');
-    widget.setAttribute('layout-mode', 'grid');
-    widget.setAttribute('time-frame', '7D');
-    widget.setAttribute('theme', 'dark');
-    widget.setAttribute('color-theme', 'dark');
-    (widget as unknown as { colorTheme?: string }).colorTheme = 'dark';
-    (widget as unknown as { colorTheme?: string }).theme = 'dark';
-    root.appendChild(widget);
-
-    const hideBranding = () => {
-      try {
-        hideMarketSummaryBranding(root);
-      } catch {
-        // ignore
-      }
-    };
-    hideBranding();
-    const t1 = setTimeout(hideBranding, 800);
-    const t2 = setTimeout(hideBranding, 2000);
-    const observer = new MutationObserver(hideBranding);
-    observer.observe(root, { childList: true, subtree: true });
-
-    return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-      observer.disconnect();
-      root.innerHTML = '';
-    };
-  }, []);
-
-  return (
-    <div className="tradingview-widget-container chart-view-market" ref={container} />
-  );
-}
-
-/* ========== 5. Summary — market-overview с вкладками, без подписи ========== */
+/* ========== 3. Summary ========== */
 function ChartViewSummary() {
   const container = useRef<HTMLDivElement>(null);
 
@@ -340,7 +247,7 @@ function ChartViewSummary() {
   );
 }
 
-/* ========== Web3 — Crypto Screener (embed-widget-screener) ========== */
+/* ========== 4. Web3 ========== */
 function ChartViewWeb3() {
   const container = useRef<HTMLDivElement>(null);
 
@@ -365,10 +272,6 @@ function ChartViewWeb3() {
     });
     root.appendChild(script);
 
-    /* После создания виджета TradingView вставляет iframe. sandbox без allow-top-navigation
-       блокирует переход в новую вкладку/окно; скролл и отображение сохраняются.
-       Навигация внутри iframe (клик по монете) может блокироваться с allow-scripts без allow-same-origin,
-       но тогда виджет иногда не грузится — пробуем allow-scripts allow-same-origin. */
     const setSandboxOnIframe = () => {
       const iframe = root.querySelector('iframe');
       if (iframe && !iframe.hasAttribute('data-sandbox-set')) {
@@ -395,36 +298,39 @@ function ChartViewWeb3() {
   );
 }
 
-/* ========== Страница Chart: панель кнопок + выбранный виджет ========== */
+/* ========== Страница Chart ========== */
 const Chart: React.FC = () => {
+  const navigate = useNavigate();
   const [chartMode, setChartMode] = useState<ChartMode>('overview');
+  const { t } = useTranslation();
 
-  const modes: { id: ChartMode; label: string }[] = [
-    { id: 'advanced', label: 'Advanced' },
-    { id: 'overview', label: 'Overview' },
-    { id: 'market', label: 'Market' },
-    { id: 'web3', label: 'Web3' },
-    { id: 'summary', label: 'Summary' },
+  const modes: { id: ChartMode; labelKey: string }[] = [
+    { id: 'advanced', labelKey: 'advanced' },
+    { id: 'overview', labelKey: 'overview' },
+    { id: 'web3', labelKey: 'web3' },
+    { id: 'summary', labelKey: 'summary' },
   ];
 
   return (
     <div className="chart-page">
       <div className="chart-toolbar">
-        {modes.map(({ id, label }) => (
+        {modes.map(({ id, labelKey }) => (
           <button
             key={id}
             type="button"
             className={`nav-button chart-mode-btn ${chartMode === id ? 'chart-mode-btn--active' : ''}`}
             onClick={() => setChartMode(id)}
           >
-            {label}
+            {t(labelKey)}
           </button>
         ))}
+        <button onClick={() => navigate('/')} className="close-button">
+          {t('close')}
+        </button>
       </div>
       <div className="chart-content">
         {chartMode === 'advanced' && <ChartViewAdvanced key="advanced" />}
         {chartMode === 'overview' && <ChartViewOverview key="overview" />}
-        {chartMode === 'market' && <ChartViewMarket key="market" />}
         {chartMode === 'web3' && <ChartViewWeb3 key="web3" />}
         {chartMode === 'summary' && <ChartViewSummary key="summary" />}
       </div>

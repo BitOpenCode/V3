@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BubbleButton, BubbleCard } from '../../components/ui';
+import { useTranslation } from '../../hooks/useTranslation';
 import './Home.css';
 import astronautImage from '../../assets/images/astronaut.png';
 
@@ -153,6 +154,7 @@ const ClickAnimation: React.FC<{ x: number; y: number; onComplete: () => void }>
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [score, setScore] = useState<number>(() => {
     const saved = localStorage.getItem('astronaut-score');
     return saved ? parseInt(saved, 10) : 0;
@@ -215,7 +217,7 @@ const Home: React.FC = () => {
 
       {/* Score Display */}
       <div className="score-container">
-        <div className="score-label">Your Score</div>
+        <div className="score-label">{t('your_score')}</div>
         <div className="score-value">{formatScore(score)}</div>
         <div className="score-icon">⭐</div>
       </div>
@@ -226,13 +228,13 @@ const Home: React.FC = () => {
           className="nav-button main-action-button"
           onClick={() => navigate('/games')}
         >
-          Games
+          {t('games')}
         </BubbleButton>
         <BubbleButton 
           className="nav-button main-action-button"
           onClick={() => navigate('/avatars')}
         >
-          Avatars
+          {t('avatars')}
         </BubbleButton>
       </div>
     </div>
@@ -240,4 +242,3 @@ const Home: React.FC = () => {
 };
 
 export default Home;
-

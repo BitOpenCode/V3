@@ -3,10 +3,12 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { fetchOrderBook, fetchTickers } from '../../services/api';
 import { Ticker } from '../../types';
+import { useTranslation } from '../../hooks/useTranslation';
 import './OrderBook.css';
 
 const OrderBook: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const initialSymbol = searchParams.get('symbol') || 'BTCUSDT';
   const [selectedSymbol, setSelectedSymbol] = useState(initialSymbol);
@@ -70,9 +72,9 @@ const OrderBook: React.FC = () => {
   return (
     <div className="orderbook-page">
       <div className="page-header">
-        <h1 className="page-title">Order Book</h1>
+        <h1 className="page-title">{t('orderbook')}</h1>
         <button onClick={() => navigate('/')} className="close-button">
-          Close
+          {t('close')}
         </button>
       </div>
 
@@ -80,7 +82,7 @@ const OrderBook: React.FC = () => {
       <div className="orderbook-search-container">
         <input
           type="text"
-          placeholder="Search symbol... (click to browse)"
+          placeholder={t('search_symbol')}
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           onFocus={() => setIsDropdownOpen(true)}
@@ -119,15 +121,15 @@ const OrderBook: React.FC = () => {
       </div>
 
       {isLoading ? (
-        <div className="orderbook-loading">Loading...</div>
+        <div className="orderbook-loading">{t('loading_orderbook')}</div>
       ) : orderBook ? (
         <div className="orderbook-container">
           {/* Asks (sells) */}
           <div className="orderbook-section asks">
             <div className="section-header">
-              <span>Total</span>
-              <span>Size</span>
-              <span>Price</span>
+              <span>{t('total')}</span>
+              <span>{t('size')}</span>
+              <span>{t('price')}</span>
             </div>
             {[...orderBook.asks].reverse().map((ask, i) => (
               <div 
@@ -146,7 +148,7 @@ const OrderBook: React.FC = () => {
 
           {/* Spread */}
           <div className="orderbook-spread">
-            Spread: ${orderBook.asks[0] && orderBook.bids[0] 
+            {t('spread')}: ${orderBook.asks[0] && orderBook.bids[0] 
               ? (orderBook.asks[0].price - orderBook.bids[0].price).toFixed(2)
               : '—'}
           </div>
@@ -154,9 +156,9 @@ const OrderBook: React.FC = () => {
           {/* Bids (buys) */}
           <div className="orderbook-section bids">
             <div className="section-header">
-              <span>Total</span>
-              <span>Size</span>
-              <span>Price</span>
+              <span>{t('total')}</span>
+              <span>{t('size')}</span>
+              <span>{t('price')}</span>
             </div>
             {orderBook.bids.map((bid, i) => (
               <div 
@@ -179,4 +181,3 @@ const OrderBook: React.FC = () => {
 };
 
 export default OrderBook;
-

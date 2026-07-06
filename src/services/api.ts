@@ -8,6 +8,9 @@ const TONAPI_BASE_URL = 'https://tonapi.io/v2';
 const CRYPTOCOMPARE_API = 'https://min-api.cryptocompare.com/data/v2';
 const CRYPTOCOMPARE_NEWS_API = 'https://min-api.cryptocompare.com/data';
 
+// Symbols to exclude from all ticker lists
+const EXCLUDED_SYMBOLS = ['TONUSDT'];
+
 // Special tokens for price formatting
 const SPECIAL_PRICE_TOKENS = ['PEPE', 'BONK', 'SHIB', '1000SATS', 'BTTC'];
 const TWO_DECIMAL_TOKENS = ['BTC', 'ETH', 'ORDI', 'SOL', 'TRUMP', 'AVAX', 'PAXG', 'BCH', 'WBTC', 'ETC', 'ENS', 'INJ', 'MKR', 'LINK', 'COMP', 'QNT', 'BNB', 'YFI', 'KSM', 'TAO', 'WBETH', 'DASH', 'GMX', 'GNO', 'BIFI', 'EGLD', 'TRB', 'METIS', 'AUCTION', 'BANANA', 'ZEC', 'DEXE', 'ILV', 'BNSOL', 'ALCX', 'DCR', 'FARM', 'AAVE', 'LTC'];
@@ -31,23 +34,19 @@ export const formatTickerPrice = (ticker: Ticker): string => {
 
 // Fetch tickers from Binance
 export const fetchTickers = async (): Promise<Ticker[]> => {
-  const [binanceResp, tonTickers] = await Promise.all([
-    axios.get(`${BINANCE_API}/ticker/24hr`),
-    fetchTonTickers()
-  ]);
-
+  const binanceResp = await axios.get(`${BINANCE_API}/ticker/24hr`);
   const binanceData = binanceResp.data;
   
-  // Filter USDT and BTC pairs
+  // Filter USDT and BTC pairs, exclude TON
   const spotTickers: Ticker[] = binanceData
     .filter((t: { symbol: string; lastPrice: string }) => {
       const isUSDT = t.symbol.endsWith('USDT');
       const isBTC = t.symbol.endsWith('BTC') && t.symbol !== 'BTC';
       const hasValidPrice = parseFloat(t.lastPrice) > 0;
-      return (isUSDT || isBTC) && hasValidPrice;
+      const isExcluded = EXCLUDED_SYMBOLS.includes(t.symbol);
+      return (isUSDT || isBTC) && hasValidPrice && !isExcluded;
     })
     .map((t: { symbol: string; lastPrice: string; priceChangePercent: string; quoteVolume: string }) => {
-      // Format pair correctly: BTCUSDT -> BTC/USDT, ETHBTC -> ETH/BTC
       let pair: string;
       if (t.symbol.endsWith('USDT')) {
         pair = t.symbol.replace('USDT', '/USDT');
@@ -67,32 +66,7 @@ export const fetchTickers = async (): Promise<Ticker[]> => {
       };
     });
 
-  // Add TON tickers
-  return [...spotTickers, ...tonTickers];
-};
-
-// Fetch TON price from TONAPI
-export const fetchTonTickers = async (): Promise<Ticker[]> => {
-  try {
-    const response = await axios.get(`${TONAPI_BASE_URL}/rates?tokens=ton&currencies=usd,btc`);
-    const tonRates = response.data.rates?.TON;
-    if (!tonRates) return [];
-    
-    const tickers: Ticker[] = [];
-    if (tonRates.prices?.USD) {
-      tickers.push({
-        symbol: 'TONUSDT',
-        pair: 'TON/USDT',
-        close: tonRates.prices.USD.toString(),
-        lastPrice: parseFloat(tonRates.prices.USD),
-        priceChangePercent: tonRates.diff_24h?.USD ? parseFloat(String(tonRates.diff_24h.USD).replace('%', '').replace('−', '-')) : 0,
-        quoteVolume: 0
-      });
-    }
-    return tickers;
-  } catch {
-    return [];
-  }
+  return spotTickers;
 };
 
 // Fetch news from NewsData.io
@@ -145,10 +119,10 @@ export const createTickerWebSocket = (onMessage: (data: Ticker[]) => void): WebS
         .filter((t: { s: string; c: string }) => {
           const isUSDT = t.s.endsWith('USDT');
           const isBTC = t.s.endsWith('BTC') && t.s !== 'BTC';
-          return isUSDT || isBTC;
+          const isExcluded = EXCLUDED_SYMBOLS.includes(t.s);
+          return (isUSDT || isBTC) && !isExcluded;
         })
         .map((t: { s: string; c: string; P: string; q: string }) => {
-          // Format pair correctly
           let pair: string;
           if (t.s.endsWith('USDT')) {
             pair = t.s.replace('USDT', '/USDT');
@@ -181,7 +155,7 @@ export const fetchTonBalance = async (address: string): Promise<string> => {
   try {
     const response = await axios.get(`${TONAPI_BASE_URL}/accounts/${address}`);
     const balance = response.data.balance;
-    return (balance / 1e9).toFixed(4); // Convert from nanoTON to TON
+    return (balance / 1e9).toFixed(4);
   } catch {
     return '0';
   }
@@ -200,4 +174,3 @@ export const fetchTonPrice = async (): Promise<{ price: number; change24h: numbe
     return { price: 0, change24h: 0 };
   }
 };
-

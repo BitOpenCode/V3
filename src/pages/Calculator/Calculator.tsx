@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchTickers, formatTickerPrice } from '../../services/api';
 import { Ticker } from '../../types';
 import { divide, multiply, minus, plus, calculatePercentChange } from '../../utils/bignumber';
+import { useTranslation } from '../../hooks/useTranslation';
 import './Calculator.css';
 
 interface CalculatorForm {
@@ -15,6 +16,7 @@ interface CalculatorForm {
 
 const Calculator: React.FC = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState('');
   const [showDropdown, setShowDropdown] = useState(false);
   const [form, setForm] = useState<CalculatorForm>({
@@ -111,20 +113,20 @@ const Calculator: React.FC = () => {
   return (
     <div className="calculator-page">
       <div className="page-header">
-        <h1 className="page-title">Calculator</h1>
+        <h1 className="page-title">{t('calculator')}</h1>
         <button onClick={() => navigate('/')} className="close-button">
-          Close
+          {t('close')}
         </button>
       </div>
 
       <div className="calculator-card">
         {/* Coin Selection */}
         <div className="calc-group coin-select-group">
-          <label className="calc-label">Select Coin</label>
+          <label className="calc-label">{t('select_coin')}</label>
           <input
             type="text"
             className="calc-input"
-            placeholder="Search coin..."
+            placeholder={t('search_coin')}
             value={searchQuery}
             onChange={(e) => {
               setSearchQuery(e.target.value);
@@ -155,13 +157,13 @@ const Calculator: React.FC = () => {
 
         {/* Investment Amount */}
         <div className="calc-group">
-          <label className="calc-label">Investment Amount (USD)</label>
+          <label className="calc-label">{t('investment_amount')}</label>
           <input
             type="number"
             min="0"
             step="0.01"
             className="calc-input"
-            placeholder="Enter amount..."
+            placeholder={t('enter_amount')}
             value={form.investment || ''}
             onChange={(e) => updateForm({ investment: parseFloat(e.target.value) || null })}
             onKeyDown={(e) => {
@@ -174,13 +176,13 @@ const Calculator: React.FC = () => {
 
         {/* Initial Price */}
         <div className="calc-group">
-          <label className="calc-label">Initial Coin Price</label>
+          <label className="calc-label">{t('initial_price')}</label>
           <input
             type="number"
             min="0"
             step="0.00000001"
             className="calc-input"
-            placeholder="Enter price..."
+            placeholder={t('enter_price')}
             value={form.initialPrice || ''}
             onChange={(e) => updateForm({ initialPrice: parseFloat(e.target.value) || null })}
             onKeyDown={(e) => {
@@ -193,13 +195,13 @@ const Calculator: React.FC = () => {
 
         {/* Projected Price */}
         <div className="calc-group">
-          <label className="calc-label">Projected Coin Price</label>
+          <label className="calc-label">{t('projected_price')}</label>
           <input
             type="number"
             min="0"
             step="0.00000001"
             className="calc-input"
-            placeholder="Enter projected price..."
+            placeholder={t('enter_projected_price')}
             value={form.projectedPrice || ''}
             onChange={(e) => updateForm({ projectedPrice: parseFloat(e.target.value) || null })}
             onKeyDown={(e) => {
@@ -214,27 +216,27 @@ const Calculator: React.FC = () => {
         {results && (
           <div className="calc-results">
             <div className="result-item">
-              <span className="result-label">Tokens Bought</span>
+              <span className="result-label">{t('tokens_bought')}</span>
               <span className="result-value">{results.tokensBought.toFixed(8)}</span>
             </div>
             <div className="result-item">
-              <span className="result-label">Projected Subtotal</span>
+              <span className="result-label">{t('projected_subtotal')}</span>
               <span className="result-value">${results.projectedSubtotal.toFixed(2)}</span>
             </div>
             <div className="result-item">
-              <span className="result-label">Projected Profit</span>
+              <span className="result-label">{t('projected_profit')}</span>
               <span className={`result-value ${results.projectedProfit >= 0 ? 'positive' : 'negative'}`}>
                 {results.projectedProfit >= 0 ? '+' : ''}${results.projectedProfit.toFixed(2)}
               </span>
             </div>
             <div className="result-item">
-              <span className="result-label">Profit %</span>
+              <span className="result-label">{t('profit_percent')}</span>
               <span className={`result-value ${results.profitPercent >= 0 ? 'positive' : 'negative'}`}>
                 {results.profitPercent >= 0 ? '+' : ''}{results.profitPercent.toFixed(2)}%
               </span>
             </div>
             <div className="result-item highlight">
-              <span className="result-label">Projected Total</span>
+              <span className="result-label">{t('projected_total')}</span>
               <span className="result-value">${results.projectedTotal.toFixed(2)}</span>
             </div>
           </div>

@@ -159,3 +159,20 @@ export const useUIStore = create<UIState>()((set) => ({
   clearError: () => set({ error: null }),
 }));
 
+// Language Store
+interface LanguageState {
+  language: string;
+  setLanguage: (language: string) => void;
+}
+
+export const useLanguageStore = create<LanguageState>()(
+  persist(
+    (set) => ({
+      language: 'English',
+      setLanguage: (language) => set({ language }),
+    }),
+    {
+      name: 'language-storage',
+    }
+  )
+);
