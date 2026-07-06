@@ -67,7 +67,7 @@ if (savedTheme) {
   document.body.classList.add('theme-space');
 }
 
-const manifestUrl = "https://bitopencode.github.io/V3/tonconnect-manifest.json";
+const manifestUrl = "https://oni-wan-shinobi.github.io/V3/tonconnect-manifest.json";
 
 const queryClient = new QueryClient({
   defaultOptions: {
