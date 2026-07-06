@@ -64,7 +64,7 @@ const Wallet: React.FC = () => {
             </div>
             <div className="wallet-balance">
               <span className="balance-label">{t('balance')}</span>
-              <span className="balance-value">{balance || '0'} TON</span>
+              <span className="balance-value">{balance || '0'} GRAM</span>
               <span className="balance-usd">${usdValue.toFixed(2)} USD</span>
             </div>
           </BubbleCard>
