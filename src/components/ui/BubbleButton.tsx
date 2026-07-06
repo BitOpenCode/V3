@@ -11,8 +11,10 @@ interface BubbleButtonProps {
 
 // Translated labels vary a lot in length (e.g. "SHARE" vs "ПОДЕЛИТЬСЯ"),
 // but the buttons have a fixed size. Shrink the label's font-size just
-// enough to fit instead of letting it overflow or wrap.
-const MIN_FONT_SCALE = 0.55;
+// enough to fit instead of letting it overflow or wrap. Floor is an
+// absolute px size (not a percentage of the base) so long words on the
+// smallest breakpoints can still shrink enough to actually fit.
+const MIN_FONT_SIZE_PX = 6;
 
 const BubbleButton: React.FC<BubbleButtonProps> = ({ onClick, children, className, disabled }) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -28,13 +30,26 @@ const BubbleButton: React.FC<BubbleButtonProps> = ({ onClick, children, classNam
       label.style.fontSize = '';
       const buttonStyle = getComputedStyle(button);
       const paddingX = parseFloat(buttonStyle.paddingLeft) + parseFloat(buttonStyle.paddingRight);
-      const available = button.clientWidth - paddingX;
+      // Small safety margin: font metrics don't scale perfectly linearly
+      // (kerning/hinting change at different sizes), so leave a little
+      // slack instead of fitting exactly to the calculated edge.
+      const available = (button.clientWidth - paddingX) * 0.85;
       const needed = label.scrollWidth;
-      if (available > 0 && needed > available) {
-        const baseFontSize = parseFloat(getComputedStyle(label).fontSize);
-        const scale = Math.max(available / needed, MIN_FONT_SCALE);
-        label.style.fontSize = `${baseFontSize * scale}px`;
+      if (available <= 0 || needed <= available) return;
+
+      const baseFontSize = parseFloat(getComputedStyle(label).fontSize);
+      let fontSize = baseFontSize * (available / needed);
+
+      // The linear estimate above is a starting point, not a guarantee.
+      // Step down further until the text actually fits (or we hit the
+      // floor), since a single proportional guess can still overflow by
+      // a pixel or two for some fonts/languages.
+      for (let i = 0; i < 20 && fontSize > MIN_FONT_SIZE_PX; i++) {
+        label.style.fontSize = `${fontSize}px`;
+        if (label.scrollWidth <= available) break;
+        fontSize -= 0.5;
       }
+      label.style.fontSize = `${Math.max(fontSize, MIN_FONT_SIZE_PX)}px`;
     };
 
     fitText();

@@ -39,6 +39,10 @@ const setAppHeight = () => {
   if (height > maxAppHeight) {
     maxAppHeight = height;
     document.documentElement.style.setProperty('--app-height', `${maxAppHeight}px`);
+    // Let nav button labels (BubbleButton) know layout may have settled,
+    // since Telegram's viewport can finish expanding after their own
+    // initial fit-to-width measurement.
+    window.dispatchEvent(new Event('resize'));
   }
 };
 setAppHeight();
