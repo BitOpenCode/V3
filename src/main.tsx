@@ -35,23 +35,21 @@ import './styles/themes.css';
 
 // Initialize Telegram WebApp
 WebApp.ready();
+WebApp.expand();
 
-// Lock app height to the initial viewport so the on-screen keyboard overlays
-// the bottom nav instead of resizing the layout and dragging it up.
+// Lock app height to Telegram's "stable" viewport height so the on-screen
+// keyboard overlays the bottom nav instead of resizing the layout and
+// dragging it up. viewportStableHeight is guaranteed by Telegram not to
+// fluctuate while the keyboard opens/closes, but does update on genuine
+// expand/orientation changes (unlike a one-shot window.innerHeight read,
+// which can capture the pre-expand height before Telegram finishes sizing
+// the WebView).
 const setAppHeight = () => {
-  document.documentElement.style.setProperty('--app-height', `${window.innerHeight}px`);
+  const height = WebApp.viewportStableHeight || window.innerHeight;
+  document.documentElement.style.setProperty('--app-height', `${height}px`);
 };
 setAppHeight();
-let lastWidth = window.innerWidth;
-window.addEventListener('resize', () => {
-  // Only recalculate on real orientation/window changes, not keyboard-driven
-  // height-only resizes. Use a tolerance since some browsers report a
-  // slightly different innerWidth (scrollbar, rounding) on every resize.
-  if (Math.abs(window.innerWidth - lastWidth) > 5) {
-    lastWidth = window.innerWidth;
-    setAppHeight();
-  }
-});
+WebApp.onEvent('viewportChanged', setAppHeight);
 window.addEventListener('orientationchange', setAppHeight);
 
 // Initialize theme on app start
