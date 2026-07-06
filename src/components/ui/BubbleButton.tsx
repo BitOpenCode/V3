@@ -10,16 +10,21 @@ interface BubbleButtonProps {
 }
 
 // Translated labels vary a lot in length (e.g. "SHARE" vs "ПОДЕЛИТЬСЯ"),
-// but the buttons have a fixed size. Shrink the label's font-size just
-// enough to fit instead of letting it overflow or wrap. Floor is an
-// absolute px size (not a percentage of the base) so long words on the
-// smallest breakpoints can still shrink enough to actually fit.
+// but the buttons have a fixed size. Multi-word labels get to wrap onto a
+// second line first (buttons are tall enough for that), which usually
+// needs little or no shrinking. Single-word labels can't wrap sensibly,
+// so those still shrink to fit on one line. Floor is an absolute px size
+// (not a percentage of the base) so long words on the smallest
+// breakpoints can still shrink enough to actually fit.
 const MIN_FONT_SIZE_PX = 6;
+const HORIZONTAL_SAFETY = 0.95;
 
 const BubbleButton: React.FC<BubbleButtonProps> = ({ onClick, children, className, disabled }) => {
   const buttonRef = useRef<HTMLButtonElement>(null);
   const labelRef = useRef<HTMLSpanElement>(null);
   const { theme } = useSettingsStore();
+
+  const isMultiWord = typeof children === 'string' && /\s/.test(children.trim());
 
   useLayoutEffect(() => {
     const button = buttonRef.current;
@@ -30,23 +35,25 @@ const BubbleButton: React.FC<BubbleButtonProps> = ({ onClick, children, classNam
       label.style.fontSize = '';
       const buttonStyle = getComputedStyle(button);
       const paddingX = parseFloat(buttonStyle.paddingLeft) + parseFloat(buttonStyle.paddingRight);
-      // Small safety margin: font metrics don't scale perfectly linearly
-      // (kerning/hinting change at different sizes), so leave a little
-      // slack instead of fitting exactly to the calculated edge.
-      const available = (button.clientWidth - paddingX) * 0.85;
-      const needed = label.scrollWidth;
-      if (available <= 0 || needed <= available) return;
+      const paddingY = parseFloat(buttonStyle.paddingTop) + parseFloat(buttonStyle.paddingBottom);
+      const availableWidth = button.clientWidth - paddingX;
 
-      const baseFontSize = parseFloat(getComputedStyle(label).fontSize);
-      let fontSize = baseFontSize * (available / needed);
+      const fits = () =>
+        isMultiWord
+          ? label.scrollHeight <= button.clientHeight - paddingY && label.scrollWidth <= availableWidth
+          : label.scrollWidth <= availableWidth * HORIZONTAL_SAFETY;
 
-      // The linear estimate above is a starting point, not a guarantee.
-      // Step down further until the text actually fits (or we hit the
-      // floor), since a single proportional guess can still overflow by
-      // a pixel or two for some fonts/languages.
+      if (availableWidth <= 0 || fits()) return;
+
+      // Step the font-size down until it actually fits (or hits the
+      // floor) rather than trusting a single proportional guess — font
+      // metrics don't scale perfectly linearly (kerning/hinting change
+      // at different sizes), and for wrapped text the fit depends on
+      // where the line break lands, which isn't easy to predict upfront.
+      let fontSize = parseFloat(getComputedStyle(label).fontSize);
       for (let i = 0; i < 20 && fontSize > MIN_FONT_SIZE_PX; i++) {
         label.style.fontSize = `${fontSize}px`;
-        if (label.scrollWidth <= available) break;
+        if (fits()) break;
         fontSize -= 0.5;
       }
       label.style.fontSize = `${Math.max(fontSize, MIN_FONT_SIZE_PX)}px`;
@@ -65,7 +72,7 @@ const BubbleButton: React.FC<BubbleButtonProps> = ({ onClick, children, classNam
       window.removeEventListener('resize', fitText);
       clearTimeout(settleTimer);
     };
-  }, [children]);
+  }, [children, isMultiWord]);
 
   useEffect(() => {
     const button = buttonRef.current;
@@ -129,7 +136,11 @@ const BubbleButton: React.FC<BubbleButtonProps> = ({ onClick, children, classNam
       onClick={onClick}
       disabled={disabled}
     >
-      <span ref={labelRef} className="nav-button-content">
+      <span
+        ref={labelRef}
+        className="nav-button-content"
+        style={{ whiteSpace: isMultiWord ? 'normal' : 'nowrap' }}
+      >
         {children}
       </span>
     </button>
