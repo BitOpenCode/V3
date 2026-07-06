@@ -55,7 +55,7 @@ if (savedTheme) {
 }
 
 // Используем рабочий URL манифеста
-const manifestUrl = "https://bitopencode.github.io/EgorWorld/tonconnect-manifest.json";
+const manifestUrl = "https://oni-wan-shinobi.github.io/V3/tonconnect-manifest.json";
 
 // Create React Query client
 const queryClient = new QueryClient({
