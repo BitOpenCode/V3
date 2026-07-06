@@ -36,6 +36,24 @@ import './styles/themes.css';
 // Initialize Telegram WebApp
 WebApp.ready();
 
+// Lock app height to the initial viewport so the on-screen keyboard overlays
+// the bottom nav instead of resizing the layout and dragging it up.
+const setAppHeight = () => {
+  document.documentElement.style.setProperty('--app-height', `${window.innerHeight}px`);
+};
+setAppHeight();
+let lastWidth = window.innerWidth;
+window.addEventListener('resize', () => {
+  // Only recalculate on real orientation/window changes, not keyboard-driven
+  // height-only resizes. Use a tolerance since some browsers report a
+  // slightly different innerWidth (scrollbar, rounding) on every resize.
+  if (Math.abs(window.innerWidth - lastWidth) > 5) {
+    lastWidth = window.innerWidth;
+    setAppHeight();
+  }
+});
+window.addEventListener('orientationchange', setAppHeight);
+
 // Initialize theme on app start
 const savedTheme = localStorage.getItem('settings-storage');
 if (savedTheme) {

@@ -1,6 +1,6 @@
 /* Layout styles */
 .app-layout {
-  min-height: 100vh;
+  height: var(--app-height, 100vh);
   display: flex;
   flex-direction: column;
   position: relative;
@@ -42,7 +42,7 @@
    Header panel (Upper navigation)
    ============================================ */
 .upper-nav-panel {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
@@ -85,7 +85,7 @@
    ============================================ */
 .bottom-nav,
 .fixed.bottom-0 {
-  position: fixed;
+  position: absolute;
   bottom: 14px;
   left: 0;
   right: 0;
@@ -229,7 +229,7 @@
    Header panel (Upper navigation)
    ============================================ */
 .upper-nav-panel {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
@@ -272,7 +272,7 @@
    ============================================ */
 .bottom-nav,
 .fixed.bottom-0 {
-  position: fixed;
+  position: absolute;
   bottom: 14px;
   left: 0;
   right: 0;
@@ -416,7 +416,7 @@
    Header panel (Upper navigation)
    ============================================ */
 .upper-nav-panel {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
@@ -457,7 +457,7 @@
    ============================================ */
 .bottom-nav,
 .fixed.bottom-0 {
-  position: fixed;
+  position: absolute;
   bottom: 14px;
   left: 0;
   right: 0;
