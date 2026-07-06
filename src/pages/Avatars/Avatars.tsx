@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BubbleCard } from '../../components/ui';
 import './Avatars.css';
+import astronautImage from '../../assets/images/astronaut.png';
 
 const Avatars: React.FC = () => {
   const navigate = useNavigate();
@@ -19,7 +20,7 @@ const Avatars: React.FC = () => {
         <BubbleCard className="avatar-card">
           <div className="avatar-card-content">
             <img 
-              src="https://uiverse.io/astronaut.png" 
+              src={astronautImage} 
               alt="Astronaut"
               className="avatar-preview"
             />

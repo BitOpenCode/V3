@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { BubbleButton, BubbleCard } from '../../components/ui';
 import './Home.css';
+import astronautImage from '../../assets/images/astronaut.png';
 
 // Pegtop Animation Component
 interface ClickEffect {
@@ -194,7 +195,7 @@ const Home: React.FC = () => {
       <BubbleCard className="hero-card astronaut-card">
         <div className="astronaut-container">
           <img 
-            src="https://uiverse.io/astronaut.png" 
+            src={astronautImage} 
             alt="Astronaut" 
             className="floating-avatar clickable-astronaut"
             draggable={false}
