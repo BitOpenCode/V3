@@ -3,10 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { TonConnectButton } from '@tonconnect/ui-react';
 import { BubbleButton } from '../ui';
 import { useTranslation } from '../../hooks/useTranslation';
+import { useWalletActivation } from '../../context/WalletActivation';
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const { active, activate } = useWalletActivation();
 
   return (
     <header className="upper-nav-panel">
@@ -29,7 +31,17 @@ const Header: React.FC = () => {
       </div>
 
       <div className="header-button-container connect-wallet-button">
-        <TonConnectButton />
+        {active ? (
+          <TonConnectButton />
+        ) : (
+          <button
+            type="button"
+            className="ton-connect-placeholder-button"
+            onClick={() => activate(true)}
+          >
+            {t('connect_wallet')}
+          </button>
+        )}
       </div>
 
       <div className="header-button-container">

@@ -565,3 +565,26 @@
     font-size: 0.7rem;
   }
 }
+
+/* Shown instead of the real TonConnectButton until the wallet feature is
+   activated (see src/context/WalletActivation.tsx) -- kept visually close
+   to TonConnect's own default button so there's no jump once it swaps in. */
+.ton-connect-placeholder-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 16px;
+  border-radius: 14px;
+  border: none;
+  background: #0088cc;
+  color: #ffffff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.ton-connect-placeholder-button:hover {
+  opacity: 0.9;
+}

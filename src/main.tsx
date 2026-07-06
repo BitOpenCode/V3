@@ -1,11 +1,11 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { HashRouter, Routes, Route } from 'react-router-dom';
-import { TonConnectUIProvider } from '@tonconnect/ui-react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
 import WebApp from '@twa-dev/sdk';
 
+import { WalletActivationProvider } from './context/WalletActivation';
 import { Layout } from './components/Layout';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { 
@@ -71,8 +71,6 @@ if (savedTheme) {
   document.body.classList.add('theme-space');
 }
 
-const manifestUrl = "https://bitopencode.github.io/V3/tonconnect-manifest.json";
-
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -94,7 +92,7 @@ try {
   <StrictMode>
     <ErrorBoundary>
       <QueryClientProvider client={queryClient}>
-        <TonConnectUIProvider manifestUrl={manifestUrl}>
+        <WalletActivationProvider>
           <>
             <HashRouter>
               <Routes>
@@ -134,7 +132,7 @@ try {
               }}
             />
           </>
-        </TonConnectUIProvider>
+        </WalletActivationProvider>
       </QueryClientProvider>
     </ErrorBoundary>
   </StrictMode>
