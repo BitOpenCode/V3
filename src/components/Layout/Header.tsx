@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { TonConnectButton } from '@tonconnect/ui-react';
+import { Wallet as WalletIcon } from 'lucide-react';
 import { BubbleButton } from '../ui';
 import { useTranslation } from '../../hooks/useTranslation';
 import { useWalletActivation } from '../../context/WalletActivation';
@@ -39,6 +40,7 @@ const Header: React.FC = () => {
             className="ton-connect-placeholder-button"
             onClick={() => activate(true)}
           >
+            <WalletIcon size={16} />
             {t('connect_wallet')}
           </button>
         )}

@@ -568,23 +568,35 @@
 
 /* Shown instead of the real TonConnectButton until the wallet feature is
    activated (see src/context/WalletActivation.tsx) -- kept visually close
-   to TonConnect's own default button so there's no jump once it swaps in. */
+   to TonConnect's own default button so there's no jump once it swaps in.
+   !important is needed because Tailwind's preflight resets
+   `button { background-color: transparent }` (see the other nav buttons'
+   "Override Tailwind base" comment in App.css for the same issue). */
 .ton-connect-placeholder-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 16px;
-  border-radius: 14px;
-  border: none;
-  background: #0088cc;
-  color: #ffffff;
-  font-size: 0.85rem;
-  font-weight: 600;
-  white-space: nowrap;
-  cursor: pointer;
-  transition: opacity 0.2s ease;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 6px !important;
+  padding: 8px 16px 8px 12px !important;
+  border-radius: 999px !important;
+  border: none !important;
+  background: #0088cc !important;
+  color: #ffffff !important;
+  font-size: 0.85rem !important;
+  font-weight: 600 !important;
+  white-space: nowrap !important;
+  cursor: pointer !important;
+  transition: opacity 0.2s ease !important;
 }
 
 .ton-connect-placeholder-button:hover {
-  opacity: 0.9;
+  opacity: 0.9 !important;
+}
+
+/* The real TonConnectButton is hit by the same Tailwind reset once it
+   swaps in after activation, leaving it a colorless ghost of text. Give
+   it the same solid pill look as the placeholder above. */
+[data-tc-connect-button] {
+  background: #0088cc !important;
+  border-radius: 999px !important;
 }
