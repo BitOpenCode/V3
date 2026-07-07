@@ -7,9 +7,10 @@ interface BubbleCardProps {
   className?: string;
   title?: string;
   onClick?: () => void;
+  style?: React.CSSProperties;
 }
 
-const BubbleCard: React.FC<BubbleCardProps> = ({ children, className, title, onClick }) => {
+const BubbleCard: React.FC<BubbleCardProps> = ({ children, className, title, onClick, style }) => {
   const cardRef = useRef<HTMLDivElement>(null);
   const { theme } = useSettingsStore();
 
@@ -47,7 +48,7 @@ const BubbleCard: React.FC<BubbleCardProps> = ({ children, className, title, onC
   }, [theme]);
 
   return (
-    <div ref={cardRef} className={`bubble-card ${className || ''}`} onClick={onClick}>
+    <div ref={cardRef} className={`bubble-card ${className || ''}`} onClick={onClick} style={style}>
       {title && <h3 className="bubble-card-title">{title}</h3>}
       <div className="bubble-card-content">
         {children}

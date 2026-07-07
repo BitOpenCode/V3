@@ -4,6 +4,7 @@ import { HashRouter, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
 import WebApp from '@twa-dev/sdk';
+import TradeRoom from './pages/TradeRoom/TradeRoom';
 
 import { WalletActivationProvider } from './context/WalletActivation';
 import { Layout } from './components/Layout';
@@ -104,7 +105,7 @@ try {
                   <Route path="games/runroad" element={<RunRoad />} />
                   <Route path="avatars" element={<Avatars />} />
                   <Route path="menu" element={<Menu />} />
-                  
+
                   {/* Functional pages */}
                   <Route path="tickers" element={<Tickers />} />
                   <Route path="news" element={<News />} />
@@ -115,13 +116,16 @@ try {
                   <Route path="mempool" element={<Mempool />} />
                   <Route path="chart" element={<Chart />} />
                   <Route path="share" element={<Share />} />
-                  
+
+                  {/* 3D Trade Room */}
+                  <Route path="trade-room" element={<TradeRoom />} />
+
                   {/* Fallback */}
                   <Route path="*" element={<Home />} />
                 </Route>
               </Routes>
             </HashRouter>
-            <Toaster 
+            <Toaster
               position="top-center"
               toastOptions={{
                 style: {

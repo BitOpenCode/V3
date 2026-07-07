@@ -16,9 +16,14 @@ const translations: Record<string, Record<string, string>> = {
 export const useTranslation = () => {
   const { language } = useLanguageStore();
 
-  const t = (key: string): string => {
+  const t = (key: string, params?: Record<string, string | number>): string => {
     const translation = translations[language] || translations['English'];
-    return translation[key] || key;
+    const template = translation[key] || key;
+    if (!params) return template;
+    return Object.entries(params).reduce(
+      (result, [paramKey, value]) => result.replace(`{{${paramKey}}}`, String(value)),
+      template
+    );
   };
 
   return { t, language };
