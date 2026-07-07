@@ -577,13 +577,14 @@
   align-items: center !important;
   justify-content: center !important;
   gap: 6px !important;
-  padding: 8px 16px 8px 12px !important;
+  padding: 11px 16px 11px 16px !important;
   border-radius: 999px !important;
   border: none !important;
   background: #0088cc !important;
   color: #ffffff !important;
-  font-size: 0.85rem !important;
-  font-weight: 600 !important;
+  font-size: 15px !important;
+  font-weight: 590 !important;
+  line-height: 18px !important;
   white-space: nowrap !important;
   cursor: pointer !important;
   transition: opacity 0.2s ease !important;
