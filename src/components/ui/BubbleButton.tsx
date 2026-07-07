@@ -1,5 +1,6 @@
-import React, { useRef, useEffect, useLayoutEffect } from 'react';
+import React, { useRef, useEffect, useLayoutEffect, useId } from 'react';
 import { useSettingsStore } from '../../store';
+import { useNavButtonGroup } from './NavButtonGroup';
 import './BubbleButton.css';
 
 interface BubbleButtonProps {
@@ -23,6 +24,14 @@ const BubbleButton: React.FC<BubbleButtonProps> = ({ onClick, children, classNam
   const buttonRef = useRef<HTMLButtonElement>(null);
   const labelRef = useRef<HTMLSpanElement>(null);
   const { theme } = useSettingsStore();
+  const group = useNavButtonGroup();
+  const groupId = useId();
+  // Kept in sync every render so effects can read the latest group value
+  // without needing it in their dependency arrays (which would re-run —
+  // and re-report — every time ANY sibling's report changes the group's
+  // resolved size, since that produces a new `group` object reference).
+  const groupRef = useRef(group);
+  groupRef.current = group;
 
   const isMultiWord = typeof children === 'string' && /\s/.test(children.trim());
 
@@ -31,7 +40,10 @@ const BubbleButton: React.FC<BubbleButtonProps> = ({ onClick, children, classNam
     const label = labelRef.current;
     if (!button || !label) return;
 
-    const fitText = () => {
+    // Computes the largest size (down to the floor) at which this
+    // button's own text fits, without actually applying it — callers
+    // decide whether to use it directly or hand it to a NavButtonGroup.
+    const computeFit = (): number => {
       label.style.fontSize = '';
       const buttonStyle = getComputedStyle(button);
       const paddingX = parseFloat(buttonStyle.paddingLeft) + parseFloat(buttonStyle.paddingRight);
@@ -43,20 +55,40 @@ const BubbleButton: React.FC<BubbleButtonProps> = ({ onClick, children, classNam
           ? label.scrollHeight <= button.clientHeight - paddingY && label.scrollWidth <= availableWidth
           : label.scrollWidth <= availableWidth * HORIZONTAL_SAFETY;
 
-      if (availableWidth <= 0 || fits()) return;
+      const baseFontSize = parseFloat(getComputedStyle(label).fontSize);
+      if (availableWidth <= 0 || fits()) return baseFontSize;
 
       // Step the font-size down until it actually fits (or hits the
       // floor) rather than trusting a single proportional guess — font
       // metrics don't scale perfectly linearly (kerning/hinting change
       // at different sizes), and for wrapped text the fit depends on
       // where the line break lands, which isn't easy to predict upfront.
-      let fontSize = parseFloat(getComputedStyle(label).fontSize);
+      let fontSize = baseFontSize;
       for (let i = 0; i < 20 && fontSize > MIN_FONT_SIZE_PX; i++) {
         label.style.fontSize = `${fontSize}px`;
         if (fits()) break;
         fontSize -= 0.5;
       }
-      label.style.fontSize = `${Math.max(fontSize, MIN_FONT_SIZE_PX)}px`;
+      return Math.max(fontSize, MIN_FONT_SIZE_PX);
+    };
+
+    const fitText = () => {
+      const size = computeFit();
+      const currentGroup = groupRef.current;
+      if (currentGroup) {
+        // Report this button's own ideal size to the shared group; the
+        // group-size effect below re-applies the resulting minimum
+        // whenever it changes. computeFit() resets the label's font-size
+        // while measuring, so re-apply the group's *current* known size
+        // right away too (falling back to this button's own size before
+        // the group has resolved one) — otherwise a report that doesn't
+        // change the group's minimum leaves the label at the reset value
+        // instead of the shared size.
+        currentGroup.report(groupId, size);
+        label.style.fontSize = `${currentGroup.groupSize ?? size}px`;
+      } else {
+        label.style.fontSize = `${size}px`;
+      }
     };
 
     fitText();
@@ -71,8 +103,17 @@ const BubbleButton: React.FC<BubbleButtonProps> = ({ onClick, children, classNam
     return () => {
       window.removeEventListener('resize', fitText);
       clearTimeout(settleTimer);
+      groupRef.current?.unregister(groupId);
     };
-  }, [children, isMultiWord]);
+  }, [children, isMultiWord, groupId]);
+
+  // Apply the group's shared (smallest-needed) size whenever it changes.
+  // Runs separately from the fit computation above so it reacts purely to
+  // the group's resolved value, without re-triggering measurement.
+  useEffect(() => {
+    if (group?.groupSize == null || !labelRef.current) return;
+    labelRef.current.style.fontSize = `${group.groupSize}px`;
+  }, [group?.groupSize]);
 
   useEffect(() => {
     const button = buttonRef.current;

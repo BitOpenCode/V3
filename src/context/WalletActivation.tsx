@@ -1,15 +1,7 @@
 import React, { createContext, useContext, useState, useCallback, useEffect } from 'react';
 import { TonConnectUIProvider, useTonConnectUI } from '@tonconnect/ui-react';
-import { useLanguageStore } from '../store';
 
 const manifestUrl = 'https://bitopencode.github.io/V3/tonconnect-manifest.json';
-
-// TonConnect UI only ships its own "en" and "ru" translations -- any other
-// app language falls back to English inside the widget regardless of what
-// we pass, so there's no point offering the other locale codes here.
-export function toTonConnectLocale(appLanguage: string): 'en' | 'ru' {
-  return appLanguage === 'Russian' ? 'ru' : 'en';
-}
 
 // @tonconnect/ui stores its restored session under this key once a wallet
 // has been connected at least once.
@@ -58,7 +50,6 @@ const ModalAutoOpener: React.FC<{ onDone: () => void }> = ({ onDone }) => {
 export const WalletActivationProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [active, setActive] = useState(hasStoredConnection);
   const [pendingModalOpen, setPendingModalOpen] = useState(false);
-  const { language } = useLanguageStore();
 
   const activate = useCallback((openModal = false) => {
     setActive(true);
@@ -77,7 +68,9 @@ export const WalletActivationProvider: React.FC<{ children: React.ReactNode }> =
 
   return (
     <WalletActivationContext.Provider value={contextValue}>
-      <TonConnectUIProvider manifestUrl={manifestUrl} language={toTonConnectLocale(language)}>
+      {/* Forced to English so the button's text/size always matches the
+          placeholder above, regardless of the app's selected language. */}
+      <TonConnectUIProvider manifestUrl={manifestUrl} language="en">
         {pendingModalOpen && <ModalAutoOpener onDone={() => setPendingModalOpen(false)} />}
         {children}
       </TonConnectUIProvider>
