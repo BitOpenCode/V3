@@ -120,13 +120,26 @@
 
 /* Button content wrapper */
 .nav-button-content {
-  width: 100%;
-  height: 100%;
-  display: flex;
+  /* No width/height: 100% here on purpose — this element's scrollWidth
+     is used by BubbleButton to measure the label's true content width
+     for auto-shrinking. A width: 100% box always reports its own full
+     width via scrollWidth, masking the real (usually smaller) text
+     width and breaking that measurement. Centering still works because
+     the parent <button> is itself a flex container with
+     justify-content/align-items: center. */
+  display: inline-flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
+  line-height: 1.05;
   z-index: 1;
   position: relative;
+  /* white-space is set inline per-instance: 'normal' (wrap) for
+     multi-word labels, 'nowrap' for single words. */
+  /* Letter-spacing's trailing gap after the last glyph isn't reliably
+     included in scrollWidth measurements, which threw off the auto-fit
+     sizing in BubbleButton. Not needed for readability at this scale. */
+  letter-spacing: normal !important;
 }
 
 /* ============================================

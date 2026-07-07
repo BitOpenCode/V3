@@ -1,11 +1,12 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { HashRouter, Routes, Route } from 'react-router-dom';
-import { TonConnectUIProvider } from '@tonconnect/ui-react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
 import WebApp from '@twa-dev/sdk';
+import TradeRoom from './pages/TradeRoom/TradeRoom';
 
+import { WalletActivationProvider } from './context/WalletActivation';
 import { Layout } from './components/Layout';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { 
@@ -39,6 +40,7 @@ const setAppHeight = () => {
   if (height > maxAppHeight) {
     maxAppHeight = height;
     document.documentElement.style.setProperty('--app-height', `${maxAppHeight}px`);
+    window.dispatchEvent(new Event('resize'));
   }
 };
 setAppHeight();
@@ -67,8 +69,6 @@ if (savedTheme) {
   document.body.classList.add('theme-space');
 }
 
-const manifestUrl = "https://bitopencode.github.io/V3/tonconnect-manifest.json";
-
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -87,53 +87,56 @@ console.log('React app starting...');
 
 try {
   createRoot(rootElement).render(
-  <StrictMode>
-    <ErrorBoundary>
-      <QueryClientProvider client={queryClient}>
-        <TonConnectUIProvider manifestUrl={manifestUrl}>
-          <>
-            <HashRouter>
-              <Routes>
-                <Route path="/" element={<Layout />}>
-                  {/* Main routes */}
-                  <Route index element={<Home />} />
-                  <Route path="games" element={<Games />} />
-                  <Route path="games/spaceship" element={<SpaceShip />} />
-                  <Route path="games/runroad" element={<RunRoad />} />
-                  <Route path="avatars" element={<Avatars />} />
-                  <Route path="menu" element={<Menu />} />
-                  
-                  {/* Functional pages */}
-                  <Route path="tickers" element={<Tickers />} />
-                  <Route path="news" element={<News />} />
-                  <Route path="calculator" element={<Calculator />} />
-                  <Route path="orderbook" element={<OrderBook />} />
-                  <Route path="portfolio" element={<Portfolio />} />
-                  <Route path="wallet" element={<Wallet />} />
-                  <Route path="mempool" element={<Mempool />} />
-                  <Route path="chart" element={<Chart />} />
-                  <Route path="share" element={<Share />} />
-                  
-                  {/* Fallback */}
-                  <Route path="*" element={<Home />} />
-                </Route>
-              </Routes>
-            </HashRouter>
-            <Toaster 
-              position="top-center"
-              toastOptions={{
-                style: {
-                  background: '#1e1e1e',
-                  color: '#c0c0c0',
-                  border: '1px solid #8a2be2',
-                },
-              }}
-            />
-          </>
-        </TonConnectUIProvider>
-      </QueryClientProvider>
-    </ErrorBoundary>
-  </StrictMode>
+    <StrictMode>
+      <ErrorBoundary>
+        <QueryClientProvider client={queryClient}>
+          <WalletActivationProvider>
+            <>
+              <HashRouter>
+                <Routes>
+                  <Route path="/" element={<Layout />}>
+                    {/* Main routes */}
+                    <Route index element={<Home />} />
+                    <Route path="games" element={<Games />} />
+                    <Route path="games/spaceship" element={<SpaceShip />} />
+                    <Route path="games/runroad" element={<RunRoad />} />
+                    <Route path="avatars" element={<Avatars />} />
+                    <Route path="menu" element={<Menu />} />
+                    
+                    {/* Functional pages */}
+                    <Route path="tickers" element={<Tickers />} />
+                    <Route path="news" element={<News />} />
+                    <Route path="calculator" element={<Calculator />} />
+                    <Route path="orderbook" element={<OrderBook />} />
+                    <Route path="portfolio" element={<Portfolio />} />
+                    <Route path="wallet" element={<Wallet />} />
+                    <Route path="mempool" element={<Mempool />} />
+                    <Route path="chart" element={<Chart />} />
+                    <Route path="share" element={<Share />} />
+                    
+                    {/* 3D Trade Room */}
+                    <Route path="trade-room" element={<TradeRoom />} />
+                    
+                    {/* Fallback */}
+                    <Route path="*" element={<Home />} />
+                  </Route>
+                </Routes>
+              </HashRouter>
+              <Toaster 
+                position="top-center"
+                toastOptions={{
+                  style: {
+                    background: '#1e1e1e',
+                    color: '#c0c0c0',
+                    border: '1px solid #8a2be2',
+                  },
+                }}
+              />
+            </>
+          </WalletActivationProvider>
+        </QueryClientProvider>
+      </ErrorBoundary>
+    </StrictMode>
   );
 } catch (error) {
   console.error('Failed to render app:', error);

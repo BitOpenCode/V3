@@ -1,0 +1,27 @@
+.trade-room-page {
+  width: 100vw;
+  height: 100vh;
+  background: #0a0a0f;
+  position: relative;
+  overflow: hidden;
+}
+
+.trade-room-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.trade-room-close:hover {
+  background: rgba(168, 85, 247, 0.3);
+  transform: scale(1.05);
+}

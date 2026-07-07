@@ -83,6 +83,22 @@
   flex-shrink: 0;
 }
 
+.news-image-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  background: linear-gradient(135deg, rgba(138, 43, 226, 0.35), rgba(0, 119, 204, 0.35));
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.news-image-placeholder span {
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
 .news-content {
   flex: 1;
   min-width: 0;

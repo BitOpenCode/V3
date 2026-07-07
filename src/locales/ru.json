@@ -14,7 +14,7 @@
   "wallet": "Кошелёк",
   "mempool": "Мемпул",
   "chart": "График",
-  "share": "Тикеры",
+  "share": "Поделиться",
   "your_score": "Ваш счет",
   "advanced": "График",
   "overview": "Обзор",
@@ -114,5 +114,10 @@
   "energy_fee": "Energy комиссия",
   "transactions": "Транзакции",
   "block": "Блок",
-  "status": "Статус"
+  "status": "Статус",
+  "recent_transactions": "Последние транзакции",
+  "sent": "Отправлено",
+  "no_transactions": "Пока нет транзакций",
+  "loading_transactions": "Загрузка транзакций...",
+  "error_transactions": "Не удалось загрузить транзакции"
 }

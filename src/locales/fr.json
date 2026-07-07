@@ -114,5 +114,10 @@
   "energy_fee": "Energy Fee",
   "transactions": "Transactions",
   "block": "Bloc",
-  "status": "Statut"
+  "status": "Statut",
+  "recent_transactions": "Transactions récentes",
+  "sent": "Envoyé",
+  "no_transactions": "Aucune transaction pour l'instant",
+  "loading_transactions": "Chargement des transactions...",
+  "error_transactions": "Échec du chargement des transactions"
 }

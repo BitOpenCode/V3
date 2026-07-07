@@ -114,5 +114,10 @@
   "energy_fee": "能量费",
   "transactions": "交易数",
   "block": "区块",
-  "status": "状态"
+  "status": "状态",
+  "recent_transactions": "最近交易",
+  "sent": "已发送",
+  "no_transactions": "暂无交易",
+  "loading_transactions": "正在加载交易...",
+  "error_transactions": "加载交易失败"
 }

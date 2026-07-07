@@ -52,6 +52,16 @@ export interface WalletData {
   balanceUSD: string;
 }
 
+// TON wallet transaction (parsed from TonAPI)
+export interface TonTransaction {
+  hash: string;
+  timestamp: number;
+  direction: 'in' | 'out';
+  amount: string;
+  counterparty: string;
+  fee: string;
+}
+
 // Filter types
 export type TickerFilter = 'ALL' | 'USDT' | 'BTC' | 'FAV';
 export type TickerSort = 'symbol' | 'price' | 'change' | 'volume';
