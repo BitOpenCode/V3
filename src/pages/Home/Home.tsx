@@ -235,11 +235,10 @@ const Home: React.FC = () => {
                 </BubbleButton>
             </div>
 
-            {/* Trade Room Card - кликабельная */}
-            <BubbleCard 
+            {/* Trade Room Card - ТЕПЕРЬ БЕЗ BubbleCard */}
+            <div 
                 className="trade-room-card"
                 onClick={() => navigate('/trade-room')}
-                style={{ cursor: 'pointer' }}
             >
                 <div
                     style={{
@@ -262,7 +261,7 @@ const Home: React.FC = () => {
                         {t('Trade Room') || 'Trade Room'}
                     </span>
                 </div>
-            </BubbleCard>
+            </div>
         </div>
     );
 };

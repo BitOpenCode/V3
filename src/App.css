@@ -327,3 +327,8 @@ button.nav-button:active {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-primary-blue);
 }
+
+body.theme-space .close-button,
+body.theme-bubbles .close-button {
+  color: #ffffff !important;
+}

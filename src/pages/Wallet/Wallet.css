@@ -2,13 +2,61 @@
 .wallet-page {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  padding: 0 16px;
   gap: 16px;
+  padding: 0 8px;
+  width: 100%;
 }
 
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  padding: 16px 0;
+}
+
+.page-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0;
+  color: #ffffff;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 12px;
+  transition: all 0.2s;
+}
+
+.close-button:hover {
+  background: rgba(168, 85, 247, 0.2);
+}
+
+.wallet-content {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-bottom: 20px;
+}
+
+/* Wallet card - ОДНА КАРТОЧКА как в Profile/Menu */
 .wallet-card {
+  width: 100%;
+  border-radius: 14px;
   padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.wallet-card:hover {
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
 }
 
 .wallet-header {
@@ -79,6 +127,7 @@
   color: var(--color-primary-silver);
 }
 
+/* Analytics card */
 .analytics-card {
   background: var(--color-bg--300);
   border-radius: 12px;
@@ -278,3 +327,153 @@
   }
 }
 
+/* ========================================== */
+/* SPACE THEME - LAVA LAMP + TRANSPARENT */
+/* ========================================== */
+body.theme-space .wallet-card {
+  background: 
+    radial-gradient(circle at 30% 30%, rgba(138, 43, 226, 0.3), transparent 70%),
+    radial-gradient(circle at 70% 70%, rgba(0, 119, 204, 0.2), transparent 70%),
+    linear-gradient(135deg, rgba(42, 26, 74, 0.6) 0%, rgba(26, 26, 58, 0.6) 100%) !important;
+  background-size: 200% 200% !important;
+  animation: lavaLampCard 12s infinite ease-in-out !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
+}
+
+body.theme-space .wallet-card .wallet-address {
+  background: rgba(0, 0, 0, 0.2) !important;
+}
+
+body.theme-space .wallet-card .wallet-balance {
+  background: rgba(138, 43, 226, 0.05) !important;
+}
+
+body.theme-space .analytics-card {
+  background: rgba(30, 20, 50, 0.3) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+body.theme-space .transaction-row {
+  border-bottom-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* ========================================== */
+/* BUBBLES THEME - LAVA LAMP WITH BUBBLES */
+/* ========================================== */
+body.theme-bubbles .wallet-card {
+  background: 
+    radial-gradient(circle at 30% 30%, rgba(138, 43, 226, 0.5), transparent 50%),
+    radial-gradient(circle at 70% 70%, rgba(0, 119, 204, 0.4), transparent 50%),
+    linear-gradient(135deg, #2a1a4a 0%, #1a1a3a 100%) !important;
+  background-size: 200% 200% !important;
+  animation: lavaLampCard 12s infinite ease-in-out !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
+}
+
+body.theme-bubbles .wallet-card .wallet-address {
+  background: rgba(0, 0, 0, 0.2) !important;
+}
+
+body.theme-bubbles .wallet-card .wallet-balance {
+  background: rgba(138, 43, 226, 0.05) !important;
+}
+
+body.theme-bubbles .analytics-card {
+  background: rgba(30, 20, 50, 0.4) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+body.theme-bubbles .transaction-row {
+  border-bottom-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+/* ========================================== */
+/* LIGHT THEME */
+/* ========================================== */
+body.theme-light .wallet-card {
+  background: rgba(255, 255, 255, 0.7) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06) !important;
+}
+
+body.theme-light .wallet-card .wallet-address {
+  background: rgba(0, 0, 0, 0.04) !important;
+}
+
+body.theme-light .wallet-card .wallet-balance {
+  background: rgba(138, 43, 226, 0.04) !important;
+}
+
+body.theme-light .wallet-header h2 {
+  color: #0f172a !important;
+}
+
+body.theme-light .balance-value {
+  color: #0f172a !important;
+}
+
+body.theme-light .balance-usd {
+  color: #475569 !important;
+}
+
+body.theme-light .address-value {
+  color: #475569 !important;
+}
+
+body.theme-light .analytics-card {
+  background: rgba(255, 255, 255, 0.7) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+body.theme-light .analytics-title {
+  color: #0f172a !important;
+}
+
+body.theme-light .analytics-value {
+  color: #0f172a !important;
+}
+
+body.theme-light .connect-card h2 {
+  color: #0f172a !important;
+}
+
+body.theme-light .connect-card p {
+  color: #475569 !important;
+}
+
+body.theme-light .transaction-counterparty {
+  color: #475569 !important;
+}
+
+body.theme-light .transaction-row {
+  border-bottom-color: rgba(0, 0, 0, 0.06) !important;
+}
+
+body.theme-light .page-title {
+  color: #0f172a !important;
+}
+
+body.theme-light .close-button {
+  color: #475569 !important;
+}
+
+body.theme-light .close-button:hover {
+  background: rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Lava Lamp Animation */
+@keyframes lavaLampCard {
+  0% { background-position: 0% 0%; }
+  25% { background-position: 100% 0%; }
+  50% { background-position: 100% 100%; }
+  75% { background-position: 0% 100%; }
+  100% { background-position: 0% 0%; }
+}

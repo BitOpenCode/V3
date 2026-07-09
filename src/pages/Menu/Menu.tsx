@@ -1,6 +1,5 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BubbleCard } from '../../components/ui';
 import { useSettingsStore, useLanguageStore, Theme } from '../../store';
 import { useTranslation } from '../../hooks/useTranslation';
 import './Menu.css';
@@ -25,12 +24,22 @@ const Menu: React.FC = () => {
     { value: 'Russian', label: 'Russian', icon: '🇷🇺' },
   ];
 
+  const profileItems: { value: string; label: string; icon: string; route: string }[] = [
+    { value: 'profile_info', label: 'Profile Info', icon: '👤', route: '/profile' },
+    { value: 'results', label: 'Results', icon: '📊', route: '/results' },
+    { value: 'progress', label: 'Progress', icon: '📈', route: '/progress' },
+  ];
+
   const handleThemeChange = (newTheme: Theme) => {
     setTheme(newTheme);
   };
 
   const handleLanguageChange = (newLanguage: string) => {
     setLanguage(newLanguage);
+  };
+
+  const handleProfileClick = (route: string) => {
+    navigate(route);
   };
 
   return (
@@ -43,7 +52,25 @@ const Menu: React.FC = () => {
       </div>
 
       <div className="menu-content">
-        <BubbleCard className="menu-card" title={t('theme_settings')}>
+        {/* Profile Card */}
+        <div className="menu-card">
+          <div className="menu-card-title">Profile</div>
+          <div className="theme-selector">
+            {profileItems.map((item) => (
+              <button
+                key={item.value}
+                onClick={() => handleProfileClick(item.route)}
+                className="theme-button"
+              >
+                <span className="theme-icon">{item.icon}</span>
+                <span className="theme-label">{item.label}</span>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="menu-card">
+          <div className="menu-card-title">{t('theme_settings')}</div>
           <div className="theme-selector">
             {themes.map((t) => (
               <button
@@ -59,9 +86,10 @@ const Menu: React.FC = () => {
               </button>
             ))}
           </div>
-        </BubbleCard>
+        </div>
 
-        <BubbleCard className="menu-card" title={t('languages')}>
+        <div className="menu-card">
+          <div className="menu-card-title">{t('languages')}</div>
           <div className="theme-selector">
             {languages.map((lang) => (
               <button
@@ -77,7 +105,7 @@ const Menu: React.FC = () => {
               </button>
             ))}
           </div>
-        </BubbleCard>
+        </div>
       </div>
     </div>
   );

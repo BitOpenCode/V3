@@ -1,51 +1,110 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { Newspaper } from 'lucide-react';
-import { fetchNews } from '../../services/api';
+import { fetchCombinedNews } from '../../services/api';
 import { NewsItem } from '../../types';
 import { formatDistanceToNow } from 'date-fns';
 import './News.css';
 
-// newsdata.io's crypto endpoint only accepts real coin tickers for its
-// `coin` filter (arbitrary labels like "Trading"/"Technology" get
-// rejected with an UnsupportedFilter error, breaking the whole list).
 const NEWS_CATEGORIES = [
   { value: '', label: 'All' },
   { value: 'btc', label: 'Bitcoin' },
-  { value: 'eth', label: 'Ethereum' },
-  { value: 'ton', label: 'TON' },
-  { value: 'xrp', label: 'XRP' },
-  { value: 'bnb', label: 'BNB' },
-  { value: 'doge', label: 'Dogecoin' },
-  { value: 'ada', label: 'Cardano' },
-  { value: 'sol', label: 'Solana' },
+  { value: 'altcoins', label: 'Altcoins' },
+  { value: 'tech', label: 'Tech' },
+  { value: 'ai', label: 'AI' },
+  { value: 'game', label: 'Game' },
+  { value: 'rwa', label: 'RWA' },
 ];
+
+const CATEGORY_KEYWORDS: Record<string, string[]> = {
+  btc: ['bitcoin', 'btc', 'satoshi'],
+  altcoins: [
+    'ethereum', 'eth', 'solana', 'sol', 'cardano', 'ada',
+    'xrp', 'ripple', 'dogecoin', 'doge', 'bnb', 'polygon',
+    'matic', 'avalanche', 'avax', 'polkadot', 'dot',
+    'chainlink', 'link', 'uniswap', 'uni', 'arbitrum', 'arb',
+    'optimism', 'op', 'aptos', 'apt', 'sui', 'near', 'algorand',
+  ],
+  tech: [
+    'blockchain', 'protocol', 'upgrade', 'scaling', 'layer2',
+    'rollup', 'zero-knowledge', 'privacy', 'security', 'node',
+    'validator', 'governance', 'dao', 'fork',
+  ],
+  ai: [
+    'artificial intelligence', 'machine learning',
+    'neural network', 'deep learning', 'automation',
+    'agi', 'llm', 'chatgpt', 'gpt', 'openai', 'anthropic',
+  ],
+  game: [
+    'gaming', 'metaverse', 'play-to-earn', 'nft',
+    'web3 game', 'esports',
+  ],
+  rwa: [
+    'real-world assets', 'tokenization', 'real estate',
+    'commodity', 'gold', 'silver', 'carbon credits',
+    'private equity', 'tradfi',
+  ],
+};
+
+const BLACKLIST_WORDS: Record<string, string[]> = {
+  btc: [
+    'xrp', 'ripple', 'cardano', 'ada', 'solana', 'sol',
+    'dogecoin', 'doge', 'bnb', 'eth', 'ethereum', 'matic', 'polygon',
+    'avalanche', 'avax', 'dot', 'polkadot', 'uni', 'uniswap',
+    'caspa', 'casp', 'kaspa',
+  ],
+  altcoins: ['bitcoin', 'btc', 'satoshi'],
+  tech: ['bitcoin', 'btc', 'xrp', 'ripple', 'doge', 'shiba'],
+  ai: ['bitcoin', 'btc', 'xrp', 'ripple', 'doge'],
+  game: ['bitcoin', 'btc', 'xrp', 'ripple'],
+  rwa: ['bitcoin', 'btc', 'xrp', 'ripple'],
+};
 
 const News: React.FC = () => {
   const navigate = useNavigate();
   const [category, setCategory] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
-  const [brokenImages, setBrokenImages] = useState<Set<string>>(new Set());
+  const [imageErrors, setImageErrors] = useState<Set<string>>(new Set());
 
-  // Fetch news with React Query
-  const { data: newsItems, isLoading, error } = useQuery({
-    queryKey: ['news', category],
-    queryFn: () => fetchNews(category || undefined),
-    staleTime: 60000, // 1 minute
+  // ОДИН ЗАПРОС — КЕШ НА 10 МИНУТ
+  const { data: allNews, isLoading, error } = useQuery({
+    queryKey: ['news', 'all'],
+    queryFn: () => fetchCombinedNews(),
+    staleTime: 600000, // 10 минут — данные считаются свежими
+    gcTime: 600000,    // 10 минут — хранятся в кеше
+    refetchOnMount: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
   });
 
-  // Filter by search
-  const filteredNews = (Array.isArray(newsItems) ? newsItems : []).filter((item: NewsItem) => {
-    if (!searchQuery) return true;
-    const query = searchQuery.toLowerCase();
-    return (
-      item.title.toLowerCase().includes(query) ||
-      item.body.toLowerCase().includes(query)
-    );
-  });
+  const filteredNews = useMemo(() => {
+    const items = Array.isArray(allNews) ? allNews : [];
+    
+    return items.filter((item: NewsItem) => {
+      if (searchQuery) {
+        const query = searchQuery.toLowerCase();
+        const match = item.title.toLowerCase().includes(query) || 
+                      item.body.toLowerCase().includes(query);
+        if (!match) return false;
+      }
 
-  // Format date
+      if (!category) return true;
+
+      const keywords = CATEGORY_KEYWORDS[category] || [];
+      const blacklist = BLACKLIST_WORDS[category] || [];
+      const text = (item.title + ' ' + item.body + ' ' + (item.categories || '')).toLowerCase();
+
+      const hasKeyword = keywords.some(kw => text.includes(kw.toLowerCase()));
+      if (!hasKeyword) return false;
+
+      const isBlocked = blacklist.some(word => text.includes(word.toLowerCase()));
+      if (isBlocked) return false;
+
+      return true;
+    });
+  }, [allNews, category, searchQuery]);
+
   const formatDate = (timestamp: number) => {
     try {
       return formatDistanceToNow(new Date(timestamp * 1000), { addSuffix: true });
@@ -54,7 +113,6 @@ const News: React.FC = () => {
     }
   };
 
-  // Open article
   const openArticle = (url: string) => {
     window.open(url, '_blank', 'noopener,noreferrer');
   };
@@ -68,7 +126,6 @@ const News: React.FC = () => {
         </button>
       </div>
 
-      {/* Search */}
       <div className="news-search-container">
         <input
           type="text"
@@ -84,7 +141,6 @@ const News: React.FC = () => {
         />
       </div>
 
-      {/* Categories */}
       <div className="news-categories">
         {NEWS_CATEGORIES.map((cat) => (
           <button
@@ -97,66 +153,64 @@ const News: React.FC = () => {
         ))}
       </div>
 
-      {/* Loading */}
-      {isLoading && (
-        <div className="news-loading">Loading news...</div>
-      )}
+      {isLoading && <div className="news-loading">Loading news...</div>}
+      {error && <div className="news-error">Failed to load news</div>}
 
-      {/* Error */}
-      {error && (
-        <div className="news-error">Failed to load news</div>
-      )}
-
-      {/* News list */}
       <div className="news-list">
-        {filteredNews.map((item: NewsItem) => (
-          <article 
-            key={item.id} 
-            className="news-card"
-            onClick={() => openArticle(item.url)}
-          >
-            {item.imageurl && !brokenImages.has(item.id.toString()) ? (
-              <img
-                src={item.imageurl}
-                alt={item.title}
-                className="news-image"
-                loading="lazy"
-                onError={() => setBrokenImages((prev) => new Set(prev).add(item.id.toString()))}
-              />
-            ) : (
-              <div className="news-image news-image-placeholder">
-                <Newspaper size={24} />
-                <span>NEWS</span>
-              </div>
-            )}
-            <div className="news-content">
-              <h3 className="news-title">{item.title}</h3>
-              <p className="news-body">
-                {item.body.length > 150 ? `${item.body.slice(0, 150)}...` : item.body}
-              </p>
-              <div className="news-meta">
-                <span className="news-source">{item.source}</span>
-                <span className="news-date">{formatDate(item.published_on)}</span>
-              </div>
-              {item.categories && (
-                <div className="news-tags">
-                  {item.categories.split('|').slice(0, 3).map((tag, i) => (
-                    <span key={i} className="news-tag">{tag}</span>
-                  ))}
-                </div>
-              )}
-            </div>
-          </article>
-        ))}
-      </div>
+        {filteredNews.length > 0 ? (
+          filteredNews.map((item: NewsItem) => {
+            const hasImageError = imageErrors.has(item.id.toString());
+            const hasImageUrl = !!item.imageurl;
 
-      {/* Empty state */}
-      {!isLoading && filteredNews.length === 0 && (
-        <div className="news-empty">No news found</div>
-      )}
+            return (
+              <article 
+                key={item.id} 
+                className="news-card"
+                onClick={() => openArticle(item.url)}
+              >
+                <div className="news-image-wrapper">
+                  <div className="news-image-placeholder">
+                    <Newspaper size={24} />
+                    <span>NEWS</span>
+                  </div>
+                  {hasImageUrl && !hasImageError && (
+                    <img
+                      src={item.imageurl}
+                      alt={item.title}
+                      className="news-image"
+                      loading="lazy"
+                      onError={() => {
+                        setImageErrors(prev => new Set(prev).add(item.id.toString()));
+                      }}
+                    />
+                  )}
+                </div>
+                <div className="news-content">
+                  <h3 className="news-title">{item.title}</h3>
+                  <p className="news-body">
+                    {item.body.length > 150 ? `${item.body.slice(0, 150)}...` : item.body}
+                  </p>
+                  <div className="news-meta">
+                    <span className="news-source">{item.source}</span>
+                    <span className="news-date">{formatDate(item.published_on)}</span>
+                  </div>
+                  {item.categories && (
+                    <div className="news-tags">
+                      {item.categories.split('|').slice(0, 3).map((tag, i) => (
+                        <span key={i} className="news-tag">{tag}</span>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </article>
+            );
+          })
+        ) : (
+          <div className="news-empty">No news found</div>
+        )}
+      </div>
     </div>
   );
 };
 
 export default News;
-
