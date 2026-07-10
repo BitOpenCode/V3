@@ -116,15 +116,16 @@ const OrderBook: React.FC = () => {
     [orderBook, groupStep]
   );
 
-  // Filter symbols - show top 20 by volume, or search results
+  // Filter symbols, sorted by volume. No cap here -- the dropdown itself
+  // scrolls (max-height + overflow-y in CSS), so every USDT pair should
+  // be reachable by scrolling, not just the first 20.
   const filteredSymbols = tickers
     ?.filter((t: Ticker) => t.symbol.endsWith('USDT'))
     .filter((t: Ticker) => {
       if (!searchQuery) return true;
       return t.symbol.toLowerCase().includes(searchQuery.toLowerCase());
     })
-    .sort((a: Ticker, b: Ticker) => b.quoteVolume - a.quoteVolume)
-    .slice(0, 20) || [];
+    .sort((a: Ticker, b: Ticker) => b.quoteVolume - a.quoteVolume) || [];
 
   // Format price
   const formatPrice = (price: number): string => {
