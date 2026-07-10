@@ -1,19 +1,60 @@
 .menu-page {
   display: flex;
   flex-direction: column;
+  gap: 16px;
+  padding: 0 8px;
   width: 100%;
-  padding: 0 16px;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  padding: 16px 0;
+}
+
+.page-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0;
+  color: #ffffff;
+}
+
+.close-button {
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 1rem;
+  cursor: pointer;
+  padding: 8px 16px;
+  border-radius: 12px;
+  transition: all 0.2s;
+}
+
+.close-button:hover {
+  background: rgba(168, 85, 247, 0.2);
 }
 
 .menu-content {
+  width: 100%;
+  max-width: 600px;
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 16px;
+  padding-bottom: 20px;
 }
 
 .menu-card {
   width: 100%;
+  border-radius: 14px;
+  padding: 20px;
+  transition: all 0.3s ease;
+}
+
+.menu-card:hover {
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3);
 }
 
 /* Theme Selector */
@@ -29,31 +70,30 @@
   align-items: center;
   gap: 12px;
   padding: 16px;
-  background: rgba(30, 30, 30, 0.7);
-  border: 2px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
-  color: var(--color-primary-silver);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.03);
+  color: #ffffff;
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s;
   width: 100%;
   text-align: left;
-  position: relative;
 }
 
 .theme-button:hover {
-  background: rgba(138, 43, 226, 0.15);
-  border-color: rgba(138, 43, 226, 0.4);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(138, 43, 226, 0.2);
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-1px);
 }
 
-.theme-button.active {
-  background: linear-gradient(135deg, rgba(138, 43, 226, 0.3), rgba(0, 119, 204, 0.3));
-  border-color: var(--color-primary-purple);
-  color: white;
-  box-shadow: 0 4px 16px rgba(138, 43, 226, 0.4);
+.theme-button.primary {
+  background: rgba(124, 58, 237, 0.2);
+  border-color: rgba(124, 58, 237, 0.3);
+}
+
+.theme-button.primary:hover {
+  background: rgba(124, 58, 237, 0.35);
 }
 
 .theme-icon {
@@ -68,175 +108,136 @@
 }
 
 .theme-check {
-  color: var(--color-primary-green);
+  color: #22c55e;
   font-size: 1.2rem;
   font-weight: 700;
 }
 
-/* Light theme adjustments */
-body.theme-light .theme-button {
-  background: rgba(249, 250, 251, 0.8);
-  border-color: rgba(124, 58, 237, 0.2);
-  color: var(--color-text);
+/* ========================================== */
+/* SPACE THEME - LAVA LAMP + TRANSPARENT */
+/* ========================================== */
+body.theme-space .menu-card {
+  background: 
+    radial-gradient(circle at 30% 30%, rgba(138, 43, 226, 0.3), transparent 70%),
+    radial-gradient(circle at 70% 70%, rgba(0, 119, 204, 0.2), transparent 70%),
+    linear-gradient(135deg, rgba(42, 26, 74, 0.6) 0%, rgba(26, 26, 58, 0.6) 100%) !important;
+  background-size: 200% 200% !important;
+  animation: lavaLampCard 12s infinite ease-in-out !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
 }
 
-body.theme-light .theme-button:hover {
-  background: rgba(124, 58, 237, 0.1);
-  border-color: rgba(124, 58, 237, 0.4);
+body.theme-space .menu-card .bubble-card-bubble {
+  display: none !important;
 }
 
-body.theme-light .theme-button.active {
-  background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(37, 99, 235, 0.2));
-  border-color: var(--color-primary-purple);
-  color: var(--color-text);
+body.theme-space .theme-button {
+  background: rgba(30, 20, 50, 0.3) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  color: #94a3b8 !important;
 }
 
-
-.theme-selector {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  width: 100%;
-}
-
-.theme-button {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px;
-  background: rgba(30, 30, 30, 0.7);
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  color: var(--color-primary-silver);
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  width: 100%;
-  text-align: left;
-  position: relative;
-}
-
-.theme-button:hover {
-  background: rgba(138, 43, 226, 0.15);
-  border-color: rgba(138, 43, 226, 0.4);
+body.theme-space .theme-button:hover {
+  background: rgba(138, 43, 226, 0.15) !important;
+  border-color: rgba(138, 43, 226, 0.4) !important;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(138, 43, 226, 0.2);
+  box-shadow: 0 4px 12px rgba(138, 43, 226, 0.2) !important;
 }
 
-.theme-button.active {
-  background: linear-gradient(135deg, rgba(138, 43, 226, 0.3), rgba(0, 119, 204, 0.3));
-  border-color: var(--color-primary-purple);
-  color: white;
-  box-shadow: 0 4px 16px rgba(138, 43, 226, 0.4);
+body.theme-space .theme-button.active {
+  background: rgba(138, 43, 226, 0.25) !important;
+  border-color: rgba(138, 43, 226, 0.5) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 16px rgba(138, 43, 226, 0.4) !important;
 }
 
-.theme-icon {
-  font-size: 1.5rem;
-  width: 32px;
-  text-align: center;
+body.theme-space .theme-check {
+  color: #22c55e !important;
 }
 
-.theme-label {
-  flex: 1;
-  font-size: 1rem;
+/* ========================================== */
+/* BUBBLES THEME - LAVA LAMP WITH BUBBLES */
+/* ========================================== */
+body.theme-bubbles .menu-card {
+  background: 
+    radial-gradient(circle at 30% 30%, rgba(138, 43, 226, 0.5), transparent 50%),
+    radial-gradient(circle at 70% 70%, rgba(0, 119, 204, 0.4), transparent 50%),
+    linear-gradient(135deg, #2a1a4a 0%, #1a1a3a 100%) !important;
+  background-size: 200% 200% !important;
+  animation: lavaLampCard 12s infinite ease-in-out !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 14px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
 }
 
-.theme-check {
-  color: var(--color-primary-green);
-  font-size: 1.2rem;
-  font-weight: 700;
+body.theme-bubbles .menu-card .bubble-card-bubble {
+  display: block !important;
 }
 
-/* Light theme adjustments */
-body.theme-light .theme-button {
-  background: rgba(249, 250, 251, 0.8);
-  border-color: rgba(124, 58, 237, 0.2);
-  color: var(--color-text);
+body.theme-bubbles .theme-button {
+  background: rgba(30, 20, 50, 0.4) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  color: #94a3b8 !important;
 }
 
-body.theme-light .theme-button:hover {
-  background: rgba(124, 58, 237, 0.1);
-  border-color: rgba(124, 58, 237, 0.4);
-}
-
-body.theme-light .theme-button.active {
-  background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(37, 99, 235, 0.2));
-  border-color: var(--color-primary-purple);
-  color: var(--color-text);
-}
-
-
-.theme-selector {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-  width: 100%;
-}
-
-.theme-button {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px;
-  background: rgba(30, 30, 30, 0.7);
-  border: 2px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  color: var(--color-primary-silver);
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  width: 100%;
-  text-align: left;
-  position: relative;
-}
-
-.theme-button:hover {
-  background: rgba(138, 43, 226, 0.15);
-  border-color: rgba(138, 43, 226, 0.4);
+body.theme-bubbles .theme-button:hover {
+  background: rgba(138, 43, 226, 0.15) !important;
+  border-color: rgba(138, 43, 226, 0.4) !important;
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(138, 43, 226, 0.2);
+  box-shadow: 0 4px 12px rgba(138, 43, 226, 0.2) !important;
 }
 
-.theme-button.active {
-  background: linear-gradient(135deg, rgba(138, 43, 226, 0.3), rgba(0, 119, 204, 0.3));
-  border-color: var(--color-primary-purple);
-  color: white;
-  box-shadow: 0 4px 16px rgba(138, 43, 226, 0.4);
+body.theme-bubbles .theme-button.active {
+  background: rgba(138, 43, 226, 0.3) !important;
+  border-color: rgba(138, 43, 226, 0.5) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 16px rgba(138, 43, 226, 0.4) !important;
 }
 
-.theme-icon {
-  font-size: 1.5rem;
-  width: 32px;
-  text-align: center;
+body.theme-bubbles .theme-check {
+  color: #22c55e !important;
 }
 
-.theme-label {
-  flex: 1;
-  font-size: 1rem;
+/* ========================================== */
+/* LIGHT THEME */
+/* ========================================== */
+body.theme-light .menu-card {
+  background: rgba(255, 255, 255, 0.7) !important;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06) !important;
 }
 
-.theme-check {
-  color: var(--color-primary-green);
-  font-size: 1.2rem;
-  font-weight: 700;
-}
-
-/* Light theme adjustments */
 body.theme-light .theme-button {
-  background: rgba(249, 250, 251, 0.8);
-  border-color: rgba(124, 58, 237, 0.2);
-  color: var(--color-text);
+  background: rgba(249, 250, 251, 0.8) !important;
+  border-color: rgba(124, 58, 237, 0.2) !important;
+  color: #0f172a !important;
 }
 
 body.theme-light .theme-button:hover {
-  background: rgba(124, 58, 237, 0.1);
-  border-color: rgba(124, 58, 237, 0.4);
+  background: rgba(124, 58, 237, 0.1) !important;
+  border-color: rgba(124, 58, 237, 0.4) !important;
 }
 
 body.theme-light .theme-button.active {
-  background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(37, 99, 235, 0.2));
-  border-color: var(--color-primary-purple);
-  color: var(--color-text);
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.2), rgba(37, 99, 235, 0.2)) !important;
+  border-color: rgba(124, 58, 237, 0.5) !important;
+  color: #0f172a !important;
+}
+
+body.theme-light .theme-check {
+  color: #22c55e !important;
+}
+
+/* Lava Lamp Animation */
+@keyframes lavaLampCard {
+  0% { background-position: 0% 0%; }
+  25% { background-position: 100% 0%; }
+  50% { background-position: 100% 100%; }
+  75% { background-position: 0% 100%; }
+  100% { background-position: 0% 0%; }
 }

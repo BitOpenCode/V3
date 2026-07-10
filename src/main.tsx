@@ -5,6 +5,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { Toaster } from 'react-hot-toast';
 import WebApp from '@twa-dev/sdk';
 import TradeRoom from './pages/TradeRoom/TradeRoom';
+import Profile from './pages/Profile/Profile';
+import Results from './pages/Results/Results';
+import Progress from './pages/Progress/Progress';
 
 import { WalletActivationProvider } from './context/WalletActivation';
 import { Layout } from './components/Layout';
@@ -119,6 +122,11 @@ try {
 
                   {/* 3D Trade Room */}
                   <Route path="trade-room" element={<TradeRoom />} />
+
+                  {/* Profile pages */}
+                  <Route path="profile" element={<Profile />} />
+                  <Route path="results" element={<Results />} />
+                  <Route path="progress" element={<Progress />} />
 
                   {/* Fallback */}
                   <Route path="*" element={<Home />} />

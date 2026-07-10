@@ -1,61 +1,48 @@
 /* BubbleButton Component Styles */
 
 .nav-button {
-  /* Base sizing */
   width: 80px;
   height: 42px;
   padding: 8px 4px;
   margin: 2px;
-  
-  /* Flexbox centering */
   display: flex;
   justify-content: center;
   align-items: center;
-  
-  /* Typography */
-  font-size: 0.7rem !important;
-  font-weight: 600 !important;
-  letter-spacing: 0.03em !important;
-  text-transform: uppercase !important;
-  color: white !important;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5) !important;
-  
-  /* Appearance */
-  border-radius: 12px !important;
-  border: 1px solid rgba(255, 255, 255, 0.2) !important;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  background-color: transparent !important;
-  
-  /* Lava lamp gradient effect */
+  background-color: transparent;
   background: 
     radial-gradient(circle at 20% 20%, rgba(138, 43, 226, 0.8), transparent 50%),
     radial-gradient(circle at 80% 80%, rgba(0, 119, 204, 0.6), transparent 50%),
     radial-gradient(circle at 50% 50%, rgba(180, 50, 200, 0.7), transparent 60%),
-    linear-gradient(135deg, #2a1a4a 0%, #1a1a3a 100%) !important;
-  background-size: 200% 200% !important;
-  animation: lavaLamp 8s infinite ease-in-out !important;
-  
-  /* Shadow & glow */
+    linear-gradient(135deg, #2a1a4a 0%, #1a1a3a 100%);
+  background-size: 200% 200%;
+  animation: lavaLamp 8s infinite ease-in-out;
   box-shadow: 
     0 2px 8px rgba(138, 43, 226, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1) !important;
-  
-  /* Transition */
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
   user-select: none;
   -webkit-user-select: none;
 }
 
 .nav-button:hover {
-  transform: translateY(-2px) scale(1.02) !important;
+  transform: translateY(-2px) scale(1.02);
   box-shadow: 
     0 4px 16px rgba(138, 43, 226, 0.6),
     0 0 20px rgba(0, 119, 204, 0.4),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2) !important;
-  border-color: rgba(255, 255, 255, 0.4) !important;
-  background-color: transparent !important;
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.4);
+  background-color: transparent;
 }
 
 .nav-button:active {
@@ -77,7 +64,6 @@
   box-shadow: 0 2px 8px rgba(138, 43, 226, 0.4);
 }
 
-/* Bubble element styles */
 .bubble {
   position: absolute;
   bottom: 0;
@@ -118,15 +104,7 @@
   }
 }
 
-/* Button content wrapper */
 .nav-button-content {
-  /* No width/height: 100% here on purpose — this element's scrollWidth
-     is used by BubbleButton to measure the label's true content width
-     for auto-shrinking. A width: 100% box always reports its own full
-     width via scrollWidth, masking the real (usually smaller) text
-     width and breaking that measurement. Centering still works because
-     the parent <button> is itself a flex container with
-     justify-content/align-items: center. */
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -134,19 +112,11 @@
   line-height: 1.05;
   z-index: 1;
   position: relative;
-  /* white-space is set inline per-instance: 'normal' (wrap) for
-     multi-word labels, 'nowrap' for single words. */
-  /* Letter-spacing's trailing gap after the last glyph isn't reliably
-     included in scrollWidth measurements, which threw off the auto-fit
-     sizing in BubbleButton. Not needed for readability at this scale. */
-  letter-spacing: normal !important;
+  letter-spacing: normal;
+  font-size: 0.7rem;
+  font-weight: 600;
 }
 
-/* ============================================
-   Responsive adjustments
-   ============================================ */
-
-/* Tablet */
 @media (max-width: 768px) {
   .nav-button {
     width: 68px;
@@ -155,29 +125,35 @@
     padding: 6px 2px;
     border-radius: 10px;
   }
+  .nav-button-content {
+    font-size: 0.6rem;
+  }
 }
 
-/* Mobile */
 @media (max-width: 480px) {
   .nav-button {
     width: 54px;
     height: 34px;
-    font-size: 0.5rem;
+    font-size: 0.55rem;
     padding: 4px 2px;
     border-radius: 8px;
     letter-spacing: 0.02em;
   }
+  .nav-button-content {
+    font-size: 0.55rem;
+  }
 }
 
-/* Small mobile */
 @media (max-width: 375px) {
   .nav-button {
     width: 48px;
     height: 32px;
-    font-size: 0.45rem;
+    font-size: 0.5rem;
     padding: 3px 1px;
     border-radius: 6px;
     margin: 1px;
   }
+  .nav-button-content {
+    font-size: 0.5rem;
+  }
 }
-

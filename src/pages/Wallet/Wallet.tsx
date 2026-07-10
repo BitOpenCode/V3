@@ -5,7 +5,6 @@ import { useQuery } from '@tanstack/react-query';
 import { Wallet as WalletIcon, ArrowDownLeft, ArrowUpRight } from 'lucide-react';
 import { fetchTonBalance, fetchTonPrice, fetchTonTransactions } from '../../services/api';
 import { TonTransaction } from '../../types';
-import { BubbleCard } from '../../components/ui';
 import { useTranslation } from '../../hooks/useTranslation';
 import { useWalletActivation } from '../../context/WalletActivation';
 import './Wallet.css';
@@ -27,21 +26,18 @@ const ConnectPrompt: React.FC<{ onConnect: () => void }> = ({ onConnect }) => {
   const { t } = useTranslation();
   return (
     <div className="wallet-connect">
-      <BubbleCard className="connect-card">
+      <div className="wallet-card connect-card">
         <WalletIcon className="connect-icon" />
         <h2>{t('connect_wallet')}</h2>
         <p>{t('connect_wallet_hint')}</p>
         <button className="connect-btn" onClick={onConnect}>
           {t('connect_ton_wallet')}
         </button>
-      </BubbleCard>
+      </div>
     </div>
   );
 };
 
-// Only rendered once the TonConnect provider is actually mounted (see
-// src/context/WalletActivation.tsx), so it's safe to call useTonConnectUI
-// here without risking a missing-provider crash.
 const WalletConnected: React.FC = () => {
   const { t } = useTranslation();
   const [tonConnectUI] = useTonConnectUI();
@@ -78,8 +74,8 @@ const WalletConnected: React.FC = () => {
 
   return (
     <>
-      {/* Wallet card */}
-      <BubbleCard className="wallet-card">
+      {/* Wallet card - ОДНА КАРТОЧКА */}
+      <div className="wallet-card">
         <div className="wallet-header">
           <WalletIcon className="wallet-icon" />
           <h2>{t('ton_wallet')}</h2>
@@ -93,7 +89,7 @@ const WalletConnected: React.FC = () => {
           <span className="balance-value">{balance || '0'} GRAM</span>
           <span className="balance-usd">${usdValue.toFixed(2)} USD</span>
         </div>
-      </BubbleCard>
+      </div>
 
       {/* TON Analytics */}
       <div className="analytics-card">

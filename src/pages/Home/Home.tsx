@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BubbleButton, BubbleCard, NavButtonGroup } from '../../components/ui';
+import { BubbleButton, BubbleCard } from '../../components/ui';
 import { useTranslation } from '../../hooks/useTranslation';
 import './Home.css';
 import astronautImage from '../../assets/images/astronaut.png';
@@ -214,34 +214,31 @@ const Home: React.FC = () => {
                     boxSizing: 'border-box'
                 }}
             >
-                <NavButtonGroup>
-                    <BubbleButton
-                        className="nav-button main-action-button"
-                        onClick={() => navigate('/games')}
-                    >
-                        {t('games')}
-                    </BubbleButton>
+                <BubbleButton
+                    className="nav-button main-action-button"
+                    onClick={() => navigate('/games')}
+                >
+                    {t('games')}
+                </BubbleButton>
 
-                    <div className="score-container" style={{ margin: 0 }}>
-                        <div className="score-label">{t('your_score')}</div>
-                        <div className="score-value">{formatScore(score)}</div>
-                        <div className="score-icon">⭐</div>
-                    </div>
+                <div className="score-container" style={{ margin: 0 }}>
+                    <div className="score-label">{t('your_score')}</div>
+                    <div className="score-value">{formatScore(score)}</div>
+                    <div className="score-icon">⭐</div>
+                </div>
 
-                    <BubbleButton
-                        className="nav-button main-action-button"
-                        onClick={() => navigate('/avatars')}
-                    >
-                        {t('avatars')}
-                    </BubbleButton>
-                </NavButtonGroup>
+                <BubbleButton
+                    className="nav-button main-action-button"
+                    onClick={() => navigate('/avatars')}
+                >
+                    {t('avatars')}
+                </BubbleButton>
             </div>
 
-            {/* Trade Room Card - кликабельная */}
-            <BubbleCard 
+            {/* Trade Room Card - ТЕПЕРЬ БЕЗ BubbleCard */}
+            <div 
                 className="trade-room-card"
                 onClick={() => navigate('/trade-room')}
-                style={{ cursor: 'pointer' }}
             >
                 <div
                     style={{
@@ -264,7 +261,7 @@ const Home: React.FC = () => {
                         {t('Trade Room') || 'Trade Room'}
                     </span>
                 </div>
-            </BubbleCard>
+            </div>
         </div>
     );
 };

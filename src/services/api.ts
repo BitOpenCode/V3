@@ -1,21 +1,17 @@
 import axios from 'axios';
 import { Ticker, NewsItem, OrderBook, OrderBookEntry, TonTransaction } from '../types';
 
-// API endpoints
 const BINANCE_API = 'https://api.binance.com/api/v3';
 const BINANCE_WS = 'wss://stream.binance.com:9443/ws';
 const TONAPI_BASE_URL = 'https://tonapi.io/v2';
 const CRYPTOCOMPARE_API = 'https://min-api.cryptocompare.com/data/v2';
 const CRYPTOCOMPARE_NEWS_API = 'https://min-api.cryptocompare.com/data';
 
-// Symbols to exclude from all ticker lists
 const EXCLUDED_SYMBOLS = ['TONUSDT'];
 
-// Special tokens for price formatting
 const SPECIAL_PRICE_TOKENS = ['PEPE', 'BONK', 'SHIB', '1000SATS', 'BTTC'];
 const TWO_DECIMAL_TOKENS = ['BTC', 'ETH', 'ORDI', 'SOL', 'TRUMP', 'AVAX', 'PAXG', 'BCH', 'WBTC', 'ETC', 'ENS', 'INJ', 'MKR', 'LINK', 'COMP', 'QNT', 'BNB', 'YFI', 'KSM', 'TAO', 'WBETH', 'DASH', 'GMX', 'GNO', 'BIFI', 'EGLD', 'TRB', 'METIS', 'AUCTION', 'BANANA', 'ZEC', 'DEXE', 'ILV', 'BNSOL', 'ALCX', 'DCR', 'FARM', 'AAVE', 'LTC'];
 
-// Format ticker price
 export const formatTickerPrice = (ticker: Ticker): string => {
   const token = ticker.symbol.replace('USDT', '').replace('BTC', '');
   
@@ -32,12 +28,10 @@ export const formatTickerPrice = (ticker: Ticker): string => {
   }
 };
 
-// Fetch tickers from Binance
 export const fetchTickers = async (): Promise<Ticker[]> => {
   const binanceResp = await axios.get(`${BINANCE_API}/ticker/24hr`);
   const binanceData = binanceResp.data;
   
-  // Filter USDT and BTC pairs, exclude TON
   const spotTickers: Ticker[] = binanceData
     .filter((t: { symbol: string; lastPrice: string }) => {
       const isUSDT = t.symbol.endsWith('USDT');
@@ -69,7 +63,7 @@ export const fetchTickers = async (): Promise<Ticker[]> => {
   return spotTickers;
 };
 
-// Fetch news from NewsData.io
+// Legacy fetchNews – uses NewsData.io
 export const fetchNews = async (categories?: string): Promise<NewsItem[]> => {
   const apiKey = 'pub_9fa0610a6ae5436086a15d68a372af7e';
   const coin = categories ? `&coin=${categories}` : '';
@@ -89,7 +83,52 @@ export const fetchNews = async (categories?: string): Promise<NewsItem[]> => {
   }));
 };
 
-// Fetch order book from Binance
+// NewsAPI.org fetcher – always returns All news
+export const fetchNewsFromNewsAPI = async (): Promise<NewsItem[]> => {
+  const API_KEY = '5997a32f77814b108dc8c615a772333e';
+  const query = 'cryptocurrency OR crypto OR blockchain';
+
+  try {
+    const response = await axios.get(
+      `https://newsapi.org/v2/everything?q=${encodeURIComponent(query)}&sortBy=publishedAt&language=en&pageSize=100&apiKey=${API_KEY}`
+    );
+    const articles = response.data.articles || [];
+    return articles.map((article: any, index: number) => ({
+      id: article.url || `article-${index}`,
+      title: article.title || '',
+      body: article.description || article.content || '',
+      url: article.url || '',
+      imageurl: article.urlToImage || '',
+      source: article.source?.name || 'Unknown',
+      published_on: article.publishedAt ? Math.floor(new Date(article.publishedAt).getTime() / 1000) : Date.now() / 1000,
+      categories: '',
+    }));
+  } catch (error) {
+    console.error('NewsAPI fetch error:', error);
+    return [];
+  }
+};
+
+// Combined news – always loads All news from both sources
+export const fetchCombinedNews = async (): Promise<NewsItem[]> => {
+  const [newsDataItems, newsApiItems] = await Promise.all([
+    fetchNews(''),      // All from NewsData.io
+    fetchNewsFromNewsAPI() // All from NewsAPI.org
+  ]);
+
+  const combined = [...newsDataItems, ...newsApiItems];
+  const seen = new Set<string>();
+  const unique = combined.filter(item => {
+    const key = item.url;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+
+  unique.sort((a, b) => b.published_on - a.published_on);
+  return unique;
+};
+
 export const fetchOrderBook = async (symbol: string, limit: number = 20): Promise<OrderBook> => {
   const response = await axios.get(`${BINANCE_API}/depth?symbol=${symbol}&limit=${limit}`);
   
@@ -108,7 +147,6 @@ export const fetchOrderBook = async (symbol: string, limit: number = 20): Promis
   return { asks, bids };
 };
 
-// Create WebSocket connection for real-time tickers
 export const createTickerWebSocket = (onMessage: (data: Ticker[]) => void): WebSocket => {
   const ws = new WebSocket(`${BINANCE_WS}/!ticker@arr`);
   
@@ -150,7 +188,6 @@ export const createTickerWebSocket = (onMessage: (data: Ticker[]) => void): WebS
   return ws;
 };
 
-// Fetch TON wallet balance
 export const fetchTonBalance = async (address: string): Promise<string> => {
   try {
     const response = await axios.get(`${TONAPI_BASE_URL}/accounts/${address}`);
@@ -161,7 +198,6 @@ export const fetchTonBalance = async (address: string): Promise<string> => {
   }
 };
 
-// Fetch TON price
 export const fetchTonPrice = async (): Promise<{ price: number; change24h: number }> => {
   try {
     const response = await axios.get(`${TONAPI_BASE_URL}/rates?tokens=ton&currencies=usd`);
@@ -189,7 +225,6 @@ interface RawTonTransaction {
   out_msgs?: RawTonMessage[];
 }
 
-// Fetch TON wallet transaction history (most recent first)
 export const fetchTonTransactions = async (address: string, limit = 20): Promise<TonTransaction[]> => {
   try {
     const response = await axios.get(`${TONAPI_BASE_URL}/blockchain/accounts/${address}/transactions`, {

@@ -2209,7 +2209,7 @@ function Scene({ currentRoom, isDark, entranceOnly, isZoomedToDesk, isZoomedToIs
   
   // Позиция камеры для zoom к столу
   const deskCameraPosition: [number, number, number] = [0, 0.3, 0.5]
-  const deskCameraTarget: [number, number, number] = [0, -0.3, -3.8]
+  const deskCameraTarget: [number, number, number] = [0, -0.1, -1.8]
 
   // Позиция камеры для zoom к острову — подлетаем близко к маленькому острову
   const islandCameraPosition: [number, number, number] = [-4.5, 3.2, -3.2]
