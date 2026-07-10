@@ -15,7 +15,6 @@ const OrderBook: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  // Update symbol when URL changes
   useEffect(() => {
     const symbol = searchParams.get('symbol');
     if (symbol) {
@@ -23,45 +22,38 @@ const OrderBook: React.FC = () => {
     }
   }, [searchParams]);
 
-  // Fetch tickers for symbol list
   const { data: tickers } = useQuery({
     queryKey: ['tickers'],
     queryFn: fetchTickers,
     staleTime: 30000,
   });
 
-  // Fetch order book - update every 500ms for real-time feel
   const { data: orderBook, isLoading } = useQuery({
     queryKey: ['orderbook', selectedSymbol],
     queryFn: () => fetchOrderBook(selectedSymbol, 15),
     refetchInterval: 500,
   });
 
-  // Filter symbols - show top 20 by volume, or search results
   const filteredSymbols = tickers
     ?.filter((t: Ticker) => t.symbol.endsWith('USDT'))
     .filter((t: Ticker) => {
       if (!searchQuery) return true;
       return t.symbol.toLowerCase().includes(searchQuery.toLowerCase());
     })
-    .sort((a: Ticker, b: Ticker) => b.quoteVolume - a.quoteVolume)
-    .slice(0, 20) || [];
+    .sort((a: Ticker, b: Ticker) => b.quoteVolume - a.quoteVolume) || [];
 
-  // Format price
   const formatPrice = (price: number): string => {
     if (price >= 1000) return price.toFixed(2);
     if (price >= 1) return price.toFixed(4);
     return price.toFixed(6);
   };
 
-  // Format total
   const formatTotal = (total: number): string => {
     if (total >= 1e6) return `${(total / 1e6).toFixed(2)}M`;
     if (total >= 1e3) return `${(total / 1e3).toFixed(2)}K`;
     return total.toFixed(2);
   };
 
-  // Calculate max total for gradient width
   const maxTotal = orderBook 
     ? Math.max(
         ...orderBook.asks.map(a => a.total),
@@ -78,7 +70,6 @@ const OrderBook: React.FC = () => {
         </button>
       </div>
 
-      {/* Symbol search */}
       <div className="orderbook-search-container">
         <input
           type="text"
@@ -95,7 +86,6 @@ const OrderBook: React.FC = () => {
           className="orderbook-search"
         />
         
-        {/* Symbol dropdown */}
         {isDropdownOpen && filteredSymbols.length > 0 && (
           <div className="orderbook-dropdown">
             {filteredSymbols.map((t: Ticker) => (
@@ -115,7 +105,6 @@ const OrderBook: React.FC = () => {
         )}
       </div>
 
-      {/* Selected symbol */}
       <div className="orderbook-symbol">
         <span className="symbol-name">{selectedSymbol.replace('USDT', '/USDT')}</span>
       </div>
@@ -126,24 +115,27 @@ const OrderBook: React.FC = () => {
         <div className="orderbook-container">
           {/* Asks (sells) */}
           <div className="orderbook-section asks">
+            <div className="section-title">Sell Orders</div>
             <div className="section-header">
-              <span>{t('total')}</span>
-              <span>{t('size')}</span>
-              <span>{t('price')}</span>
+              <span>Total</span>
+              <span>Size</span>
+              <span>Price</span>
             </div>
-            {[...orderBook.asks].reverse().map((ask, i) => (
-              <div 
-                key={i} 
-                className="orderbook-row ask"
-                style={{ 
-                  '--gradient-width': `${(ask.total / maxTotal) * 100}%` 
-                } as React.CSSProperties}
-              >
-                <span className="total">{formatTotal(ask.total)}</span>
-                <span className="amount">{ask.size.toFixed(4)}</span>
-                <span className="price">{formatPrice(ask.price)}</span>
-              </div>
-            ))}
+            <div className="orderbook-rows">
+              {[...orderBook.asks].reverse().map((ask, i) => (
+                <div 
+                  key={i} 
+                  className="orderbook-row ask"
+                  style={{ 
+                    '--gradient-width': `${(ask.total / maxTotal) * 100}%` 
+                  } as React.CSSProperties}
+                >
+                  <span className="total">{formatTotal(ask.total)}</span>
+                  <span className="amount">{ask.size.toFixed(4)}</span>
+                  <span className="price">{formatPrice(ask.price)}</span>
+                </div>
+              ))}
+            </div>
           </div>
 
           {/* Spread */}
@@ -155,24 +147,27 @@ const OrderBook: React.FC = () => {
 
           {/* Bids (buys) */}
           <div className="orderbook-section bids">
+            <div className="section-title">Buy Orders</div>
             <div className="section-header">
-              <span>{t('total')}</span>
-              <span>{t('size')}</span>
-              <span>{t('price')}</span>
+              <span>Total</span>
+              <span>Size</span>
+              <span>Price</span>
             </div>
-            {orderBook.bids.map((bid, i) => (
-              <div 
-                key={i} 
-                className="orderbook-row bid"
-                style={{ 
-                  '--gradient-width': `${(bid.total / maxTotal) * 100}%` 
-                } as React.CSSProperties}
-              >
-                <span className="total">{formatTotal(bid.total)}</span>
-                <span className="amount">{bid.size.toFixed(4)}</span>
-                <span className="price">{formatPrice(bid.price)}</span>
-              </div>
-            ))}
+            <div className="orderbook-rows">
+              {orderBook.bids.map((bid, i) => (
+                <div 
+                  key={i} 
+                  className="orderbook-row bid"
+                  style={{ 
+                    '--gradient-width': `${(bid.total / maxTotal) * 100}%` 
+                  } as React.CSSProperties}
+                >
+                  <span className="total">{formatTotal(bid.total)}</span>
+                  <span className="amount">{bid.size.toFixed(4)}</span>
+                  <span className="price">{formatPrice(bid.price)}</span>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       ) : null}
