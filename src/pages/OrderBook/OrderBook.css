@@ -177,7 +177,7 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 12px;
   overflow: hidden;
-  max-height: 220px;
+  max-height: 320px;
 }
 
 .section-title {
@@ -409,7 +409,7 @@ body.theme-light .page-title {
   }
   
   .orderbook-section {
-    max-height: 150px;
+    max-height: 260px;
   }
   
   .symbol-name {
