@@ -8,15 +8,15 @@ const Profile: React.FC = () => {
   const { t } = useTranslation();
 
   const user = {
-    name: 'LilBitcoinVert',
-    username: '@LilBitcoinVert',
-    level: 42,
+    tgUsername: 'tg_Username',
+    nickname: 'nickname',
+    level: 6,
     xp: 8420,
     xpMax: 10000,
     stats: {
-      missions: 248,
-      distance: '12.4M km',
-      bosses: 37,
+      trades: 66,
+      volume: '$1.4M',
+      profit: 33,
       topPercent: 5,
     },
     reputation: 4.8,
@@ -28,7 +28,7 @@ const Profile: React.FC = () => {
       { name: 'Diamond', icon: '💎', unlocked: false },
       { name: 'Flame', icon: '🔥', unlocked: false },
     ],
-    fleetShips: [
+    games: [
       { name: 'Nova Fighter', icon: '🚀', unlocked: true },
       { name: 'Eclipse Cruiser', icon: '🛸', unlocked: true },
       { name: 'Legendary Ship', icon: '⭐', unlocked: false },
@@ -39,9 +39,12 @@ const Profile: React.FC = () => {
     <div className="profile-page">
       <div className="page-header">
         <h1 className="page-title">Profile</h1>
-        <button onClick={() => navigate('/menu')} className="close-button">
-          {t('close')}
-        </button>
+        <div className="header-right">
+          <span className="soon-badge">soon</span>
+          <button onClick={() => navigate('/menu')} className="close-button">
+            {t('close')}
+          </button>
+        </div>
       </div>
 
       <div className="menu-content">
@@ -60,8 +63,8 @@ const Profile: React.FC = () => {
               </div>
             </div>
             <div className="avatar-info">
-              <h2 className="profile-name">{user.name}</h2>
-              <span className="profile-username">{user.username}</span>
+              <h2 className="profile-name">{user.tgUsername}</h2>
+              <div className="profile-username">{user.nickname}</div>
               <div className="profile-rank">✦ Rank {user.level}</div>
             </div>
           </div>
@@ -78,27 +81,27 @@ const Profile: React.FC = () => {
           </div>
         </div>
 
-        {/* Stats Grid - 4 columns */}
+        {/* Stats Grid - 4 columns (Trading stats) */}
         <div className="stats-grid-holo">
           <div className="profile-card-glass stat-card-holo">
             <div className="stat-holo">
-              <span className="stat-holo-icon">🚀</span>
-              <span className="stat-holo-value">{user.stats.missions}</span>
-              <span className="stat-holo-label">Missions</span>
+              <span className="stat-holo-icon">📊</span>
+              <span className="stat-holo-value">{user.stats.trades}</span>
+              <span className="stat-holo-label">Trades</span>
             </div>
           </div>
           <div className="profile-card-glass stat-card-holo">
             <div className="stat-holo">
-              <span className="stat-holo-icon">🌌</span>
-              <span className="stat-holo-value">{user.stats.distance}</span>
-              <span className="stat-holo-label">Distance</span>
+              <span className="stat-holo-icon">💰</span>
+              <span className="stat-holo-value">{user.stats.volume}</span>
+              <span className="stat-holo-label">Volume</span>
             </div>
           </div>
           <div className="profile-card-glass stat-card-holo">
             <div className="stat-holo">
-              <span className="stat-holo-icon">👾</span>
-              <span className="stat-holo-value">{user.stats.bosses}</span>
-              <span className="stat-holo-label">Bosses</span>
+              <span className="stat-holo-icon">📈</span>
+              <span className="stat-holo-value">{user.stats.profit}%</span>
+              <span className="stat-holo-label">Profit</span>
             </div>
           </div>
           <div className="profile-card-glass stat-card-holo">
@@ -128,9 +131,12 @@ const Profile: React.FC = () => {
           </div>
         </div>
 
-        {/* Achievements Card */}
+        {/* Achievements Card with Open */}
         <div className="profile-card-glass achievements-card">
-          <div className="profile-card-title">Achievements</div>
+          <div className="profile-card-header">
+            <div className="profile-card-title">Achievements</div>
+            <span className="profile-card-open">Open</span>
+          </div>
           <div className="achievements-grid">
             {user.achievements.map((ach, index) => (
               <div key={index} className={`achievement-badge ${ach.unlocked ? 'unlocked' : 'locked'}`}>
@@ -141,14 +147,17 @@ const Profile: React.FC = () => {
           </div>
         </div>
 
-        {/* Fleet Ships Card */}
+        {/* Games Card with Open */}
         <div className="profile-card-glass fleet-card">
-          <div className="profile-card-title">Fleet</div>
+          <div className="profile-card-header">
+            <div className="profile-card-title">Games</div>
+            <span className="profile-card-open">Open</span>
+          </div>
           <div className="fleet-grid">
-            {user.fleetShips.map((ship, index) => (
-              <div key={index} className={`fleet-ship ${ship.unlocked ? '' : 'locked'}`}>
-                <span className="ship-icon">{ship.icon}</span>
-                <span className="ship-name">{ship.name}</span>
+            {user.games.map((game, index) => (
+              <div key={index} className={`fleet-ship ${game.unlocked ? '' : 'locked'}`}>
+                <span className="ship-icon">{game.icon}</span>
+                <span className="ship-name">{game.name}</span>
               </div>
             ))}
           </div>

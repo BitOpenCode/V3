@@ -64,7 +64,6 @@ const OrderBook: React.FC = () => {
   const [groupStep, setGroupStep] = useState(0);
   const [isStepMenuOpen, setIsStepMenuOpen] = useState(false);
 
-  // Update symbol when URL changes
   useEffect(() => {
     const symbol = searchParams.get('symbol');
     if (symbol) {
@@ -127,14 +126,12 @@ const OrderBook: React.FC = () => {
     })
     .sort((a: Ticker, b: Ticker) => b.quoteVolume - a.quoteVolume) || [];
 
-  // Format price
   const formatPrice = (price: number): string => {
     if (price >= 1000) return price.toFixed(2);
     if (price >= 1) return price.toFixed(4);
     return price.toFixed(6);
   };
 
-  // Format total
   const formatTotal = (total: number): string => {
     if (total >= 1e6) return `${(total / 1e6).toFixed(2)}M`;
     if (total >= 1e3) return `${(total / 1e3).toFixed(2)}K`;
@@ -157,7 +154,6 @@ const OrderBook: React.FC = () => {
         </button>
       </div>
 
-      {/* Symbol search */}
       <div className="orderbook-search-container">
         <input
           type="text"
@@ -240,9 +236,9 @@ const OrderBook: React.FC = () => {
           <div className="orderbook-section asks">
             <div className="section-title">{t('sell_orders')}</div>
             <div className="section-header">
-              <span>{t('total')}</span>
-              <span>{t('size')}</span>
-              <span>{t('price')}</span>
+              <span>Total</span>
+              <span>Size</span>
+              <span>Price</span>
             </div>
             <div className="orderbook-rows">
               {[...groupedAsks].reverse().map((ask, i) => (
@@ -272,9 +268,9 @@ const OrderBook: React.FC = () => {
           <div className="orderbook-section bids">
             <div className="section-title">{t('buy_orders')}</div>
             <div className="section-header">
-              <span>{t('total')}</span>
-              <span>{t('size')}</span>
-              <span>{t('price')}</span>
+              <span>Total</span>
+              <span>Size</span>
+              <span>Price</span>
             </div>
             <div className="orderbook-rows">
               {groupedBids.map((bid, i) => (

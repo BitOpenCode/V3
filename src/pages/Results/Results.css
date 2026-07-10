@@ -15,6 +15,7 @@
   width: 100%;
   max-width: 600px;
   padding: 16px 0;
+  position: relative;
 }
 
 .page-title {
@@ -43,15 +44,111 @@
   max-width: 600px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
   padding-bottom: 20px;
 }
 
-.menu-card {
-  width: 100% !important;
+/* Results Cards - используют те же стили что и Profile */
+.results-card {
+  padding: 20px;
 }
 
-.results-details {
-  padding: 8px 0;
-  color: #c0c0c0;
+.results-card-title {
+  color: #ffffff;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 16px;
 }
+
+.results-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.results-row {
+  display: flex;
+  gap: 16px;
+}
+
+.results-row .results-item {
+  flex: 1;
+}
+
+.results-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 8px 0;
+}
+
+.results-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.results-value.positive {
+  color: #22c55e;
+}
+
+.results-value.negative {
+  color: #ef4444;
+}
+
+.results-label {
+  font-size: 0.75rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: 4px;
+}
+
+.results-chart-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 120px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 8px;
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+/* ========================================== */
+/* LIGHT THEME */
+/* ========================================== */
+body.theme-light .results-card-title,
+body.theme-light .results-value,
+body.theme-light .page-title {
+  color: #0f172a !important;
+}
+
+body.theme-light .results-label {
+  color: #475569 !important;
+}
+
+body.theme-light .results-chart-placeholder {
+  background: rgba(0, 0, 0, 0.03) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  color: #475569 !important;
+}
+
+body.theme-light .close-button {
+  color: #0f172a !important;
+}
+
+body.theme-light .close-button:hover {
+  background: rgba(124, 58, 237, 0.1) !important;
+}
+
+/* ========================================== */
+/* SPACE THEME - уже есть в Profile.css */
+/* ========================================== */
+
+/* ========================================== */
+/* BUBBLES THEME - уже есть в Profile.css */
+/* ========================================== */

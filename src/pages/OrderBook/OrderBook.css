@@ -47,8 +47,9 @@
   border-radius: 10px;
   max-height: 200px;
   overflow-y: auto;
-  z-index: 10;
+  z-index: 1000;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  pointer-events: auto;
 }
 
 .dropdown-item {
@@ -62,6 +63,7 @@
   cursor: pointer;
   font-size: 0.85rem;
   transition: all 0.2s ease;
+  pointer-events: auto;
 }
 
 .dropdown-item:hover {
@@ -171,7 +173,7 @@
   flex-shrink: 0;
   padding: 8px 12px 5px;
   font-weight: bold;
-  font-size: 1rem;
+  font-size: 0.85rem;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
@@ -183,20 +185,13 @@
   color: #22c55e;
 }
 
-.orderbook-rows {
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-}
-
 /* Header - CSS Grid for perfect alignment */
 .section-header {
   flex-shrink: 0;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  padding: 6px 12px;
-  font-size: 0.7rem;
-  color: #22c55e;
+  padding: 2px 12px 4px;
+  font-size: 0.6rem;
   font-weight: 600;
   text-transform: uppercase;
 }
@@ -213,11 +208,25 @@
   text-align: right;
 }
 
+.orderbook-section.asks .section-header {
+  color: #ef4444;
+}
+
+.orderbook-section.bids .section-header {
+  color: #22c55e;
+}
+
+.orderbook-rows {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+}
+
 /* Order row - CSS Grid for perfect alignment */
 .orderbook-row {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  padding: 8px 12px;
+  padding: 4px 12px;
   font-size: 0.8rem;
   font-family: 'Roboto Mono', monospace;
   position: relative;
@@ -291,15 +300,101 @@
   font-size: 1rem;
 }
 
+/* ========================================== */
+/* LIGHT THEME OVERRIDES */
+/* ========================================== */
+body.theme-light .orderbook-search {
+  background: rgba(255, 255, 255, 0.8) !important;
+  border: 1px solid rgba(168, 85, 247, 0.2) !important;
+  color: #0f172a !important;
+}
+
+body.theme-light .orderbook-search:focus {
+  border-color: rgba(168, 85, 247, 0.5) !important;
+  box-shadow: 0 0 16px rgba(168, 85, 247, 0.15) !important;
+  background: rgba(255, 255, 255, 0.95) !important;
+}
+
+body.theme-light .orderbook-search::placeholder {
+  color: rgba(15, 23, 42, 0.4) !important;
+}
+
+body.theme-light .orderbook-dropdown {
+  background: #ffffff !important;
+  border: 1px solid rgba(168, 85, 247, 0.3) !important;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15) !important;
+  pointer-events: auto !important;
+  opacity: 1 !important;
+}
+
+body.theme-light .dropdown-item {
+  color: #0f172a !important;
+  pointer-events: auto !important;
+}
+
+body.theme-light .dropdown-item:hover {
+  background: rgba(168, 85, 247, 0.15) !important;
+  color: #7c3aed !important;
+}
+
+body.theme-light .symbol-name {
+  color: #0f172a !important;
+  text-shadow: none !important;
+}
+
+body.theme-light .orderbook-section {
+  background: rgba(255, 255, 255, 0.6) !important;
+  border: 1px solid rgba(168, 85, 247, 0.15) !important;
+}
+
+body.theme-light .orderbook-section.asks .section-title,
+body.theme-light .orderbook-section.asks .section-header {
+  color: #ef4444 !important;
+}
+
+body.theme-light .orderbook-section.bids .section-title,
+body.theme-light .orderbook-section.bids .section-header {
+  color: #22c55e !important;
+}
+
+body.theme-light .orderbook-row .total,
+body.theme-light .orderbook-row .amount {
+  color: #475569 !important;
+}
+
+body.theme-light .orderbook-spread {
+  background: rgba(255, 255, 255, 0.6) !important;
+  border: 1px solid rgba(234, 179, 8, 0.3) !important;
+  color: #eab308 !important;
+  text-shadow: none !important;
+  box-shadow: 0 0 16px rgba(234, 179, 8, 0.1) !important;
+}
+
+body.theme-light .orderbook-loading {
+  color: #475569 !important;
+}
+
+body.theme-light .close-button {
+  color: #0f172a !important;
+}
+
+body.theme-light .close-button:hover {
+  background: rgba(124, 58, 237, 0.1) !important;
+}
+
+body.theme-light .page-title {
+  color: #0f172a !important;
+}
+
 @media (max-width: 480px) {
   .orderbook-row {
     font-size: 0.7rem;
-    padding: 3px 8px;
+    padding: 2px 8px;
   }
 
   .section-header {
-    font-size: 0.6rem;
-    padding: 5px 8px;
+    font-size: 0.5rem;
+    padding: 2px 8px 2px;
   }
   
   .orderbook-section {
@@ -308,5 +403,10 @@
   
   .symbol-name {
     font-size: 1rem;
+  }
+
+  .section-title {
+    font-size: 0.75rem;
+    padding: 3px 8px 1px;
   }
 }

@@ -235,29 +235,13 @@ const Home: React.FC = () => {
                 </BubbleButton>
             </div>
 
-            {/* Trade Room Card - ТЕПЕРЬ БЕЗ BubbleCard */}
+            {/* Trade Room Card - УБРАЛИ ИНЛАЙН-СТИЛИ У ТЕКСТА */}
             <div 
                 className="trade-room-card"
                 onClick={() => navigate('/trade-room')}
             >
-                <div
-                    style={{
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        padding: '12px 0'
-                    }}
-                >
-                    <span
-                        style={{
-                            fontSize: '1.5rem',
-                            fontWeight: 'bold',
-                            background: 'linear-gradient(135deg, #a855f7, #06b6d4)',
-                            WebkitBackgroundClip: 'text',
-                            WebkitTextFillColor: 'transparent',
-                            letterSpacing: '0.5px'
-                        }}
-                    >
+                <div className="trade-room-title-wrapper">
+                    <span className="trade-room-title">
                         {t('Trade Room') || 'Trade Room'}
                     </span>
                 </div>

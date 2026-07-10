@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 import { fetchTickers } from '../../services/api';
@@ -14,6 +14,9 @@ const Portfolio: React.FC = () => {
   const { t } = useTranslation();
   const [showAddForm, setShowAddForm] = useState(false);
   const [newPosition, setNewPosition] = useState({ symbol: 'BTC', amount: '', buyPrice: '' });
+  const [searchQuery, setSearchQuery] = useState('');
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   // Zustand store
   const { positions, addPosition, removePosition } = usePortfolioStore();
@@ -32,6 +35,22 @@ const Portfolio: React.FC = () => {
     .map((t: Ticker) => t.symbol.replace('USDT', ''))
     .filter((v: string, i: number, a: string[]) => a.indexOf(v) === i)
     .sort() || [];
+
+  // Filter symbols based on search
+  const filteredSymbols = cryptoList.filter((symbol: string) =>
+    symbol.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  // Close dropdown on click outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   // Calculate portfolio with live prices using BigNumber for precision
   const portfolioWithPrices = useMemo(() => {
@@ -89,6 +108,7 @@ const Portfolio: React.FC = () => {
     
     setNewPosition({ symbol: 'BTC', amount: '', buyPrice: '' });
     setShowAddForm(false);
+    setSearchQuery('');
   };
 
   // Format currency
@@ -129,9 +149,9 @@ const Portfolio: React.FC = () => {
         </div>
       </BubbleCard>
 
-      {/* Add button */}
+      {/* Add button – теперь с динамическим классом active */}
       <button 
-        className="add-position-btn"
+        className={`add-position-btn ${showAddForm ? 'active' : ''}`}
         onClick={() => setShowAddForm(!showAddForm)}
       >
         {showAddForm ? `✕ ${t('cancel')}` : `+ ${t('add_position')}`}
@@ -140,15 +160,36 @@ const Portfolio: React.FC = () => {
       {/* Add form */}
       {showAddForm && (
         <div className="add-form">
-          <select
-            value={newPosition.symbol}
-            onChange={(e) => setNewPosition({...newPosition, symbol: e.target.value})}
-            className="form-select"
-          >
-            {cryptoList.map((crypto: string) => (
-              <option key={crypto} value={crypto}>{crypto}</option>
-            ))}
-          </select>
+          <div className="form-symbol-container" ref={dropdownRef}>
+            <input
+              type="text"
+              placeholder={t('search_symbol')}
+              value={searchQuery || newPosition.symbol}
+              onChange={(e) => {
+                setSearchQuery(e.target.value);
+                setIsDropdownOpen(true);
+              }}
+              onFocus={() => setIsDropdownOpen(true)}
+              className="form-symbol-input"
+            />
+            {isDropdownOpen && filteredSymbols.length > 0 && (
+              <div className="form-dropdown">
+                {filteredSymbols.map((symbol: string) => (
+                  <button
+                    key={symbol}
+                    onClick={() => {
+                      setNewPosition({...newPosition, symbol});
+                      setSearchQuery('');
+                      setIsDropdownOpen(false);
+                    }}
+                    className="dropdown-item"
+                  >
+                    {symbol}
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
           <input
             type="number"
             placeholder={t('amount')}
