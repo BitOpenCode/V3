@@ -39,12 +39,12 @@ const groupEntries = (entries: OrderBookEntry[], step: number, side: 'ask' | 'bi
 
 // Price-step options scale with the asset's own price so they stay
 // sensible for both a $63,000 BTC book and a $0.03 altcoin book, while
-// still landing on the same "100 / 1,000 / 10,000"-style round numbers
-// the grouping is meant to show for a higher-priced pair.
+// still landing on round numbers for a higher-priced pair. Capped at two
+// steps -- coarser buckets collapse the book into too few rows to be useful.
 const getStepOptions = (referencePrice: number): number[] => {
   if (!referencePrice || referencePrice <= 0) return [];
   const magnitude = Math.pow(10, Math.floor(Math.log10(referencePrice)));
-  return [magnitude / 100, magnitude / 10, magnitude, magnitude * 10];
+  return [magnitude / 100, magnitude / 10];
 };
 
 const formatStepLabel = (step: number): string => {
