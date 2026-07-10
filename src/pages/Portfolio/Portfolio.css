@@ -49,19 +49,27 @@
   margin-left: 4px;
 }
 
+/* Кнопка Add Position - используем такой же градиент как у активных фильтров в Share */
 .add-position-btn {
   padding: 12px;
-  background: var(--color-primary-purple);
-  border: none;
-  border-radius: 8px;
-  color: white;
+  background: var(--color-accent-gradient) !important;
+  border: none !important;
+  border-radius: 8px !important;
+  color: white !important;
   font-size: 0.85rem;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 15px rgba(168, 85, 247, 0.35) !important;
 }
 
 .add-position-btn:hover {
-  background: var(--color-primary-blue);
+  filter: brightness(0.9) !important;
+  transform: scale(1.02);
+}
+
+.add-position-btn:active {
+  filter: brightness(0.8) !important;
+  transform: scale(0.98);
 }
 
 .add-form {
@@ -197,3 +205,384 @@
   }
 }
 
+/* Symbol search with dropdown */
+.form-symbol-container {
+  grid-column: span 2;
+  position: relative;
+}
+
+.form-symbol-input {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--color-bg--500);
+  border: 1px solid rgba(138, 43, 226, 0.3);
+  border-radius: 6px;
+  color: white;
+  font-size: 0.85rem;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.form-symbol-input:focus {
+  border-color: rgba(138, 43, 226, 0.6);
+  box-shadow: 0 0 16px rgba(138, 43, 226, 0.2);
+}
+
+.form-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--color-bg--300);
+  border: 1px solid rgba(138, 43, 226, 0.3);
+  border-radius: 6px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 10;
+  margin-top: 4px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.form-dropdown .dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 10px 14px;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.form-dropdown .dropdown-item:hover {
+  background: rgba(138, 43, 226, 0.3);
+  color: white;
+}
+
+.form-dropdown::-webkit-scrollbar {
+  width: 4px;
+}
+
+.form-dropdown::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 2px;
+}
+
+.form-dropdown::-webkit-scrollbar-thumb {
+  background: rgba(138, 43, 226, 0.5);
+  border-radius: 2px;
+}
+
+/* Update form grid for mobile */
+@media (max-width: 480px) {
+  .form-symbol-container {
+    grid-column: span 1;
+  }
+}/* Portfolio page styles */
+.portfolio-page {
+  display: flex;
+flex-direction: column;
+  width: 100%;
+  padding: 0 8px;
+  gap: 16px;
+}
+
+/* Перебиваем стили bubble-card для portfolio-summary */
+.portfolio-page .bubble-card.portfolio-summary {
+  background: var(--color-accent-gradient) !important;
+  border: none !important;
+  box-shadow: 0 4px 15px rgba(168, 85, 247, 0.35) !important;
+}
+
+/* Тексты внутри карточки */
+.portfolio-page .bubble-card.portfolio-summary .summary-label {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+.portfolio-page .bubble-card.portfolio-summary .summary-value {
+  color: #ffffff !important;
+}
+
+.portfolio-page .bubble-card.portfolio-summary .summary-value.positive {
+  color: #22c55e !important;
+}
+
+.portfolio-page .bubble-card.portfolio-summary .summary-value.negative {
+  color: #ef4444 !important;
+}
+
+.portfolio-page .bubble-card.portfolio-summary .pnl-percent {
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.summary-item {
+  text-align: center;
+}
+
+.summary-label {
+  display: block;
+  font-size: 0.7rem;
+  color: rgba(192, 192, 192, 0.7);
+  margin-bottom: 4px;
+  text-transform: uppercase;
+}
+
+.summary-value {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: white;
+}
+
+.summary-value.positive {
+  color: #22c55e;
+}
+
+.summary-value.negative {
+  color: #ef4444;
+}
+
+.pnl-percent {
+  font-size: 0.8rem;
+  opacity: 0.8;
+  margin-left: 4px;
+}
+
+.add-position-btn {
+  padding: 12px;
+  background: var(--color-accent-gradient);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 15px rgba(168, 85, 247, 0.35);
+}
+
+.add-position-btn:hover {
+  filter: brightness(0.9);
+  transform: scale(1.02);
+}
+
+.add-position-btn:active {
+  filter: brightness(0.8);
+  transform: scale(0.98);
+}
+
+.add-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  padding: 16px;
+  background: var(--color-bg--300);
+  border-radius: 12px;
+}
+
+.form-select,
+.form-input {
+  padding: 10px 12px;
+  background: var(--color-bg--500);
+  border: 1px solid rgba(138, 43, 226, 0.3);
+  border-radius: 6px;
+  color: white;
+  font-size: 0.85rem;
+  outline: none;
+}
+
+.form-select {
+  grid-column: span 2;
+}
+
+.form-submit {
+  grid-column: span 2;
+  padding: 10px;
+  background: #22c55e;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.positions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.position-card {
+  background: var(--color-bg--300);
+  border-radius: 12px;
+  padding: 14px;
+  border: 1px solid rgba(138, 43, 226, 0.2);
+}
+
+.position-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.position-symbol {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: white;
+}
+
+.position-remove {
+  background: rgba(239, 68, 68, 0.2);
+  border: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  color: #ef4444;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.position-details {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.detail-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--color-primary-silver);
+}
+
+.detail-row .value {
+  color: white;
+  font-weight: 600;
+}
+
+.detail-row .positive {
+  color: #22c55e;
+}
+
+.detail-row .negative {
+  color: #ef4444;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--color-primary-silver);
+}
+
+.empty-hint {
+  font-size: 0.8rem;
+  opacity: 0.6;
+  margin-top: 8px;
+}
+
+@media (max-width: 480px) {
+  .summary-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .summary-value {
+    font-size: 1rem;
+  }
+
+  .add-form {
+    grid-template-columns: 1fr;
+  }
+
+  .form-select {
+    grid-column: span 1;
+  }
+
+  .form-submit {
+    grid-column: span 1;
+  }
+}
+
+/* Symbol search with dropdown */
+.form-symbol-container {
+  grid-column: span 2;
+  position: relative;
+}
+
+.form-symbol-input {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--color-bg--500);
+  border: 1px solid rgba(138, 43, 226, 0.3);
+  border-radius: 6px;
+  color: white;
+  font-size: 0.85rem;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.form-symbol-input:focus {
+  border-color: rgba(138, 43, 226, 0.6);
+  box-shadow: 0 0 16px rgba(138, 43, 226, 0.2);
+}
+
+.form-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: var(--color-bg--300);
+  border: 1px solid rgba(138, 43, 226, 0.3);
+  border-radius: 6px;
+  max-height: 200px;
+  overflow-y: auto;
+  z-index: 10;
+  margin-top: 4px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+
+.form-dropdown .dropdown-item {
+  display: block;
+  width: 100%;
+  padding: 10px 14px;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.8);
+  text-align: left;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.form-dropdown .dropdown-item:hover {
+  background: rgba(138, 43, 226, 0.3);
+  color: white;
+}
+
+.form-dropdown::-webkit-scrollbar {
+  width: 4px;
+}
+
+.form-dropdown::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 2px;
+}
+
+.form-dropdown::-webkit-scrollbar-thumb {
+  background: rgba(138, 43, 226, 0.5);
+  border-radius: 2px;
+}
+
+/* Update form grid for mobile */
+@media (max-width: 480px) {
+  .form-symbol-container {
+    grid-column: span 1;
+  }
+}

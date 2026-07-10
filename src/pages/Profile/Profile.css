@@ -13,6 +13,7 @@
   width: 100%;
   max-width: 600px;
   padding: 16px 0;
+  position: relative;
 }
 
 .page-title {
@@ -103,6 +104,28 @@
 
 .avatar-info {
   flex: 1;
+}
+
+/* Добавить после .avatar-info */
+.profile-details {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+/* Изменить .profile-username */
+.profile-username {
+  font-size: 0.9rem;
+  color: #94a3b8;
+}
+
+/* Изменить .profile-rank */
+.profile-rank {
+  font-size: 0.85rem;
+  color: #fbbf24;
+  letter-spacing: 1px;
+  margin-top: 0; /* убрать margin-top */
 }
 
 .profile-name {
@@ -556,4 +579,54 @@ body.theme-light .level-badge {
   50% { background-position: 100% 100%; }
   75% { background-position: 0% 100%; }
   100% { background-position: 0% 0%; }
+}
+
+/* Profile card header with Open */
+.profile-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.profile-card-open {
+  color: #94a3b8;
+  font-size: 0.85rem;
+  font-weight: 300;
+  opacity: 0.7;
+}
+
+/* Profile card title без margin-bottom, теперь он в header */
+.profile-card-title {
+  color: #ffffff;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  padding: 16px 0;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 32px; /* Увеличил отступ между soon и close */
+}
+
+.soon-badge {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #94a3b8;
+  font-size: 1.4rem;
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  opacity: 0.8;
 }

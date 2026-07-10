@@ -238,6 +238,20 @@ body.theme-space .pegtop-loader {
     box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3) !important;
 }
 
+.trade-room-title-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 0;
+}
+
+.trade-room-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    color: #ffffff;
+}
+
 /* SPACE THEME - как в Profile */
 body.theme-space .trade-room-card {
     background: 
@@ -251,6 +265,10 @@ body.theme-space .trade-room-card {
     border: 1px solid rgba(255, 255, 255, 0.15) !important;
     border-radius: 14px !important;
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
+}
+
+body.theme-space .trade-room-title {
+    color: #ffffff !important;
 }
 
 /* BUBBLES THEME - как в Profile */
@@ -268,11 +286,19 @@ body.theme-bubbles .trade-room-card {
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2) !important;
 }
 
-/* LIGHT THEME - как в Profile */
+body.theme-bubbles .trade-room-title {
+    color: #ffffff !important;
+}
+
+/* LIGHT THEME - такой же градиент как у карточек и кнопок */
 body.theme-light .trade-room-card {
-    background: rgba(255, 255, 255, 0.7) !important;
-    border: 1px solid rgba(0, 0, 0, 0.08) !important;
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06) !important;
+    background: var(--color-accent-gradient) !important;
+    border: none !important;
+    box-shadow: 0 4px 15px rgba(168, 85, 247, 0.35) !important;
+}
+
+body.theme-light .trade-room-title {
+    color: #ffffff !important;
 }
 
 /* Lava Lamp Animation */
