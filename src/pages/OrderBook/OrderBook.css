@@ -354,8 +354,11 @@ body.theme-light .symbol-name {
 }
 
 body.theme-light .orderbook-section {
-  background: rgba(255, 255, 255, 0.6) !important;
-  border: 1px solid rgba(168, 85, 247, 0.15) !important;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.75), rgba(255, 255, 255, 0.75)) padding-box,
+    var(--color-accent-gradient) border-box !important;
+  border: 1.5px solid transparent !important;
+  box-shadow: 0 4px 20px rgba(168, 85, 247, 0.12) !important;
 }
 
 body.theme-light .orderbook-section.asks .section-title,
