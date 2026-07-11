@@ -13,15 +13,14 @@ const Portfolio: React.FC = () => {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const [showAddForm, setShowAddForm] = useState(false);
-  const [newPosition, setNewPosition] = useState({ symbol: 'BTC', amount: '', buyPrice: '' });
+  const [newPosition, setNewPosition] = useState({ symbol: '', amount: '', buyPrice: '' });
   const [searchQuery, setSearchQuery] = useState('');
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
+  const amountInputRef = useRef<HTMLInputElement>(null);
 
-  // Zustand store
   const { positions, addPosition, removePosition } = usePortfolioStore();
 
-  // Fetch tickers
   const { data: tickers } = useQuery({
     queryKey: ['tickers'],
     queryFn: fetchTickers,
@@ -29,19 +28,16 @@ const Portfolio: React.FC = () => {
     refetchInterval: 10000,
   });
 
-  // Get crypto list
   const cryptoList = tickers
     ?.filter((t: Ticker) => t.symbol.endsWith('USDT'))
     .map((t: Ticker) => t.symbol.replace('USDT', ''))
     .filter((v: string, i: number, a: string[]) => a.indexOf(v) === i)
     .sort() || [];
 
-  // Filter symbols based on search
   const filteredSymbols = cryptoList.filter((symbol: string) =>
     symbol.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  // Close dropdown on click outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
@@ -52,7 +48,6 @@ const Portfolio: React.FC = () => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Calculate portfolio with live prices using BigNumber for precision
   const portfolioWithPrices = useMemo(() => {
     if (!tickers) return positions;
     
@@ -75,7 +70,6 @@ const Portfolio: React.FC = () => {
     });
   }, [positions, tickers]);
 
-  // Portfolio totals using BigNumber
   const totals = useMemo(() => {
     const totalValue = portfolioWithPrices.reduce(
       (sum, p) => plus(sum, p.value), 
@@ -96,9 +90,8 @@ const Portfolio: React.FC = () => {
     };
   }, [portfolioWithPrices]);
 
-  // Add position handler
   const handleAddPosition = () => {
-    if (!newPosition.amount || !newPosition.buyPrice) return;
+    if (!newPosition.symbol || !newPosition.amount || !newPosition.buyPrice) return;
     
     addPosition({
       symbol: newPosition.symbol,
@@ -106,12 +99,11 @@ const Portfolio: React.FC = () => {
       buyPrice: parseFloat(newPosition.buyPrice),
     });
     
-    setNewPosition({ symbol: 'BTC', amount: '', buyPrice: '' });
+    setNewPosition({ symbol: '', amount: '', buyPrice: '' });
     setShowAddForm(false);
     setSearchQuery('');
   };
 
-  // Format currency
   const formatCurrency = (value: number): string => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
@@ -130,7 +122,6 @@ const Portfolio: React.FC = () => {
         </button>
       </div>
 
-      {/* Summary */}
       <BubbleCard className="portfolio-summary">
         <div className="summary-grid">
           <div className="summary-item">
@@ -149,7 +140,6 @@ const Portfolio: React.FC = () => {
         </div>
       </BubbleCard>
 
-      {/* Add button – теперь с динамическим классом active */}
       <button 
         className={`add-position-btn ${showAddForm ? 'active' : ''}`}
         onClick={() => setShowAddForm(!showAddForm)}
@@ -157,19 +147,26 @@ const Portfolio: React.FC = () => {
         {showAddForm ? `✕ ${t('cancel')}` : `+ ${t('add_position')}`}
       </button>
 
-      {/* Add form */}
       {showAddForm && (
         <div className="add-form">
           <div className="form-symbol-container" ref={dropdownRef}>
             <input
               type="text"
               placeholder={t('search_symbol')}
-              value={searchQuery || newPosition.symbol}
+              value={searchQuery}
               onChange={(e) => {
                 setSearchQuery(e.target.value);
                 setIsDropdownOpen(true);
               }}
               onFocus={() => setIsDropdownOpen(true)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && filteredSymbols.length > 0) {
+                  setNewPosition({...newPosition, symbol: filteredSymbols[0]});
+                  setSearchQuery(filteredSymbols[0]);
+                  setIsDropdownOpen(false);
+                  amountInputRef.current?.focus();
+                }
+              }}
               className="form-symbol-input"
             />
             {isDropdownOpen && filteredSymbols.length > 0 && (
@@ -179,8 +176,9 @@ const Portfolio: React.FC = () => {
                     key={symbol}
                     onClick={() => {
                       setNewPosition({...newPosition, symbol});
-                      setSearchQuery('');
+                      setSearchQuery(symbol);
                       setIsDropdownOpen(false);
+                      amountInputRef.current?.focus();
                     }}
                     className="dropdown-item"
                   >
@@ -191,6 +189,7 @@ const Portfolio: React.FC = () => {
             )}
           </div>
           <input
+            ref={amountInputRef}
             type="number"
             placeholder={t('amount')}
             value={newPosition.amount}
@@ -219,7 +218,6 @@ const Portfolio: React.FC = () => {
         </div>
       )}
 
-      {/* Positions list */}
       <div className="positions-list">
         {portfolioWithPrices.length === 0 ? (
           <div className="empty-state">

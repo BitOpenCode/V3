@@ -115,7 +115,7 @@
   align-items: center;
   gap: 2px;
   width: 100% !important;
-  max-width: none !important; /* переопределяем Tailwind .container (max-width на брейкпоинтах) */
+  max-width: none !important;
   margin-left: 0;
   margin-right: 0;
   box-sizing: border-box;
@@ -143,14 +143,14 @@
   
   .bottom-nav,
   .fixed.bottom-0 {
-    bottom: calc(20px + env(safe-area-inset-bottom, 0px)); /* выше на мобильных, учёт выреза/индикатора iPhone */
-    padding: 12px 2px 8px 2px; /* Увеличен верхний отступ, уменьшен нижний */
+    bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+    padding: 12px 2px 8px 2px;
   }
   
   .bottom-nav .container,
   .fixed.bottom-0 .container {
-    align-items: flex-start; /* Выравнивание кнопок по верху */
-    padding-top: 4px; /* Дополнительный отступ сверху для кнопок */
+    align-items: flex-start;
+    padding-top: 4px;
   }
   
   .page-header {
@@ -175,385 +175,13 @@
   
   .bottom-nav,
   .fixed.bottom-0 {
-    padding: 10px 1px 6px 1px; /* Увеличен верхний отступ, уменьшен нижний */
+    padding: 10px 1px 6px 1px;
   }
   
   .bottom-nav .container,
   .fixed.bottom-0 .container {
-    align-items: flex-start; /* Выравнивание кнопок по верху */
-    padding-top: 3px; /* Дополнительный отступ сверху для кнопок */
-  }
-  
-  .page-title {
-    font-size: 1rem;
-  }
-  
-  .close-button {
-    padding: 5px 10px;
-    font-size: 0.7rem;
-  }
-}
-
-/* Page header common styles */
-.page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-  flex-shrink: 0;
-}
-
-.page-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: var(--color-text, white);
-  margin: 0;
-}
-
-.close-button {
-  padding: 8px 16px;
-  background: var(--color-primary-purple);
-  border: none;
-  border-radius: 6px;
-  color: white;
-  font-size: 0.85rem;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.close-button:hover {
-  background: var(--color-primary-blue);
-}
-
-/* ============================================
-   Header panel (Upper navigation)
-   ============================================ */
-.upper-nav-panel {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 150;
-  
-  /* Dark gradient background */
-  background: linear-gradient(180deg, 
-    rgba(20, 15, 35, 0.98) 0%, 
-    rgba(25, 20, 40, 0.95) 100%
-  );
-  backdrop-filter: blur(12px);
-  
-  /* Bottom border glow */
-  border-bottom: 1px solid rgba(138, 43, 226, 0.5);
-  box-shadow: 0 2px 20px rgba(138, 43, 226, 0.2);
-  
-  /* Layout */
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 8px;
-  gap: 4px;
-}
-
-.header-button-container {
-  flex: 1 1 0;
-  min-width: 0;
-  display: flex;
-  justify-content: center;
-}
-
-/* TonConnect button special handling */
-.header-button-container:nth-child(3) {
-  flex: 0 0 auto;
-  min-width: fit-content;
-}
-
-/* ============================================
-   Bottom navigation panel
-   ============================================ */
-.bottom-nav,
-.fixed.bottom-0 {
-  position: absolute;
-  bottom: 14px;
-  left: 0;
-  right: 0;
-  z-index: 150;
-  height: 90px;
-  margin-top: -15px;
-  margin-bottom: -15px;
-  
-  /* Dark gradient background */
-  background: linear-gradient(0deg, 
-    rgba(20, 15, 35, 0.98) 0%, 
-    rgba(25, 20, 40, 0.95) 100%
-  );
-  backdrop-filter: blur(12px);
-  
-  /* Top border glow */
-  border-top: 1px solid rgba(138, 43, 226, 0.5);
-  box-shadow: 0 -2px 20px rgba(138, 43, 226, 0.2);
-  
-  padding: 11px 4px;
-}
-
-.bottom-nav .container,
-.fixed.bottom-0 .container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 2px;
-  width: 100% !important;
-  max-width: none !important; /* переопределяем Tailwind .container (max-width на брейкпоинтах) */
-  margin-left: 0;
-  margin-right: 0;
-  box-sizing: border-box;
-}
-
-/* Кнопки нижней панели растягиваются с равным интервалом на широких экранах */
-.bottom-nav .container .nav-button,
-.bottom-nav .container button.nav-button,
-.fixed.bottom-0 .container .nav-button,
-.fixed.bottom-0 .container button.nav-button {
-  flex: 1 1 0;
-  min-width: 0;
-  width: auto !important;
-  max-width: none;
-}
-
-/* ============================================
-   Responsive adjustments
-   ============================================ */
-@media (max-width: 640px) {
-  .upper-nav-panel {
-    padding: 8px 4px;
-    gap: 2px;
-  }
-  
-  .bottom-nav,
-  .fixed.bottom-0 {
-    bottom: calc(20px + env(safe-area-inset-bottom, 0px)); /* выше на мобильных, учёт выреза/индикатора iPhone */
-    padding: 12px 2px 8px 2px; /* Увеличен верхний отступ, уменьшен нижний */
-  }
-  
-  .bottom-nav .container,
-  .fixed.bottom-0 .container {
-    align-items: flex-start; /* Выравнивание кнопок по верху */
-    padding-top: 4px; /* Дополнительный отступ сверху для кнопок */
-  }
-  
-  .page-header {
-    margin-bottom: 12px;
-  }
-  
-  .page-title {
-    font-size: 1.2rem;
-  }
-  
-  .close-button {
-    padding: 6px 12px;
-    font-size: 0.75rem;
-  }
-}
-
-@media (max-width: 400px) {
-  .upper-nav-panel {
-    padding: 6px 2px;
-    gap: 1px;
-  }
-  
-  .bottom-nav,
-  .fixed.bottom-0 {
-    padding: 10px 1px 6px 1px; /* Увеличен верхний отступ, уменьшен нижний */
-  }
-  
-  .bottom-nav .container,
-  .fixed.bottom-0 .container {
-    align-items: flex-start; /* Выравнивание кнопок по верху */
-    padding-top: 3px; /* Дополнительный отступ сверху для кнопок */
-  }
-  
-  .page-title {
-    font-size: 1rem;
-  }
-  
-  .close-button {
-    padding: 5px 10px;
-    font-size: 0.7rem;
-  }
-}
-
-/* Page header common styles */
-.page-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 16px;
-  flex-shrink: 0;
-}
-
-.page-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: var(--color-text, white);
-  margin: 0;
-}
-
-.close-button {
-  padding: 8px 16px;
-  background: var(--color-primary-purple);
-  border: none;
-  border-radius: 6px;
-  color: white;
-  font-size: 0.85rem;
-  cursor: pointer;
-  transition: background 0.2s;
-}
-
-.close-button:hover {
-  background: var(--color-primary-blue);
-}
-
-/* ============================================
-   Header panel (Upper navigation)
-   ============================================ */
-.upper-nav-panel {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 150;
-  
-  /* Dark gradient background */
-  background: linear-gradient(180deg, 
-    rgba(20, 15, 35, 0.98) 0%, 
-    rgba(25, 20, 40, 0.95) 100%
-  );
-  backdrop-filter: blur(12px);
-  
-  /* Bottom border glow */
-  border-bottom: 1px solid rgba(138, 43, 226, 0.5);
-  box-shadow: 0 2px 20px rgba(138, 43, 226, 0.2);
-  
-  /* Layout */
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px 8px;
-  gap: 4px;
-}
-
-.header-button-container {
-  flex: 1 1 0;
-  min-width: 0;
-  display: flex;
-  justify-content: center;
-}
-
-/* TonConnect button special handling */
-.header-button-container:nth-child(3) {
-  flex: 0 0 auto;
-  min-width: fit-content;
-}/* ============================================
-   Bottom navigation panel
-   ============================================ */
-.bottom-nav,
-.fixed.bottom-0 {
-  position: absolute;
-  bottom: 14px;
-  left: 0;
-  right: 0;
-  z-index: 150;
-  height: 90px;
-  margin-top: -15px;
-  margin-bottom: -15px;
-  
-  /* Dark gradient background */
-  background: linear-gradient(0deg, 
-    rgba(20, 15, 35, 0.98) 0%, 
-    rgba(25, 20, 40, 0.95) 100%
-  );
-  backdrop-filter: blur(12px);
-  
-  /* Top border glow */
-  border-top: 1px solid rgba(138, 43, 226, 0.5);
-  box-shadow: 0 -2px 20px rgba(138, 43, 226, 0.2);
-  
-  padding: 11px 4px;
-}
-
-.bottom-nav .container,
-.fixed.bottom-0 .container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 2px;
-  width: 100% !important;
-  max-width: none !important; /* переопределяем Tailwind .container (max-width на брейкпоинтах) */
-  margin-left: 0;
-  margin-right: 0;
-  box-sizing: border-box;
-}
-
-/* Кнопки нижней панели растягиваются с равным интервалом на широких экранах */
-.bottom-nav .container .nav-button,
-.bottom-nav .container button.nav-button,
-.fixed.bottom-0 .container .nav-button,
-.fixed.bottom-0 .container button.nav-button {
-  flex: 1 1 0;
-  min-width: 0;
-  width: auto !important;
-  max-width: none;
-}
-
-/* ============================================
-   Responsive adjustments
-   ============================================ */
-@media (max-width: 640px) {
-  .upper-nav-panel {
-    padding: 8px 4px;
-    gap: 2px;
-  }
-  
-  .bottom-nav,
-  .fixed.bottom-0 {
-    bottom: calc(20px + env(safe-area-inset-bottom, 0px)); /* выше на мобильных, учёт выреза/индикатора iPhone */
-    padding: 12px 2px 8px 2px; /* Увеличен верхний отступ, уменьшен нижний */
-  }
-  
-  .bottom-nav .container,
-  .fixed.bottom-0 .container {
-    align-items: flex-start; /* Выравнивание кнопок по верху */
-    padding-top: 4px; /* Дополнительный отступ сверху для кнопок */
-  }
-  
-  .page-header {
-    margin-bottom: 12px;
-  }
-  
-  .page-title {
-    font-size: 1.2rem;
-  }
-  
-  .close-button {
-    padding: 6px 12px;
-    font-size: 0.75rem;
-  }
-}
-
-@media (max-width: 400px) {
-  .upper-nav-panel {
-    padding: 6px 2px;
-    gap: 1px;
-  }
-  
-  .bottom-nav,
-  .fixed.bottom-0 {
-    padding: 10px 1px 6px 1px; /* Увеличен верхний отступ, уменьшен нижний */
-  }
-  
-  .bottom-nav .container,
-  .fixed.bottom-0 .container {
-    align-items: flex-start; /* Выравнивание кнопок по верху */
-    padding-top: 3px; /* Дополнительный отступ сверху для кнопок */
+    align-items: flex-start;
+    padding-top: 3px;
   }
   
   .page-title {
@@ -594,10 +222,32 @@
   opacity: 0.9 !important;
 }
 
-/* The real TonConnectButton is hit by the same Tailwind reset once it
-   swaps in after activation, leaving it a colorless ghost of text. Give
-   it the same solid pill look as the placeholder above. */
-[data-tc-connect-button] {
-  background: #0088cc !important;
-  border-radius: 999px !important;
+/* Скрываем иконку в кнопке TonConnect */
+.ton-connect-placeholder-button svg,
+[data-tc-connect-button] svg {
+  display: none !important;
+}
+
+/* Более выраженный контур для кнопки TonConnect в Space и Bubbles темах */
+
+/* Space Theme */
+body.theme-space [data-tc-connect-button] {
+  border: 2px solid rgba(157, 78, 221, 0.8) !important;
+  box-shadow: 0 0 20px rgba(157, 78, 221, 0.4), inset 0 0 20px rgba(157, 78, 221, 0.1) !important;
+}
+
+body.theme-space [data-tc-connect-button]:hover {
+  border-color: rgba(76, 201, 240, 0.8) !important;
+  box-shadow: 0 0 30px rgba(157, 78, 221, 0.6), 0 0 40px rgba(76, 201, 240, 0.3) !important;
+}
+
+/* Bubbles Theme */
+body.theme-bubbles [data-tc-connect-button] {
+  border: 2px solid rgba(138, 43, 226, 0.8) !important;
+  box-shadow: 0 0 20px rgba(138, 43, 226, 0.5), inset 0 0 20px rgba(138, 43, 226, 0.15) !important;
+}
+
+body.theme-bubbles [data-tc-connect-button]:hover {
+  border-color: rgba(138, 43, 226, 1) !important;
+  box-shadow: 0 0 30px rgba(138, 43, 226, 0.7) !important;
 }

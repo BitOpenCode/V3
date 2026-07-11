@@ -14,7 +14,6 @@ const NEWS_CATEGORIES = [
   { value: 'tech', label: 'Tech' },
   { value: 'ai', label: 'AI' },
   { value: 'game', label: 'Game' },
-  { value: 'rwa', label: 'RWA' },
 ];
 
 const CATEGORY_KEYWORDS: Record<string, string[]> = {
@@ -39,11 +38,6 @@ const CATEGORY_KEYWORDS: Record<string, string[]> = {
   game: [
     'gaming', 'metaverse', 'play-to-earn', 'nft',
     'web3 game', 'esports',
-  ],
-  rwa: [
-    'real-world assets', 'tokenization', 'real estate',
-    'commodity', 'gold', 'silver', 'carbon credits',
-    'private equity', 'tradfi',
   ],
 };
 

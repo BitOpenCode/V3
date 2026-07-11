@@ -8,6 +8,8 @@
 
 .news-search-container {
   margin-bottom: 12px;
+  position: relative;
+  z-index: 2;
 }
 
 .news-search {
@@ -31,8 +33,12 @@
   margin-bottom: 16px;
   flex-wrap: nowrap;
   overflow-x: auto;
+  overflow-y: visible;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+  padding: 8px 0;
+  position: relative;
+  z-index: 1;
 }
 
 .news-categories::-webkit-scrollbar {
@@ -40,30 +46,51 @@
 }
 
 .category-button {
-  flex: 0 0 64px;
-  width: 64px;
-  padding: 6px 8px;
-  background: var(--color-bg--300);
-  border: 1px solid var(--color-primary-purple);
-  border-radius: 6px;
-  color: var(--color-primary-silver);
-  font-size: 0.7rem;
+  flex: 1;
+  min-width: 0;
+  padding: 10px 8px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: all 0.3s ease;
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: rgba(255, 255, 255, 0.8);
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(138, 43, 226, 0.5), transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(0, 119, 204, 0.4), transparent 50%),
+    linear-gradient(135deg, #2a1a4a 0%, #1a1a3a 100%);
+  background-size: 200% 200%;
+  box-shadow: 0 2px 8px rgba(138, 43, 226, 0.2);
+  position: relative;
+  z-index: 1;
 }
 
 .category-button:hover {
-  background: var(--color-primary-purple);
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 16px rgba(138, 43, 226, 0.4);
+  z-index: 2;
 }
 
 .category-button.active {
-  background: var(--color-accent-gradient);
-  border-color: transparent;
+  background: 
+    radial-gradient(circle at 20% 20%, rgba(138, 43, 226, 0.8), transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(0, 119, 204, 0.6), transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(180, 50, 200, 0.7), transparent 60%),
+    linear-gradient(135deg, #2a1a4a 0%, #1a1a3a 100%);
+  background-size: 200% 200%;
+  animation: lavaLampBtn 8s infinite ease-in-out;
   color: white;
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 
+    0 4px 16px rgba(138, 43, 226, 0.5),
+    0 0 20px rgba(0, 119, 204, 0.3);
+  z-index: 2;
 }
 
 .news-list {
@@ -203,10 +230,33 @@
 /* ========================================== */
 /* LIGHT THEME */
 /* ========================================== */
+body.theme-light .category-button {
+  background: rgba(255, 255, 255, 0.8) !important;
+  border: 1px solid rgba(168, 85, 247, 0.2) !important;
+  color: #0f172a !important;
+  box-shadow: 0 2px 8px rgba(168, 85, 247, 0.08) !important;
+  animation: none !important;
+}
+
+body.theme-light .category-button:hover {
+  background: rgba(168, 85, 247, 0.1) !important;
+  border-color: rgba(168, 85, 247, 0.4) !important;
+  color: #7c3aed !important;
+}
+
 body.theme-light .category-button.active {
   background: var(--color-accent-gradient) !important;
   border-color: transparent !important;
   color: white !important;
+  box-shadow: 0 4px 15px rgba(168, 85, 247, 0.35) !important;
+  animation: none !important;
+}
+
+@keyframes lavaLampBtn {
+  0% { background-position: 0% 100%; }
+  33% { background-position: 100% 50%; }
+  66% { background-position: 50% 0%; }
+  100% { background-position: 0% 100%; }
 }
 
 @media (max-width: 480px) {
@@ -224,7 +274,7 @@ body.theme-light .category-button.active {
   }
 
   .category-button {
-    padding: 5px 8px;
+    padding: 8px 6px;
     font-size: 0.65rem;
   }
 }

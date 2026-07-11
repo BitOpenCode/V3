@@ -477,3 +477,78 @@ body.theme-light .close-button:hover {
   75% { background-position: 0% 100%; }
   100% { background-position: 0% 0%; }
 }
+
+/* TonConnect модальное окно - светлая тема */
+body.theme-light .tc-modal {
+  background: #ffffff !important;
+  color: #1e293b !important;
+}
+
+body.theme-light .tc-modal .tc-modal__header {
+  color: #1e293b !important;
+}
+
+body.theme-light .tc-modal .tc-modal__body {
+  color: #475569 !important;
+}
+
+body.theme-light .tc-modal button {
+  color: #1e293b !important;
+}
+
+body.theme-light .tc-modal .tc-modal__footer {
+  color: #475569 !important;
+}
+
+/* Для текста "Scan with your mobile wallet" */
+body.theme-light .tc-modal .tc-text {
+  color: #475569 !important;
+}
+
+body.theme-light .tc-modal .tc-subtext {
+  color: #94a3b8 !important;
+}
+
+/* Иконки в модалке (TonConnect использует svg) */
+body.theme-light .tc-modal svg {
+  filter: none !important;
+  opacity: 1 !important;
+}
+
+/* Контейнер иконок в модалке */
+body.theme-light .tc-modal .tc-wallet-item {
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+}
+
+body.theme-light .tc-modal .tc-wallet-item:hover {
+  background: #f1f5f9 !important;
+}
+
+body.theme-light .tc-modal .tc-wallet-item .tc-wallet-name {
+  color: #1e293b !important;
+}
+
+/* Для всех дочерних элементов модалки */
+body.theme-light .tc-modal * {
+  color: #1e293b !important;
+}
+
+/* Но для текста-подсказки оставляем серый */
+body.theme-light .tc-modal .tc-hint,
+body.theme-light .tc-modal .tc-description {
+  color: #94a3b8 !important;
+}
+
+/* Кнопка Connect Wallet - всегда с градиентом, как Add Position */
+.connect-btn {
+  background: var(--color-accent-gradient) !important;
+  border: none !important;
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(168, 85, 247, 0.35) !important;
+}
+
+.connect-btn:hover {
+  filter: brightness(0.9) !important;
+  transform: scale(1.02);
+}

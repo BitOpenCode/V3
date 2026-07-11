@@ -47,7 +47,7 @@
   border-radius: 10px;
   max-height: 200px;
   overflow-y: auto;
-  z-index: 1000;
+  z-index: 10000 !important;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
   pointer-events: auto;
 }
@@ -63,7 +63,7 @@
   cursor: pointer;
   font-size: 0.85rem;
   transition: all 0.2s ease;
-  pointer-events: auto;
+  pointer-events: auto !important;
 }
 
 .dropdown-item:hover {
@@ -72,27 +72,30 @@
 }
 
 .orderbook-symbol {
+  position: relative;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 10px;
+  justify-content: center;
   margin-bottom: 12px;
-  position: relative;
+  z-index: 10001 !important;
+  overflow: visible !important;
 }
 
 .symbol-name {
-  flex: 1;
   text-align: center;
   font-size: 1.2rem;
   font-weight: bold;
   color: white;
   text-shadow: 0 0 8px var(--color-primary-yellow);
+  flex: 1;
 }
 
-/* Price-step grouping control, pinned to the right edge next to the symbol name */
 .group-step-control {
-  position: relative;
-  flex-shrink: 0;
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 10002 !important;
 }
 
 .group-step-toggle {
@@ -113,6 +116,8 @@
     0 2px 8px rgba(138, 43, 226, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
   transition: all 0.2s ease;
+  position: relative;
+  z-index: 10003 !important;
 }
 
 .group-step-toggle.active {
@@ -124,28 +129,33 @@
 
 .group-step-menu {
   position: absolute;
-  top: calc(100% + 6px);
+  top: calc(100% + 8px);
   right: 0;
-  display: flex;
-  flex-direction: column;
   min-width: 100px;
-  background: linear-gradient(180deg, #2a1a4a 0%, #1a1a3a 100%);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: #1a1a3a;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 10px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+  z-index: 99999 !important;
+  pointer-events: auto !important;
   overflow: hidden;
-  z-index: 10;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  opacity: 1 !important;
 }
 
 .group-step-option {
   padding: 8px 14px;
-  background: none;
+  background: transparent;
   border: none;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.9);
   font-size: 0.75rem;
   text-align: center;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background 0.2s;
+  pointer-events: auto !important;
+  width: 100%;
+  display: block;
 }
 
 .group-step-option:hover {
@@ -164,10 +174,10 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  position: relative;
+  z-index: 1;
 }
 
-/* Section styling -- title and column header stay put; only the row
-   list (.orderbook-rows) scrolls, so they never get scrolled out of view. */
 .orderbook-section {
   display: flex;
   flex-direction: column;
@@ -178,6 +188,8 @@
   border-radius: 12px;
   overflow: hidden;
   max-height: 320px;
+  position: relative;
+  z-index: 1;
 }
 
 .section-title {
@@ -196,7 +208,6 @@
   color: #22c55e;
 }
 
-/* Header - CSS Grid for perfect alignment */
 .section-header {
   flex-shrink: 0;
   display: grid;
@@ -233,7 +244,6 @@
   overflow-y: auto;
 }
 
-/* Order row - CSS Grid for perfect alignment */
 .orderbook-row {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -263,7 +273,6 @@
   );
 }
 
-/* Columns - Total | Size | Price */
 .orderbook-row .total {
   text-align: left;
   color: var(--color-primary-silver);
@@ -286,7 +295,6 @@
   color: #22c55e;
 }
 
-/* Spread section */
 .orderbook-spread {
   text-align: center;
   padding: 12px;
@@ -398,6 +406,45 @@ body.theme-light .close-button:hover {
 
 body.theme-light .page-title {
   color: #0f172a !important;
+}
+
+/* Light theme overrides for group-step-toggle and dropdown */
+body.theme-light .group-step-toggle {
+  background: rgba(255, 255, 255, 0.8) !important;
+  border: 1px solid rgba(168, 85, 247, 0.2) !important;
+  color: #0f172a !important;
+  box-shadow: 0 2px 8px rgba(168, 85, 247, 0.08) !important;
+  text-shadow: none !important;
+}
+
+body.theme-light .group-step-toggle.active {
+  background: var(--color-accent-gradient) !important;
+  border: 1px solid transparent !important;
+  color: white !important;
+  box-shadow: 0 4px 15px rgba(168, 85, 247, 0.35) !important;
+}
+
+body.theme-light .group-step-menu {
+  background: #ffffff !important;
+  border: 1px solid rgba(168, 85, 247, 0.3) !important;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  z-index: 99999 !important;
+}
+
+body.theme-light .group-step-option {
+  color: #0f172a !important;
+}
+
+body.theme-light .group-step-option:hover {
+  background: rgba(168, 85, 247, 0.1) !important;
+  color: #7c3aed !important;
+}
+
+body.theme-light .group-step-option.active {
+  background: var(--color-accent-gradient) !important;
+  color: white !important;
 }
 
 @media (max-width: 480px) {

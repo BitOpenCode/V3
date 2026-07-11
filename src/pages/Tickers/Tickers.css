@@ -104,9 +104,9 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-bottom: none;
   border-radius: 12px 12px 0 0;
-  font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.6);
-  font-weight: 600;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.8);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
@@ -127,22 +127,28 @@
 
 .tickers-table-header div:nth-child(2) {
   text-align: right;
+  padding-right: 16px;
 }
 
 .tickers-table-header div:nth-child(3) {
   text-align: right;
+  padding-right: 14px;
 }
 
 .tickers-table-header div:nth-child(4) {
   text-align: right;
+  padding-right: 10px;
 }
 
 .tickers-table-header div:nth-child(5) {
   text-align: center;
+  padding-right: 0px;
 }
 
 .fav-header {
   cursor: default !important;
+  display: inline-block;
+  transform: translateX(-7px);
 }
 
 .tickers-list {
@@ -197,6 +203,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   font-weight: 500;
+  padding-right: 16px;
 }
 
 .ticker-price.positive {
@@ -211,6 +218,7 @@
   text-align: right;
   white-space: nowrap;
   font-size: 0.75rem;
+  padding-right: 14px;
 }
 
 .ticker-change.positive {
@@ -226,23 +234,35 @@
   color: var(--color-primary-silver);
   font-size: 0.7rem;
   white-space: nowrap;
+  padding-right: 10px;
 }
 
 .favorite-btn {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 0.9rem;
-  padding: 4px;
+  font-size: 1.9rem;
+  padding: 0;
   line-height: 1;
-  color: rgba(156, 163, 175, 0.5);
   transition: all 0.2s;
   text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-left: 0px;
 }
 
 .favorite-btn:hover {
-  color: var(--color-primary-yellow);
-  transform: scale(1.2);
+  transform: scale(1.3);
+}
+
+.favorite-btn.favorited {
+  color: #fbbf24 !important;
+}
+
+.favorite-btn:not(.favorited) {
+  color: rgba(156, 163, 175, 0.5) !important;
 }
 
 .tickers-loading,
@@ -265,13 +285,13 @@
 /* Responsive */
 @media (max-width: 480px) {
   .tickers-table-header {
-    grid-template-columns: 1.3fr 1fr 0.7fr 0.7fr 0.3fr;
-    font-size: 0.6rem;
+    grid-template-columns: 1.3fr 1fr 0.7fr 0.7fr 0.4fr;
+    font-size: 0.7rem;
     padding: 8px;
   }
 
   .ticker-row {
-    grid-template-columns: 1.3fr 1fr 0.7fr 0.7fr 0.3fr;
+    grid-template-columns: 1.3fr 1fr 0.7fr 0.7fr 0.4fr;
     font-size: 0.7rem;
     padding: 8px;
   }
@@ -290,7 +310,7 @@
   }
   
   .favorite-btn {
-    font-size: 0.8rem;
-    padding: 2px;
+    font-size: 1rem;
+    margin-left: 0px;
   }
 }

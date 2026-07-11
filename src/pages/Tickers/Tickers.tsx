@@ -215,7 +215,7 @@ const Tickers: React.FC = () => {
             </span>
             <span className="ticker-volume">{formatVolume(ticker.quoteVolume)}</span>
             <button
-              className="favorite-btn"
+              className={`favorite-btn ${favorites.includes(ticker.symbol) ? 'favorited' : ''}`}
               onClick={(e) => {
                 e.stopPropagation();
                 toggleFavorite(ticker.symbol);
