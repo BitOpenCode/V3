@@ -7,7 +7,6 @@ import { Environment, OrbitControls, PerspectiveCamera, Html, Float, Text, Round
 import { useState, useRef, useEffect } from "react"
 import * as THREE from "three"
 import { SpookyIsland } from "./spooky-island"
-import { SkyCabinIsland } from "./sky-cabin-island"
 import { SingularityCrystal } from "./singularity-crystal"
 import {
   Github,
@@ -1627,7 +1626,6 @@ function EntranceRoom({ position, isDark = true, onZoomToDesk, onZoomToIsland, o
 
       {/* Floating decorative elements */}
       <SpookyIsland position={[-5, 3, -4]} scale={0.003} onClick={onZoomToIsland} />
-      <SkyCabinIsland position={[5, 4, -3]} scale={0.028} onClick={onZoomToBlueIsland} />
       {isSingularityCrystalTransformed ? (
         <SingularityCrystal
           position={[-4, 5, -5]}

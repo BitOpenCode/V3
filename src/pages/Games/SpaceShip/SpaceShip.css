@@ -986,3 +986,9 @@ html.game-active {
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+#fps-hud {
+  color: #00ff88;
+  font-weight: bold;
+  min-width: 80px;
+}
